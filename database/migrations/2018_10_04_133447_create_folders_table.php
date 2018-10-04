@@ -16,10 +16,10 @@ class CreateFoldersTable extends Migration
         Schema::create('folders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->unsignedInteger('id_folders_parent');
-            $table->foreign('id_folders_parent')->references('id')->on('folders');
-            $table->unsignedInteger('id_users_owner');
-            $table->foreign('id_users_owner')->references('id')->on('users');
+            $table->unsignedInteger('id_folder_parent')->nullable();
+            $table->foreign('id_folder_parent')->references('id')->on('folders');
+            $table->unsignedInteger('id_user_owner');
+            $table->foreign('id_user_owner')->references('id')->on('users');
             $table->timestamps();
         });
     }

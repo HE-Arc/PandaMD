@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth'); //Force to login
     }
 
     /**
@@ -26,9 +26,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $folders = $user->folders;
-        $files = $folders->first()->files;
-        return view('home.index', ['folders' => $folders,'files'=>$files]);
+        return view('home.index');
     }
 }

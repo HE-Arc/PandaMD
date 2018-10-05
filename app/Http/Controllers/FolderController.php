@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class FolderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -48,7 +53,7 @@ class FolderController extends Controller
     {
         $folders = $folder->folders;
         $files = $folder->files;
-        return view('home.index', ['folders' => $folders, 'files' => $files]);
+        return view('folders.show', ['folders' => $folders, 'files' => $files]);
     }
 
     /**

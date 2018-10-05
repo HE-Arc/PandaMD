@@ -26,12 +26,12 @@ class FoldersTableSeeder extends Seeder
         foreach ($users as $user) {
             self::createSaveFolder([
                 "name" => "Maths",
-                "folder_id" => $user->getUserHomeFolders()->id,
+                "folder_id" => $user->getUserHomeFolder()->id,
                 "user_id" => $user->id
             ]);
             self::createSaveFolder([
                 "name" => "Informatique",
-                "folder_id" => $user->getUserHomeFolders()->id,
+                "folder_id" => $user->getUserHomeFolder()->id,
                 "user_id" => $user->id
             ]);
         }

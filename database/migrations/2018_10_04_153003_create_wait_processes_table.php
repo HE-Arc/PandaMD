@@ -15,9 +15,10 @@ class CreateWaitProcessesTable extends Migration
     {
         Schema::create('wait_processes', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_file');
-            $table->foreign('id_file')->references('id')->on('files');
-            $table->boolean('is_finished')->default('false');
+            $table->unsignedInteger('file_id');
+            $table->foreign('file_id')->references('id')->on('files');
+            $table->string('token');
+            $table->integer('status')->default('0'); //0 = running, 1 = finished, -1 = error
             $table->string('error_message')->nullable();
             $table->timestamps();
         });

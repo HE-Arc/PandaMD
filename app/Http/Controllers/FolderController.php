@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\folder;
+use App\Folder;
 use Illuminate\Http\Request;
 
 class FolderController extends Controller
@@ -41,10 +41,10 @@ class FolderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\folder  $folder
+     * @param  \App\Folder  $folder
      * @return \Illuminate\Http\Response
      */
-    public function show(folder $folder)
+    public function show(Folder $folder)
     {
         //
     }
@@ -52,10 +52,10 @@ class FolderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\folder  $folder
+     * @param  \App\Folder  $folder
      * @return \Illuminate\Http\Response
      */
-    public function edit(folder $folder)
+    public function edit(Folder $folder)
     {
         //
     }
@@ -64,10 +64,10 @@ class FolderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\folder  $folder
+     * @param  \App\Folder  $folder
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, folder $folder)
+    public function update(Request $request, Folder $folder)
     {
         //
     }
@@ -75,10 +75,10 @@ class FolderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\folder  $folder
+     * @param  \App\Folder  $folder
      * @return \Illuminate\Http\Response
      */
-    public function destroy(folder $folder)
+    public function destroy(Folder $folder)
     {
         //
     }

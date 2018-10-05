@@ -1,5 +1,7 @@
 <?php
 
+use App\Folder;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Database\Seeder;
 use App\User;
 
@@ -10,24 +12,34 @@ class UsersTableSeeder extends Seeder
      *
      * @return void
      */
+    public static function createSaveUser(array $args) {
+        $user = new User();
+        $user->name = $args["name"];
+        $user->email = $args["email"];
+        $user->password = bcrypt($args["password"]);
+        $user->save();
+        (Folder::createHomeFolder($user->id))->save();
+    }
+
     public function run()
     {
-        $user1 = new User();
-        $user1->name = "Claude";
-        $user1->email = "claude@gmail.com";
-        $user1->password = bcrypt("pass1234");
-        $user1->save();
+        self::createSaveUser([
+            "name" => "Claude",
+            "email" => "claude@gmail.com",
+            "password" => "pass1234"
+        ]);
 
-        $user2 = new User();
-        $user2->name = "Michel";
-        $user2->email = "michel@gmail.com";
-        $user2->password = bcrypt("pass1234");
-        $user2->save();
+        self::createSaveUser([
+            "name" => "Michel",
+            "email" => "michel@gmail.com",
+            "password" => "pass1234"
+        ]);
 
-        $user3 = new User();
-        $user3->name = "Didier";
-        $user3->email = "didier@gmail.com";
-        $user3->password = bcrypt("pass1234");
-        $user3->save();
+
+        self::createSaveUser([
+            "name" => "Didier",
+            "email" => "didier@gmail.com",
+            "password" => "pass1234"
+        ]);
     }
 }

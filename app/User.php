@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Folder;
 
 class User extends Authenticatable
 {
     use Notifiable;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -27,4 +27,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function folders()
+    {
+        return $this->hasMany(Folder::class);
+    }
+
+    public function getUserHomeFolders() {
+        return $this->folders()->where(["name"=>"home"])->first();
+    }
 }

@@ -15,10 +15,10 @@ class CreateFileAuthorsTable extends Migration
     {
         Schema::create('file_authors', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedSmallInteger('id_file');
-            $table->foreign('id_file')->references('id')->on('files');
-            $table->unsignedInteger('id_author');
-            $table->foreign('id_author')->references('id')->on('authors');
+            $table->unsignedSmallInteger('file_id');
+            $table->foreign('file_id')->references('id')->on('files');
+            $table->unsignedInteger('author_id');
+            $table->foreign('author_id')->references('id')->on('authors');
             $table->timestamps();;
         });
     }

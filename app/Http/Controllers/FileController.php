@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\file;
+use App\File;
 use Illuminate\Http\Request;
 
 class FileController extends Controller
@@ -41,10 +41,10 @@ class FileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\file  $file
+     * @param  \App\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function show(file $file)
+    public function show(File $file)
     {
         //
     }
@@ -52,10 +52,10 @@ class FileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\file  $file
+     * @param  \App\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function edit(file $file)
+    public function edit(File $file)
     {
         //
     }
@@ -64,10 +64,10 @@ class FileController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\file  $file
+     * @param  \App\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, file $file)
+    public function update(Request $request, File $file)
     {
         //
     }
@@ -75,10 +75,10 @@ class FileController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\file  $file
+     * @param  \App\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function destroy(file $file)
+    public function destroy(File $file)
     {
         //
     }

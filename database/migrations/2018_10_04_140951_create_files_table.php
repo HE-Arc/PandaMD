@@ -21,7 +21,7 @@ class CreateFilesTable extends Migration
             $table->boolean('is_title_page');
             $table->boolean('is_toc');
             $table->boolean('is_toc_own_page');
-            $table->boolean('îs_links_as_notes');
+            $table->boolean('is_links_as_notes');
             $table->text('title');
             $table->text('subtitle');
             $table->text('school')->nullable();

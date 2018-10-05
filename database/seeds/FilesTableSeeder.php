@@ -37,7 +37,7 @@ class FilesTableSeeder extends Seeder
             foreach ($user->folders as $folder) {
                 self::createSaveFile([
                     "folder_id" => $folder->id,
-                    "content" => "# It's the $user->name folder\n##It's called $folder->name\n* elem 1\n*e elem 2",
+                    "content" => "# It's the $user->name folder\n## It's called $folder->name\n* elem 1\n* elem 2",
                     "is_title_page" => true,
                     "is_toc" => true,
                     "is_toc_own_page" => true,

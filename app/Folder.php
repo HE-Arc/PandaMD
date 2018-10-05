@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\File;
 
 class Folder extends Model
 {
@@ -17,5 +18,13 @@ class Folder extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function files() {
+        return $this->hasMany(File::class);
+    }
+
+    public function folders() {
+        return $this->hasMany(Folder::class);
     }
 }

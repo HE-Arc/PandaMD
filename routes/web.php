@@ -15,4 +15,6 @@ Route::get("/", "HomeController@index")->name('home');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::resource("folders", "FolderController", ["only"=>["show"]]);
+
+Route::resource("files", "FileController", ["only" => ["show"]]);

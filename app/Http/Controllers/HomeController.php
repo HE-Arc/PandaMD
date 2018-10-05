@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user();
+        $folders = $user->folders;
+        $files = $folders->first()->files;
+        return view('home.index', ['folders' => $folders,'files'=>$files]);
     }
 }

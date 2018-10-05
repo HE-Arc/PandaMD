@@ -46,7 +46,9 @@ class FolderController extends Controller
      */
     public function show(Folder $folder)
     {
-        //
+        $folders = $folder->folders;
+        $files = $folder->files;
+        return view('home.index', ['folders' => $folders, 'files' => $files]);
     }
 
     /**

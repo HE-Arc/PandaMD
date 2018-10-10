@@ -31,11 +31,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item active">
+            <li class="nav-item {{{ (Request::is('/') ? 'active' : '') }}}">
                 <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="@if(Auth::check()){{route('folders.show', Auth::user()->getUserHomeFolder()->id)}}@else{{route('login')}}@endif">Folder</a>
+                <a class="nav-link {{{ (Request::is('folders/*') ? 'active' : '') }}}" href="@if(Auth::check()){{route('folders.show', Auth::user()->getUserHomeFolder()->id)}}@else{{route('login')}}@endif">Folder</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Create</a>

@@ -20,6 +20,7 @@
             crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="icon" href="{{asset('favicon.ico')}}" type="image/gif">
     <title>Application</title>
 </head>
 <body>
@@ -35,7 +36,7 @@
                 <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{{ (Request::is('folders/*') ? 'active' : '') }}}" href="@if(Auth::check()){{route('folders.show', Auth::user()->getUserHomeFolder()->id)}}@else{{route('login')}}@endif">Folder</a>
+                <a class="nav-link {{{ (Request::is('folders/*') ? 'active' : '') }}}" href="{{route('folders.index')}}">Folder</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Create</a>

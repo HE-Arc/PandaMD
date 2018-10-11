@@ -20,7 +20,7 @@ class FolderController extends Controller
      */
     public function index()
     {
-        //
+        return redirect(route('folders.show', Auth::user()->getUserHomeFolder()->id));
     }
 
     /**

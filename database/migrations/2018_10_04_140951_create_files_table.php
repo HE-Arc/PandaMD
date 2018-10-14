@@ -15,7 +15,7 @@ class CreateFilesTable extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('folder_id')->nullable(); //If user is not registered
+            $table->unsignedInteger('folder_id');
             $table->foreign('folder_id')->references('id')->on('folders');
             $table->longText('content');
             $table->boolean('is_title_page');
@@ -26,6 +26,7 @@ class CreateFilesTable extends Migration
             $table->text('subtitle');
             $table->text('school')->nullable();
             $table->date('date');
+            $table->integer('security')->default(0); //0 private 1 readable -1 editable
             $table->timestamps();
         });
     }

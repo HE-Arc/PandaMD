@@ -17,4 +17,4 @@ Auth::routes();
 
 Route::resource("folders", "FolderController", ["only"=>["show", "index"]]);
 
-Route::resource("files", "FileController", ["only" => ["show"]]);
+Route::resource("files", "FileController", ["only" => ["show", "edit", "update"]]);

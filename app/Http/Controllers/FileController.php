@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Helpers;
+use Symfony\Component\Console\Helper\Helper;
 
 class FileController extends Controller
 {
@@ -46,7 +49,6 @@ class FileController extends Controller
      */
     public function show(File $file)
     {
-
         return view('files.show', ['file' => $file]);
     }
 
@@ -58,7 +60,13 @@ class FileController extends Controller
      */
     public function edit(File $file)
     {
-        //
+        $fileDate = date_create($file->date)->format("M d, Y");
+
+        return view('files.edit', [
+            'file' => $file,
+            'cbxOptions' => Helpers::getArrayCbxOptionsForFile($file),
+            'textOptions' => Helpers::getArrayTextOptionsForFile($file),
+            'fileDate' => $fileDate]);
     }
 
     /**
@@ -70,7 +78,17 @@ class FileController extends Controller
      */
     public function update(Request $request, File $file)
     {
-        //
+        $file->content = $request->get('fileContent');
+        $file->is_title_page = $request->get('isTitlePage') ?? false;
+        $file->is_toc = $request->get('isToc') ?? false;
+        $file->is_toc_own_page = $request->get('isTocOwnPage') ?? false;
+        $file->is_links_as_notes = $request->get('isLinksAsNotes') ?? false;
+        $file->title = $request->get('title')??"Title";
+        $file->subtitle = $request->get('subtitle')??"Subtitle";
+        $file->school = $request->get('school');
+        $file->date = $request->get('date');
+        $file->save();
+        return redirect(route('files.show', $file));
     }
 
     /**

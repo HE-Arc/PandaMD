@@ -46,7 +46,6 @@ class FileController extends Controller
      */
     public function show(File $file)
     {
-
         return view('files.show', ['file' => $file]);
     }
 
@@ -58,7 +57,7 @@ class FileController extends Controller
      */
     public function edit(File $file)
     {
-        //
+        return view('files.edit', ['file' => $file]);
     }
 
     /**
@@ -70,7 +69,9 @@ class FileController extends Controller
      */
     public function update(Request $request, File $file)
     {
-        //
+        $file->content = $request->get('fileContent');
+        $file->save();
+        return redirect(route('files.show', $file));
     }
 
     /**

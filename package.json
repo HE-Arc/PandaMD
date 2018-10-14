@@ -18,5 +18,11 @@
         "lodash": "^4.17.5",
         "popper.js": "^1.12",
         "vue": "^2.5.7"
+    },
+    "dependencies": {
+        "katex": "^0.10.0-rc.1",
+        "markdown-it": "^8.4.2",
+        "markdown-it-katex": "^2.0.3",
+        "simplemde": "^1.11.2"
     }
 }

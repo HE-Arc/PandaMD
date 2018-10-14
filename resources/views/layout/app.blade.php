@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-POYwD7xcktv3gUeZO5s/9nUbRJG/WOmV6jfEGikMJu77LGYO8Rfs2X7URG822aum" crossorigin="anonymous">
     @yield("includes")
     <title>Application</title>
 </head>
@@ -39,13 +41,14 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item {{{ (Request::is('/') ? 'active' : '') }}}">
-                <a class="nav-link" href="{{route('home')}}">Home</a>
+                <a class="nav-link" href="{{route('home')}}"><i class="fal fa-home fa-fw"></i> Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{{ (Request::is('folders/*') ? 'active' : '') }}}" href="{{route('folders.index')}}">Folder</a>
+                <a class="nav-link {{{ (Request::is('folders/*') ? 'active' : '') }}}" href="{{route('folders.index')}}"><i
+                            class="fal fa-folder fa-fw"></i> Folder</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Create</a>
+                <a class="nav-link" href="#"><i class="fal fa-pencil fa-fw"></i> Create</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">

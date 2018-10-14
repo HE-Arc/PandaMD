@@ -15,7 +15,8 @@
             <div class="form-group row pl-3">
                 @foreach($cbxOptions as $cbxOption)
                     <div class="form-check custom-checkbox col-6 col-lg-3">
-                        <input id="{{$cbxOption[0]}}" name="{{$cbxOption[0]}}" type="checkbox" class="custom-control-input"
+                        <input id="{{$cbxOption[0]}}" name="{{$cbxOption[0]}}" type="checkbox"
+                               class="custom-control-input"
                                @if($cbxOption[2])checked="checked"@endif>
                         <label for="{{$cbxOption[0]}}"
                                class="custom-control-label">{{$cbxOption[1]}}</label>
@@ -27,7 +28,8 @@
                     <label for="{{$textOption[0]}}"
                            class="col-sm-2 col-form-label">{{$textOption[1]}}</label>
                     <div class="col-sm-10">
-                        <input id="{{$textOption[0]}}" name="{{$textOption[0]}}" type="text" value="{{$textOption[2]}}" class="form-control">
+                        <input id="{{$textOption[0]}}" name="{{$textOption[0]}}" type="text" value="{{$textOption[2]}}"
+                               class="form-control">
                     </div>
                 </div>
             @endforeach
@@ -35,8 +37,8 @@
             <div class="form-group row">
                 <label for="date" class="col-form-label col-sm-2 col-form-label">Date</label>
                 <div class="col-sm-10">
-                    <input id="date" name="date" type='text' class="form-control datepicker-here" data-position="left top"
-                           data-language='en'
+                    <input id="date" name="date" type='text' class="form-control datepicker-here"
+                           data-position="left top" data-language='en'
                            data-date-format="dd/mm/yyyy" onchange="console.log(datepicker.date)"/>
                 </div>
             </div>
@@ -44,7 +46,7 @@
         </div>
         <textarea name="fileContent" id="editor-md"></textarea>
 
-        <button type="submit" class="btn btn-success float-right mr-3">Save</button>
+        <button type="submit" class="btn btn-outline-primary"><i class="fal fa-save fa-fw"></i> Save</button>
 
     </form>
     <script>
@@ -56,9 +58,9 @@
         var optionsToggler = $("#optionsToggler");
         optionsToggler.on("click", function () {
             if ($("#pandocOptions").hasClass("show")) {
-                optionsToggler.text("Show Pandoc options");
+                optionsToggler.text(optionsToggler.text().replace("Reduce", "Show"));
             } else {
-                optionsToggler.text("Reduce Pandoc options");
+                optionsToggler.text(optionsToggler.text().replace("Show", "Reduce"));
             }
         });
 

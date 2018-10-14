@@ -5,6 +5,8 @@
  */
 
 require('./bootstrap');
+require('air-datepicker');
+require('air-datepicker/dist/js/i18n/datepicker.en');
 
 // window.Vue = require('vue');
 

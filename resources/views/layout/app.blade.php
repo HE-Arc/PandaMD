@@ -24,9 +24,9 @@
     <script src="{{asset('js/all.js')}}"></script>
     <link rel="icon" href="{{asset('favicon.ico')}}" type="image/gif">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css"/>
+    @yield("includes")
     <title>Application</title>
 </head>
 <body>

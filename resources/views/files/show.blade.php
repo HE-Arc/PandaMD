@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>{{$file->title}} <a href="{{route('files.edit', $file)}}" class="btn btn-primary float-right"><i
+    <h1>{{$file->title}} <a href="{{route('files.edit', $file)}}" class="btn btn-outline-primary float-right"><i
                     class="fal fa-edit fa-fw"></i> edit</a></h1>
     <div id="content-mdfile" class="border-top pt-4">
 

@@ -78,15 +78,15 @@ class FileController extends Controller
      */
     public function update(Request $request, File $file)
     {
-        $file->content = $request->get('fileContent');
-        $file->is_title_page = $request->get('isTitlePage') ?? false;
-        $file->is_toc = $request->get('isToc') ?? false;
-        $file->is_toc_own_page = $request->get('isTocOwnPage') ?? false;
-        $file->is_links_as_notes = $request->get('isLinksAsNotes') ?? false;
-        $file->title = $request->get('title')??"Title";
-        $file->subtitle = $request->get('subtitle')??"Subtitle";
-        $file->school = $request->get('school');
-        $file->date = $request->get('date');
+        $file->content = $request->fileContent;
+        $file->is_title_page = $request->isTitlePage ?? false;
+        $file->is_toc = $request->isToc ?? false;
+        $file->is_toc_own_page = $request->isTocOwnPage ?? false;
+        $file->is_links_as_notes = $request->isLinksAsNotes ?? false;
+        $file->title = $request->title??"Title";
+        $file->subtitle = $request->subtitle??"Subtitle";
+        $file->school = $request->school;
+        $file->date = $request->date;
         $file->save();
         return redirect(route('files.show', $file));
     }

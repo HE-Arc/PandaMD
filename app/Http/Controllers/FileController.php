@@ -61,12 +61,9 @@ class FileController extends Controller
     public function edit(File $file)
     {
         $fileDate = date_create($file->date)->format("M d, Y");
-
-        return view('files.edit', [
-            'file' => $file,
-            'cbxOptions' => Helpers::getArrayCbxOptionsForFile($file),
-            'textOptions' => Helpers::getArrayTextOptionsForFile($file),
-            'fileDate' => $fileDate]);
+        $cbxOptions = Helpers::getArrayCbxOptionsForFile($file);
+        $textOptions = Helpers::getArrayTextOptionsForFile($file);
+        return view('files.edit', compact('file', 'cbxOptions', 'textOptions', 'fileDate'));
     }
 
     /**

@@ -33,7 +33,7 @@ class FileController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -44,22 +44,24 @@ class FileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\File  $file
+     * @param  \App\File $file
      * @return \Illuminate\Http\Response
      */
     public function show(File $file)
     {
+        $this->authorize('read', $file);
         return view('files.show', ['file' => $file]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\File  $file
+     * @param  \App\File $file
      * @return \Illuminate\Http\Response
      */
     public function edit(File $file)
     {
+        $this->authorize('edit', $file);
         $fileDate = date_create($file->date)->format("M d, Y");
         $cbxOptions = Helpers::getArrayCbxOptionsForFile($file);
         $textOptions = Helpers::getArrayTextOptionsForFile($file);
@@ -69,8 +71,8 @@ class FileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\File  $file
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\File $file
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, File $file)
@@ -80,8 +82,8 @@ class FileController extends Controller
         $file->is_toc = $request->isToc ?? false;
         $file->is_toc_own_page = $request->isTocOwnPage ?? false;
         $file->is_links_as_notes = $request->isLinksAsNotes ?? false;
-        $file->title = $request->title??"Title";
-        $file->subtitle = $request->subtitle??"Subtitle";
+        $file->title = $request->title ?? "Title";
+        $file->subtitle = $request->subtitle ?? "Subtitle";
         $file->school = $request->school;
         $file->date = $request->date;
         $file->save();
@@ -91,7 +93,7 @@ class FileController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\File  $file
+     * @param  \App\File $file
      * @return \Illuminate\Http\Response
      */
     public function destroy(File $file)

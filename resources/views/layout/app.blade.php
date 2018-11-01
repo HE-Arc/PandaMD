@@ -86,7 +86,22 @@
     </div>
 </nav>
 <div class="container mt-5">
+    @if(Request::get('error')==1)<div class="alert alert-danger alert-dismissible fade" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>You are not allowed to access to this resource</strong>
+    </div>@endif
     @yield('content')
 </div>
+@yield('script')
+<script>
+    $(document).ready(function(){
+        $(".alert").addClass('show');
+    });
+    setTimeout(function(){
+        $(".alert").alert("close");
+    },5000);
+</script>
 </body>
 </html>

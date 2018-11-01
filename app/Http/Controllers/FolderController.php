@@ -52,9 +52,8 @@ class FolderController extends Controller
      */
     public function show(Folder $folder)
     {
-        if (Auth::user()->id != $folder->user_id) {
-            return redirect(route('home'));
-        }
+        $this->authorize('manage',$folder);
+
         $folders = $folder->folders;
         $files = $folder->files;
         return view('folders.show', compact('folders', 'files'));

@@ -26,7 +26,7 @@ class CreateFilesTable extends Migration
             $table->text('subtitle');
             $table->text('school')->nullable();
             $table->date('date');
-            $table->integer('security')->default(0); //0 private 1 readable -1 editable
+            $table->enum('security',['private','readable','editable'])->default('private');
             $table->timestamps();
         });
     }

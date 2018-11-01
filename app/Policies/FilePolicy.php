@@ -23,28 +23,13 @@ class FilePolicy
     public function read(?User $user, File $file)
     {
 
-        $security = $file->security;
-
-        if ($security == 1 || $security == -1)
-            return true;
-        elseif ($security == 0 && $user != null) {
-            return $user->id === $file->folder->user_id;
-        } else {
-            return false;
-        }
+       return $file->isReadable($user);
 
     }
 
     public function edit(?User $user, File $file)
     {
-        $security = $file->security;
 
-        if ($security == -1) {
-            return true;
-        } elseif (($security != -1) && $user != null) {
-            return $user->id === $file->folder->user_id;
-        } else {
-            return false;
-        }
+        return $file->isEditable($user);
     }
 }

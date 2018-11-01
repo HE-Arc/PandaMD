@@ -16,16 +16,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Blade::if('editable', function (File $file) {
-            $security = $file->security;
-            $user = auth()->user();
+            return $file->isEditable(auth()->user());
 
-            if ($security == -1) {
-                return true;
-            } elseif (($security != -1) && $user != null) {
-                return $user->id === $file->folder->user_id;
-            } else {
-                return false;
-            }
         });
     }
 

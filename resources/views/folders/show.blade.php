@@ -3,19 +3,17 @@
 @section('content')
 
     <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action active">
-            {{$folder->name}}
+        <a href="#" class="list-group-item list-group-item-action active bg-dark">
+            <h1>{{$folder->name}}</h1>
         </a>
-        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-        <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-    </div>
-    <h1></h1>
     @foreach($folders as $folder)
-        <a href="{{route('folders.show',$folder->id)}}"><h4>{{$folder->name}}</h4></a><br>
+        <a href="{{route('folders.show',$folder->id)}}" class="list-group-item list-group-item-action">
+            <h3> <i class="fal fa-folder fa-fw"></i> {{$folder->name}}</h3></a>
     @endforeach
+
     @foreach($files as $file)
-        <a href="{{route('files.show', $file->id)}}">{{$file->title}}</a><br>
+        <a href="{{route('files.show', $file->id)}}" class="list-group-item list-group-item-action" style="font-family: 'Titillium Web', sans-serif;font-size: 20px;">
+        <i class="fal fa-file fa-fw"></i> {{$file->title}}</a><br>
     @endforeach
+    </div>
 @endsection

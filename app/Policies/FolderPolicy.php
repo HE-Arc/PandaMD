@@ -23,6 +23,6 @@ class FolderPolicy
     public function manage(User $user, Folder $folder)
     {
 
-        return $user->id === $folder->user_id;
+        return $folder->isUserFolder($user);
     }
 }

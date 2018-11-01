@@ -27,4 +27,8 @@ class Folder extends Model
     public function folders() {
         return $this->hasMany(Folder::class);
     }
+    
+    public function isUserFolder($user){
+        return $user->id === $this->user_id;
+    }
 }

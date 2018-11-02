@@ -44,7 +44,6 @@
         <textarea name="fileContent" id="editor-md"></textarea>
 
         <button type="submit" class="btn btn-outline-primary"><i class="fal fa-save fa-fw"></i> Save</button>
-
     </form>
     <script>
         initSimpleMde(@json($file->content));

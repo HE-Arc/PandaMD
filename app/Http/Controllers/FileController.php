@@ -105,4 +105,9 @@ class FileController extends Controller
         //
     }
 
+    public function generate(Request $request, File $file)
+    {
+        $file->exportMDFile();
+    }
+
 }

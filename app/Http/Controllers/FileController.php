@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\Http\Requests\StoreFile;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Console\Helper\Helper;
 
 class FileController extends Controller
@@ -75,8 +78,9 @@ class FileController extends Controller
      * @param  \App\File $file
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, File $file)
+    public function update(StoreFile $request, File $file)
     {
+        $validator = $request->validated();
         $file->content = $request->fileContent;
         $file->is_title_page = $request->isTitlePage ?? false;
         $file->is_toc = $request->isToc ?? false;

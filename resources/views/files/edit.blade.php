@@ -1,7 +1,4 @@
 @extends('layout.app')
-@section("includes")
-
-@endsection
 @section('content')
     <form method="POST" action="{{route('files.update', $file)}}">
         {{ csrf_field() }}
@@ -15,7 +12,7 @@
             <div class="form-group row pl-3">
                 @foreach($cbxOptions as $cbxOption)
                     <div class="form-check custom-checkbox col-6 col-lg-3">
-                        <input id="{{$cbxOption[0]}}" name="{{$cbxOption[0]}}" type="checkbox"
+                        <input id="{{$cbxOption[0]}}" name="{{$cbxOption[0]}}" value="true" type="checkbox"
                                class="custom-control-input"
                                @if($cbxOption[2])checked="checked"@endif>
                         <label for="{{$cbxOption[0]}}"
@@ -28,7 +25,7 @@
                     <label for="{{$textOption[0]}}"
                            class="col-sm-2 col-form-label">{{$textOption[1]}}</label>
                     <div class="col-sm-10">
-                        <input id="{{$textOption[0]}}" name="{{$textOption[0]}}" type="text" value="{{$textOption[2]}}"
+                        <input id="{{$textOption[0]}}" name="{{$textOption[0]}}" type="text" value="{{$textOption[2]}}" placeholder="{{$textOption[1]}}" {{$textOption[3]}}
                                class="form-control">
                     </div>
                 </div>
@@ -39,7 +36,7 @@
                 <div class="col-sm-10">
                     <input id="date" name="date" type='text' class="form-control datepicker-here"
                            data-position="left top" data-language='en'
-                           data-date-format="dd/mm/yyyy" onchange="console.log(datepicker.date)"/>
+                           data-date-format="dd/mm/yyyy" onkeydown="return false"/>
                 </div>
             </div>
 
@@ -52,7 +49,9 @@
     <script>
         initSimpleMde(@json($file->content));
 
-        var datepicker = $('#date').datepicker().data('datepicker');
+        var datepicker = $('#date').datepicker({
+            'autoClose': true
+        }).data('datepicker');
         datepicker.selectDate(new Date("{{$fileDate}}"));
 
         var optionsToggler = $("#optionsToggler");

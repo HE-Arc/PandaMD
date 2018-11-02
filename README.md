@@ -12,4 +12,5 @@ tar -xvzf install-tl-unx.tar.gz
 cd install-tl-20181101
 sudo ./install-tl
 export 'PATH=$PATH:/usr/local/texlive/2018/bin/x86_64-linux/' >> .bash_profile
+rm -rf install-tl-*
 ```

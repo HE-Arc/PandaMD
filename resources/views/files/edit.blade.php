@@ -1,4 +1,5 @@
 @extends('layout.app')
+
 @section('content')
     <form method="POST" action="{{route('files.update', $file)}}">
         {{ csrf_field() }}
@@ -42,8 +43,7 @@
 
         </div>
         <textarea name="fileContent" id="editor-md"></textarea>
-
-        <button type="submit" class="btn btn-outline-primary"><i class="fal fa-save fa-fw"></i> Save</button>
+        {{--Button submit in toolbar from js--}}
     </form>
     <script>
         initSimpleMde(@json($file->content));
@@ -72,5 +72,9 @@
                 elem.parentElement.classList.remove("cbxdisabled");
             }
         };
+
+
+
+
     </script>
 @endsection

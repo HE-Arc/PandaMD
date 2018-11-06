@@ -19,5 +19,5 @@ rm -rf install-tl-*
 ```sh
 mkdir -p ~/.pandoc/templates
 cd ~/.pandoc/templates
-https://github.com/steven-jeanneret/dotFiles/blob/master/pandoc/eisvogel.latex
+wget https://raw.githubusercontent.com/steven-jeanneret/dotFiles/master/pandoc/eisvogel.latex
 ```

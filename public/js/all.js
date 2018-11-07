@@ -13,15 +13,18 @@ function initSimpleMde(fileContent) {
     });
 
     //Add button submit (save) in toolbar
-    //var btn = '<button type="submit" class="btn btn-outline-primary"><i class="fal fa-save fa-fw"></i> Save</button>';
+    //Button md lg
     var btn = document.createElement("button");
     btn.type = "submit";
-    btn.classList.add("btn", "btn-outline-primary", "float-right");
+    btn.classList.add("btn", "btn-outline-primary", "float-md-right");
     btn.style.marginTop = "-3.5px";
     var icone = document.createElement("i");
     icone.classList.add("fal", "fa-save", "fa-fw");
     btn.appendChild(icone);
-    btn.appendChild(document.createTextNode(' Save'));
+    var spanSaveText = document.createElement("span");
+    spanSaveText.classList.add("d-none", "d-md-inline");
+    spanSaveText.appendChild(document.createTextNode(' Save'));
+    btn.appendChild(spanSaveText);
     document.getElementsByClassName('editor-toolbar')[0].appendChild(btn);
 
     /* Sticky the toolbar of simplemde

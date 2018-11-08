@@ -110,8 +110,8 @@ class FileController extends Controller
     public function generate(Request $request, File $file)
     {
         $token = $file->exportMDFile();
-        ProcessPDFDocument::dispatchNow($token);
-        $headers = array(
+        ProcessPDFDocument::dispatch($token)->onQueue("");
+        $headers = array( //Source : https://stackoverflow.com/questions/20415444/download-files-in-laravel-using-responsedownload
             'Content-Type: application/pdf',
         );
         return \Illuminate\Support\Facades\Response::download("pdf_files/$token.pdf", "$file->title.pdf", $headers);

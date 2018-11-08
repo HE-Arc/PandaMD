@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\File;
 use App\Http\Requests\StoreFile;
+use App\Jobs\ProcessPDFDocument;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Console\Helper\Helper;
@@ -107,7 +109,12 @@ class FileController extends Controller
 
     public function generate(Request $request, File $file)
     {
-        $file->exportMDFile();
+        $token = $file->exportMDFile();
+        ProcessPDFDocument::dispatchNow($token);
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+        return \Illuminate\Support\Facades\Response::download("pdf_files/$token.pdf", "$file->title.pdf", $headers);
     }
 
 }

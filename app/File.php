@@ -43,7 +43,7 @@ class File extends Model
     public function exportMDFile()
     {
         $date = date('YmdHis');
-        $token = "{$this->id}_{$this->folder->id}_{$date}";
+        $token = "{$this->id}{$this->folder->id}{$date}"; //Create a token (unique while 2 same file aren't build at same ms)
         $file_name = "md_files/{$token}.md";
         $file_content = <<<"EOD"
 ---
@@ -63,6 +63,7 @@ $this->content
 EOD;
 
         file_put_contents($file_name, $file_content);
+        return $token;
     }
 
 

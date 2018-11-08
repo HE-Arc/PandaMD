@@ -12,4 +12,5 @@ npm-debug.log
 yarn-error.log
 .env
 .phpunit.result.cache
-md_files/*
+md_files/
+pdf_files/

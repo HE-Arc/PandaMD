@@ -56,7 +56,7 @@ class FolderController extends Controller
 
         $folders = $folder->folders;
         $files = $folder->files;
-        return view('folders.show', compact('folders', 'files'));
+        return view('folders.show', compact('folder','folders', 'files'));
     }
 
     /**

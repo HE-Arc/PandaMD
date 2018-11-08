@@ -9,6 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <script src="{{asset('js/app.js')}}"></script>
     <script src="{{asset('js/all.js')}}"></script>
@@ -22,7 +23,7 @@
     <title>Application</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-family: 'Comfortaa'">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-family:'Comfortaa'">
     <a class="navbar-brand" href="{{route('home')}}"><img src="{{asset('favicon.ico')}}" alt=""> PandaMD</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +34,7 @@
             <li class="nav-item {{{ (Request::is('/') ? 'active' : '') }}}">
                 <a class="nav-link" href="{{route('home')}}"><i class="fal fa-home fa-fw"></i> Home</a>
             </li>
+            @auth
             <li class="nav-item">
                 <a class="nav-link {{{ (Request::is('folders/*') ? 'active' : '') }}}" href="{{route('folders.index')}}"><i
                             class="fal fa-folder fa-fw"></i> Folder</a>
@@ -40,6 +42,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fal fa-pencil fa-fw"></i> Create</a>
             </li>
+            @endauth
         </ul>
         <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->

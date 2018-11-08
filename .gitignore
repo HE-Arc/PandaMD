@@ -13,4 +13,6 @@ yarn-error.log
 .env
 .phpunit.result.cache
 md_files/*
+!md_files/.gitkeep
 pdf_files/*
+!pdf_files/.gitkeep

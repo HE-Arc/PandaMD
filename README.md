@@ -11,7 +11,7 @@ wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 tar -xvzf install-tl-unx.tar.gz 
 cd install-tl-20181101
 sudo ./install-tl
-export 'PATH=$PATH:/usr/local/texlive/2018/bin/x86_64-linux/' >> .bash_profile
+sudo ln -s /usr/local/texlive/2018/bin/x86_64-linux/pdflatex /bin/pdflatex #Add pdflatex to program path
 rm -rf install-tl-*
 ```
 

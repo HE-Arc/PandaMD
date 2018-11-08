@@ -14,3 +14,21 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+
+.sticky {
+  position: sticky !important;
+  z-index: 2;
+  top: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.editor-toolbar {
+  background-color: #f8fafeff !important;
+  width: 100%;
+  opacity: 1 !important;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 60px;
+}

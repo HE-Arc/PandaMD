@@ -16,9 +16,9 @@ class Helpers {
 
     public static function getArrayTextOptionsForFile(File $file) {
         return [
-            ['title', 'Title', $file->title],
-            ['subtitle', 'Subtitle', $file->subtitle],
-            ['school', 'School', $file->school],
+            ['title', 'Title', $file->title, ''],
+            ['subtitle', 'Subtitle', $file->subtitle, ''],
+            ['school', 'School', $file->school, ''],
         ];
     }
 }

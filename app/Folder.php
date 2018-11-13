@@ -7,6 +7,10 @@ use App\File;
 
 class Folder extends Model
 {
+    protected $fillable = [
+        'name','user_id','folder_id',
+    ];
+
     public static function createHomeFolder(int $id) {
         $home_folder = new Folder();
         $home_folder->name = "home";
@@ -25,7 +29,7 @@ class Folder extends Model
     }
 
     public function folders() {
-        return $this->hasMany(Folder::class);
+        return $this->hasMany(Folder::class)->orderBy('name');
     }
     
     public function isUserFolder($user){

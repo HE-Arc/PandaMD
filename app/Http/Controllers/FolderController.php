@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Folder;
+use App\Http\Requests\FolderRequest;
+use App\Http\Requests\FolderNameChangeRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\FolderRepository;
 
 class FolderController extends Controller
 {
-    public function __construct()
+    public function __construct(FolderRepository $repository)
     {
         $this->middleware('auth');
+        $this->repositroy=$repository;
     }
 
     /**
@@ -30,7 +34,7 @@ class FolderController extends Controller
      */
     public function create()
     {
-        //
+    //
     }
 
     /**
@@ -39,9 +43,14 @@ class FolderController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FolderRequest $request)
     {
-        //
+        $this->repositroy->store($request);
+        $name = $request->input('name');
+        return response()->json([
+            'state' => true,
+            'name' => $name,
+        ]);
     }
 
     /**
@@ -77,9 +86,16 @@ class FolderController extends Controller
      * @param  \App\Folder $folder
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Folder $folder)
+    public function update(FolderNameChangeRequest $request, Folder $folder)
     {
-        //
+        $this->authorize('manage',$folder);
+
+        $this->repositroy->updateName($folder,$request);
+        $newName = $request->input('newName');
+        return response()->json([
+            'state' => true,
+            'newName' => $newName,
+        ]);
     }
 
     /**

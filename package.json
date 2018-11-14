@@ -22,9 +22,11 @@
     },
     "dependencies": {
         "air-datepicker": "^2.2.3",
+        "bootstrap-select": "^1.13.3",
         "katex": "^0.10.0-rc.1",
         "markdown-it": "^8.4.2",
         "markdown-it-katex": "^2.0.3",
+        "npm": "^6.4.1",
         "simplemde": "^1.11.2"
     }
 }

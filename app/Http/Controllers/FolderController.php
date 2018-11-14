@@ -14,6 +14,7 @@ class FolderController extends Controller
     public function __construct(FolderRepository $repository)
     {
         $this->middleware('auth');
+        $this->middleware('ajax')->only('destroy','update','store');
         $this->repositroy = $repository;
     }
 
@@ -45,10 +46,13 @@ class FolderController extends Controller
      */
     public function store(FolderRequest $request)
     {
+
         $currentFolder = Folder::find($request->input('folderId'));
+        $this->authorize('manage', $currentFolder);
+
         $name = $request->input('name');
         if ($currentFolder->canCreatedFolder($name)) {
-            $this->repositroy->store($request);
+            $this->repositroy->store(Auth::user(),$request);
             return response()->json([
                 'state' => true,
                 'name' => $name,
@@ -121,6 +125,8 @@ class FolderController extends Controller
      */
     public function destroy(Folder $folder)
     {
-        //
+        $this->authorize('manage', $folder);
+        $folder->delete();
+        return response()->json();
     }
 }

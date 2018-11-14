@@ -7,6 +7,7 @@
 require('./bootstrap');
 require('air-datepicker');
 require('air-datepicker/dist/js/i18n/datepicker.en');
+require('bootstrap-select/dist/js/bootstrap-select');
 window.swal = require('sweetalert2');
 
 // window.Vue = require('vue');

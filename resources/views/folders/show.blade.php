@@ -28,7 +28,10 @@
                                     class="btn  btn-secondary">
                                 <i class="fal fa-pen"></i> Rename
                             </button>
-                            <button class="btn  btn-danger">
+                            <button id="btnRenameDelete{{$childFolder->id}}"
+                                    value="{{$childFolder->name}}"
+                                    name="{{$childFolder->id}}"
+                                    class="btn  btn-danger">
                                 <i class="far fa-folder-times"></i> Delete
                             </button>
                         </span>
@@ -40,11 +43,18 @@
                        style="font-family: 'Titillium Web', sans-serif;font-size: 20px;">
                         <i class="fal fa-file fa-fw"></i>{{$file->title}}
                         <span class="float-right">
+                          <select class="selectpicker">
+                              <option data-icon="far fa-lock" data-subtext="Only for you" value="private"> Private</option>
+                              <option data-icon="fal fa-book-open" data-subtext="Everyone can read" value="readable"> Readable</option>
+                              <option data-icon="fal fa-file-edit" data-subtext="Everyone can edit" value="editable"> Editable</option>
+                            </select>
                             <button id="btnRenameFile{{$file->id}}" name="{{$file->id}}" value="{{$file->tile}}"
                                     class="btn  btn-secondary">
                                 <i class="fal fa-pen"></i> Rename
                             </button>
-                            <button class="btn  btn-danger">
+                            <button id="btnDeleteFile{{$file->id}}"
+                                    name="{{$file->id}}"
+                                    value="{{$file->tile}}" class="btn  btn-danger">
                                 <i class="far fa-folder-times"></i> Delete
                             </button>
                         </span></a>
@@ -56,146 +66,14 @@
 
 @endsection
 @section('script')
+    @include('folders.partialScripts.newFolder')
+    @include('folders.partialScripts.renameFolder')
+    @include('folders.partialScripts.delete')
     <script>
-
-        var OnReady = (function () {
-            var onReadyNewFolder = function () {
-                $('#btnNewFolder').click(function (event) {
-                    event.preventDefault()
-                    swal({
-                        title: 'Rename your new Folder',
-                        input: 'text',
-                        inputValue: 'Untilted',
-                        inputAttributes: {
-                            autocapitalize: 'off'
-                        },
-                        showCancelButton: true,
-                        confirmButtonText: 'Create',
-                        showLoaderOnConfirm: true,
-                        preConfirm: (folderName) => {
-                            return fetch('{{route('folders.store')}}', {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "Accept": "application/json",
-                                    "X-Requested-With": "XMLHttpRequest",
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-
-                                body: JSON.stringify({name: folderName, folderId: "{{$folder->id}}"})
-                            }).then(response => {
-                                if (!response.ok) {
-                                    throw new Error(response.statusText)
-                                }
-                                let rep = response.json();
-                                rep.then(result =>{
-                                    if(result.state==false){
-                                        swal.showValidationMessage(
-                                            'Folder already exists'
-                                        )
-                                    }
-                                })
-
-                                return rep;
-
-                            })
-                                .catch(error => {
-                                    swal.showValidationMessage(
-                                        `Request failed: ${error}`
-                                    )
-                                })
-                        },
-                        allowOutsideClick: () => !swal.isLoading()
-                    }).then((result) => {
-                        if (result.value.state) {
-                            swal(
-                                'Folder Created',
-                                `${result.value.name}`,
-                                'success'
-                            ).then(function () {
-                                location.reload();
-                            });
-                        } else {
-                            throw new Error(`Name already exist: ${result.value.name}`);
-                        }
-
-
-                    })
-                })
-            }
-            var onReadyRename = function () {
-                $("button[id^='btnRenameFolder']").click(function (event) {
-                    let value = $(this).val();
-                    let id = $(this).attr("name");
-                    event.preventDefault();
-                    swal({
-                        title: 'Rename Folder: "' + value + '"',
-                        input: 'text',
-                        inputValue: value,
-                        inputAttributes: {
-                            autocapitalize: 'off'
-                        },
-                        showCancelButton: true,
-                        confirmButtonText: 'Rename',
-                        showLoaderOnConfirm: true,
-                        preConfirm: (folderName) => {
-                            return fetch('{{url('/folders')}}' + '/' + id, {
-                                method: "PUT",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "Accept": "application/json",
-                                    "X-Requested-With": "XMLHttpRequest",
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-
-                                body: JSON.stringify({newName: folderName})
-                            }).then(response => {
-                                if (!response.ok) {
-                                    throw new Error(response.statusText)
-                                }
-                                let rep = response.json();
-                                rep.then(result =>{
-                                    if(result.state==false){
-                                        swal.showValidationMessage(
-                                            'Name already exists'
-                                        )
-                                    }
-                                })
-
-                                return rep;
-                            })
-                                .catch(error => {
-                                    swal.showValidationMessage(
-                                        `Request failed: ${error}`
-                                    )
-                                })
-                        },
-                        allowOutsideClick: () => !swal.isLoading()
-                    }).then((result) => {
-                        swal(
-                            'Folder Rename',
-                            `${result.value.newName}`,
-                            'success'
-                        ).then(function () {
-                            location.reload();
-                        });
-
-                    })
-
-                })
-            }
-
-            return {
-                onReadyNewFolder: onReadyNewFolder,
-                onReadyRename: onReadyRename
-            }
-
-        })()
-
-
         $(document).ready(function () {
-            OnReady.onReadyNewFolder();
-            OnReady.onReadyRename();
+            onReadyNewFolder();
+            onReadyRename();
+            onReadyDelete();
 
         })
     </script>

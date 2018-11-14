@@ -15,7 +15,7 @@ Route::get("/", "HomeController@index")->name('home');
 
 Auth::routes();
 
-Route::resource("folders", "FolderController", ["only"=>["show", "index","store","update"]]);
+Route::resource("folders", "FolderController", ["only"=>["show", "index","store","update","destroy"]]);
 
 Route::get('files/{file}/generate', 'FileController@generate')->name('generate');
 Route::resource("files", "FileController", ["only" => ["show", "edit", "update"]]);

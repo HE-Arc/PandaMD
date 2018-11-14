@@ -4,19 +4,18 @@ namespace App\Repositories;
 
 use App\Folder;
 use App\Http\Requests\FolderRequest;
+use App\Http\Requests\FolderNameChangeRequest;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use phpDocumentor\Reflection\Types\Boolean;
+
 
 class FolderRepository
 {
 
-    public function store(FolderRequest $request)
+    public function store(User $user,FolderRequest $request)
     {
         $folder_id = $request->input('folderId');
         $name=$request->input('name');
-
-        $user=Auth::user();
 
         Folder::create([
             'name' => $name,
@@ -26,7 +25,7 @@ class FolderRepository
 
     }
 
-    public function updateName(Folder $folder,FolderRequest $request)
+    public function updateName(Folder $folder,FolderNameChangeRequest $request)
     {
         $newName=$request->input('newName');
         $folder->name=$newName;

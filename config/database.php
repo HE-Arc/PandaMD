@@ -63,7 +63,7 @@ return [
             'password' => env('PASSWORD', env('DB_PASSWORD', '')),
             'charset' => 'utf8',
             'prefix' => '',
-            'schema' => 'public',
+            'schema' => env('DB_SCHEMA','pandamd'),
             'sslmode' => 'prefer',
         ],
 

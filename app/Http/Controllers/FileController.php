@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\File;
 use App\Http\Requests\StoreFile;
 use App\Jobs\ProcessPDFDocument;
+use App\wait_process;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers;
@@ -110,11 +111,23 @@ class FileController extends Controller
     public function generate(Request $request, File $file)
     {
         $token = $file->exportMDFile();
-        ProcessPDFDocument::dispatch($token)->onQueue("");
-        $headers = array( //Source : https://stackoverflow.com/questions/20415444/download-files-in-laravel-using-responsedownload
-            'Content-Type: application/pdf',
-        );
-        return \Illuminate\Support\Facades\Response::download("pdf_files/$token.pdf", "$file->title.pdf", $headers);
+        $this->dispatch((new ProcessPDFDocument($token, $file->id)));
+        return $token;
+    }
+
+    public function download(Request $request, String $token)
+    {
+        $path = "pdf_files/$token.pdf";
+        if (file_exists($path)) {
+            return response()->download("pdf_files/$token.pdf", "$token.pdf")->deleteFileAfterSend();
+        }
+        $previousUrl = app('url')->previous();
+        return redirect()->to("$previousUrl?error=2");
+    }
+
+    public function isReady(Request $request, String $token) {
+        $waitProcess = wait_process::where("token", $token)->first();
+        return $waitProcess->status;
     }
 
 }

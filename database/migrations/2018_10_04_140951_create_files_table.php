@@ -16,7 +16,9 @@ class CreateFilesTable extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('folder_id');
-            $table->foreign('folder_id')->references('id')->on('folders');
+            $table->foreign('folder_id')->references('id')->on('folders')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->longText('content');
             $table->boolean('is_title_page');
             $table->boolean('is_toc');

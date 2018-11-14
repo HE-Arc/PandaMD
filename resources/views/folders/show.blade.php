@@ -1,7 +1,4 @@
 @extends('layout.app')
-@section('inculdes')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
 @section('content')
 
     <div class="row mb-3 ">
@@ -10,7 +7,8 @@
             </button>
         </div>
         <div class="col-1">
-            <button id="btnRenameFolder{{$folder->id}}" name="{{$folder->id}}" value="{{$folder->name}}" type="button" class="btn btn-secondary"><i
+            <button id="btnRenameFolder{{$folder->id}}" name="{{$folder->id}}" value="{{$folder->name}}" type="button"
+                    class="btn btn-secondary"><i
                         class="fal fa-pen"></i> Rename
             </button>
         </div>
@@ -25,7 +23,8 @@
                     <a href="{{route('folders.show',$childFolder->id)}}" class=" list-group-item clearfix ">
                         <h3 style="display: inline;"><i class="fal fa-folder fa-fw"></i> {{$childFolder->name}}</h3>
                         <span class="float-right">
-                            <button id="btnRenameFolder{{$childFolder->id}}" name="{{$childFolder->id}}" value="{{$childFolder->name}}"
+                            <button id="btnRenameFolder{{$childFolder->id}}" name="{{$childFolder->id}}"
+                                    value="{{$childFolder->name}}"
                                     class="btn  btn-secondary">
                                 <i class="fal fa-pen"></i> Rename
                             </button>
@@ -66,7 +65,7 @@
                     swal({
                         title: 'Rename your new Folder',
                         input: 'text',
-                        inputValue:'Untilted' ,
+                        inputValue: 'Untilted',
                         inputAttributes: {
                             autocapitalize: 'off'
                         },
@@ -88,7 +87,17 @@
                                 if (!response.ok) {
                                     throw new Error(response.statusText)
                                 }
-                                return response.json();
+                                let rep = response.json();
+                                rep.then(result =>{
+                                    if(result.state==false){
+                                        swal.showValidationMessage(
+                                            'Folder already exists'
+                                        )
+                                    }
+                                })
+
+                                return rep;
+
                             })
                                 .catch(error => {
                                     swal.showValidationMessage(
@@ -98,24 +107,29 @@
                         },
                         allowOutsideClick: () => !swal.isLoading()
                     }).then((result) => {
-                        swal(
-                            'Folder Created',
-                            `${result.value.name}`,
-                            'success'
-                        ).then(function () {
-                            location.reload();
-                        });
+                        if (result.value.state) {
+                            swal(
+                                'Folder Created',
+                                `${result.value.name}`,
+                                'success'
+                            ).then(function () {
+                                location.reload();
+                            });
+                        } else {
+                            throw new Error(`Name already exist: ${result.value.name}`);
+                        }
+
 
                     })
                 })
             }
             var onReadyRename = function () {
                 $("button[id^='btnRenameFolder']").click(function (event) {
-                    let value=$(this).val();
-                    let id=$(this).attr("name");
+                    let value = $(this).val();
+                    let id = $(this).attr("name");
                     event.preventDefault();
                     swal({
-                        title: 'Rename Folder: "'+value+'"',
+                        title: 'Rename Folder: "' + value + '"',
                         input: 'text',
                         inputValue: value,
                         inputAttributes: {
@@ -125,7 +139,7 @@
                         confirmButtonText: 'Rename',
                         showLoaderOnConfirm: true,
                         preConfirm: (folderName) => {
-                            return fetch('{{url('/folders')}}'+'/'+id, {
+                            return fetch('{{url('/folders')}}' + '/' + id, {
                                 method: "PUT",
                                 headers: {
                                     "Content-Type": "application/json",
@@ -139,7 +153,16 @@
                                 if (!response.ok) {
                                     throw new Error(response.statusText)
                                 }
-                                return response.json();
+                                let rep = response.json();
+                                rep.then(result =>{
+                                    if(result.state==false){
+                                        swal.showValidationMessage(
+                                            'Name already exists'
+                                        )
+                                    }
+                                })
+
+                                return rep;
                             })
                                 .catch(error => {
                                     swal.showValidationMessage(

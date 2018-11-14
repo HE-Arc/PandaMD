@@ -14,7 +14,7 @@ class FolderController extends Controller
     public function __construct(FolderRepository $repository)
     {
         $this->middleware('auth');
-        $this->repositroy=$repository;
+        $this->repositroy = $repository;
     }
 
     /**
@@ -34,7 +34,7 @@ class FolderController extends Controller
      */
     public function create()
     {
-    //
+        //
     }
 
     /**
@@ -45,12 +45,20 @@ class FolderController extends Controller
      */
     public function store(FolderRequest $request)
     {
-        $this->repositroy->store($request);
+        $currentFolder = Folder::find($request->input('folderId'));
         $name = $request->input('name');
-        return response()->json([
-            'state' => true,
-            'name' => $name,
-        ]);
+        if ($currentFolder->canCreatedFolder($name)) {
+            $this->repositroy->store($request);
+            return response()->json([
+                'state' => true,
+                'name' => $name,
+            ]);
+        } else {
+            return response()->json([
+                'state' => false,
+            ]);
+        }
+
     }
 
     /**
@@ -61,11 +69,11 @@ class FolderController extends Controller
      */
     public function show(Folder $folder)
     {
-        $this->authorize('manage',$folder);
+        $this->authorize('manage', $folder);
 
         $folders = $folder->folders;
         $files = $folder->files;
-        return view('folders.show', compact('folder','folders', 'files'));
+        return view('folders.show', compact('folder', 'folders', 'files'));
     }
 
     /**
@@ -88,14 +96,21 @@ class FolderController extends Controller
      */
     public function update(FolderNameChangeRequest $request, Folder $folder)
     {
-        $this->authorize('manage',$folder);
+        $this->authorize('manage', $folder);
 
-        $this->repositroy->updateName($folder,$request);
+        $currentFolder = Folder::find($folder->folder_id);
         $newName = $request->input('newName');
-        return response()->json([
-            'state' => true,
-            'newName' => $newName,
-        ]);
+        if ($currentFolder->canCreatedFolder($newName)) {
+            $this->repositroy->updateName($folder, $request);
+            return response()->json([
+                'state' => true,
+                'newName' => $newName,
+            ]);
+        } else {
+            return response()->json([
+                'state' => false,
+            ]);
+        }
     }
 
     /**

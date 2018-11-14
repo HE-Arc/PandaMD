@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-POYwD7xcktv3gUeZO5s/9nUbRJG/WOmV6jfEGikMJu77LGYO8Rfs2X7URG822aum" crossorigin="anonymous">
     @yield("includes")
-    <title>Application</title>
+    <title>PandaMD</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-family: 'Comfortaa'">
@@ -34,7 +34,8 @@
                 <a class="nav-link" href="{{route('home')}}"><i class="fal fa-home fa-fw"></i> Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{{ (Request::is('folders/*') ? 'active' : '') }}}" href="{{route('folders.index')}}"><i
+                <a class="nav-link {{{ (Request::is('folders/*') ? 'active' : '') }}}"
+                   href="{{route('folders.index')}}"><i
                             class="fal fa-folder fa-fw"></i> Folder</a>
             </li>
             <li class="nav-item">
@@ -45,11 +46,13 @@
             <!-- Authentication Links -->
             @guest
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}"><i class="fal fa-sign-in fa-fw"></i> {{ __('Login') }}</a>
+                    <a class="nav-link" href="{{ route('login') }}"><i
+                                class="fal fa-sign-in fa-fw"></i> {{ __('Login') }}</a>
                 </li>
                 <li class="nav-item">
                     @if (Route::has('register'))
-                        <a class="nav-link" href="{{ route('register') }}"><i class="fal fa-user-plus fa-fw"></i> {{ __('Register') }}</a>
+                        <a class="nav-link" href="{{ route('register') }}"><i
+                                    class="fal fa-user-plus fa-fw"></i> {{ __('Register') }}</a>
                     @endif
                 </li>
             @else
@@ -76,22 +79,50 @@
     </div>
 </nav>
 <div class="container mt-5">
-    @if(Request::get('error')==1)<div class="alert alert-danger alert-dismissible fade" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>You are not allowed to access to this resource</strong>
-    </div>@endif
+    <div id="divAlert"></div>
     @yield('content')
+
 </div>
 @yield('script')
 <script>
-    $(document).ready(function(){
-        $(".alert").addClass('show');
-    });
-    setTimeout(function(){
-        $(".alert").alert("close");
-    },5000);
+    function createAlert(alertType, alertText, linkHref = "", linkText = "") {
+        $(".alert").alert('close');
+        if (typeof alertTimeout !== 'undefined') {
+            clearTimeout(alertTimeout);
+        }
+        let divAlert = document.getElementById("divAlert");
+        let alert = document.createElement("div");
+        alert.classList.add("alert", alertType, "alert-dismissible", "fade");
+        let btn = document.createElement("button");
+        btn.classList.add("close");
+        btn.setAttribute("data-dismiss", "alert");
+        btn.setAttribute("aria-label", "Close");
+        let cross = document.createElement("span");
+        cross.setAttribute("aria-hidden", "true");
+        cross.appendChild(document.createTextNode("x"));
+        btn.appendChild(cross);
+        alert.appendChild(document.createTextNode(alertText));
+        let link = document.createElement("a");
+        link.setAttribute("href", linkHref);
+        link.appendChild(document.createTextNode(linkText));
+        link.classList.add("alert-link");
+        link.setAttribute("onClick", "$('.alert').alert('close');");
+        alert.appendChild(link);
+        alert.appendChild(btn);
+        divAlert.appendChild(alert);
+        alertTimeout = setTimeout(function () {
+            $(".alert").alert('close');
+        }, 5000);
+        $(document).ready(function () {
+            $(".alert").addClass('show');
+        });
+    }
+
+    @if(Request::get('error')==1)
+    createAlert("alert-danger", "You are not allowed to acceess to this ressource");
+    @elseif(Request::get('error')==2)
+    createAlert("alert-danger", "File is missing");
+    @endif
 </script>
 </body>
 </html>

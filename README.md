@@ -17,7 +17,13 @@ rm -rf install-tl-*
 
 ### Template for pandoc
 ```sh
-mkdir -p ~/.pandoc/templates
-cd ~/.pandoc/templates
-wget https://raw.githubusercontent.com/steven-jeanneret/dotFiles/master/pandoc/eisvogel.latex
+sudo mkdir -p /usr/share/pandoc/data/templates/
+cd /usr/share/pandoc/data/templates
+sudo wget https://raw.githubusercontent.com/steven-jeanneret/dotFiles/master/pandoc/eisvogel.latex
+```
+
+# Queue manager
+## Run on local
+```sh
+php artisan queue:work --tries=1
 ```

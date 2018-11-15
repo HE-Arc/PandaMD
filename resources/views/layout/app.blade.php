@@ -109,7 +109,9 @@
         link.setAttribute("href", linkHref);
         link.appendChild(document.createTextNode(linkText));
         link.classList.add("alert-link");
-        link.setAttribute("onClick", "$('.alert').alert('close');");
+        link.addEventListener("click", function(event) {
+            $('.alert').alert('close');
+        })
         alert.appendChild(link);
         alert.appendChild(btn);
         divAlert.appendChild(alert);

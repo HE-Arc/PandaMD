@@ -4,6 +4,7 @@
         $("button[id^='btnRenameFolder']").click(function (event) {
             let value = $(this).val();
             let id = $(this).attr("name");
+            let that = $(event.currentTarget);
             event.preventDefault();
             swal({
                 title: 'Rename Folder: "' + value + '"',
@@ -16,7 +17,7 @@
                 confirmButtonText: 'Rename',
                 showLoaderOnConfirm: true,
                 preConfirm: (folderName) => {
-                    return fetch('{{url('/folders')}}' + '/' + id, {
+                    return fetch(`{{url('/folders')}}/${id}`, {
                         method: "PUT",
                         headers: {
                             "Content-Type": "application/json",
@@ -54,7 +55,8 @@
                     `${result.value.newName}`,
                     'success'
                 ).then(function () {
-                    location.reload();
+                    //location.reload();
+                    that.parents('a').children('h3').children('span').text(result.value.newName);
                 });
 
             })

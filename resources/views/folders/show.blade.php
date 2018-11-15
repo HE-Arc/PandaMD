@@ -21,7 +21,7 @@
                 </a>
                 @foreach($folders as $childFolder)
                     <a href="{{route('folders.show',$childFolder->id)}}" class=" list-group-item clearfix ">
-                        <h3 style="display: inline;"><i class="fal fa-folder fa-fw"></i> {{$childFolder->name}}</h3>
+                        <h3 style="display: inline;"><i class="fal fa-folder fa-fw"></i> <span>{{$childFolder->name}}</span></h3>
                         <span class="float-right">
                             <button id="btnRenameFolder{{$childFolder->id}}" name="{{$childFolder->id}}"
                                     value="{{$childFolder->name}}"

@@ -15,7 +15,7 @@
                 confirmButtonText: `Yes, delete ${value}`,
                 showLoaderOnConfirm: true,
                 preConfirm: () => {
-                    return fetch('{{url('/folders')}}' + '/' + id, {
+                    return fetch(`{{url('/folders')}}/${id}`, {
                         method: "DELETE",
                         headers: {
                             "Content-Type": "application/json",
@@ -24,7 +24,7 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
 
-                        body: JSON.stringify({newName: folderName})
+
                     }).then(response => {
                         if (!response.ok) {
                             throw new Error(response.statusText)
@@ -46,12 +46,6 @@
                         'success'
                     ).then( () =>{
                         that.parents('a').remove();
-                    })
-                }else{
-                    swal({
-                        type: 'error',
-                        title: 'Cancelled',
-                        text: `${value} not cancelled`,
                     })
                 }
             })

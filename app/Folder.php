@@ -38,8 +38,7 @@ class Folder extends Model
 
     public function foldersName()
     {
-        $foldersInside = Folder::with('folders')->where('folder_id', $this->id)->get();
-        return $foldersInside->map(function ($folder) {
+        return $this->folders->map(function ($folder) {
             return $folder->name;
         });
     }

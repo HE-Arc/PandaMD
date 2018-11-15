@@ -21,14 +21,14 @@
                 </a>
                 @foreach($folders as $childFolder)
                     <a href="{{route('folders.show',$childFolder->id)}}" class=" list-group-item clearfix ">
-                        <h3 style="display: inline;"><i class="fal fa-folder fa-fw"></i> <span>{{$childFolder->name}}</span></h3>
+                        <h3 style="display: inline;"><i class="fal fa-folder fa-fw"></i> <span class="folder{{$childFolder->id}}">{{$childFolder->name}}</span></h3>
                         <span class="float-right">
-                            <button id="btnRenameFolder{{$childFolder->id}}" name="{{$childFolder->id}}"
-                                    value="{{$childFolder->name}}"
+                            <button id="btnRenameFolder{{$childFolder->id}}"
+                                    value="{{$childFolder->id}}"
                                     class="btn  btn-secondary">
                                 <i class="fal fa-pen"></i> Rename
                             </button>
-                            <button id="btnRenameDelete{{$childFolder->id}}"
+                            <button id="btnDeleteFolder{{$childFolder->id}}"
                                     value="{{$childFolder->name}}"
                                     name="{{$childFolder->id}}"
                                     class="btn  btn-danger">
@@ -41,20 +41,16 @@
                 @foreach($files as $file)
                     <a href="{{route('files.show', $file->id)}}" class="pl-5 list-group-item "
                        style="font-family: 'Titillium Web', sans-serif;font-size: 20px;">
-                        <i class="fal fa-file fa-fw"></i>{{$file->title}}
+                        <i class="fal fa-file fa-fw"></i> <span class="file{{$file->id}}">{{$file->title}}</span>
                         <span class="float-right">
-                          <select class="selectpicker">
-                              <option data-icon="far fa-lock" data-subtext="Only for you" value="private"> Private</option>
-                              <option data-icon="fal fa-book-open" data-subtext="Everyone can read" value="readable"> Readable</option>
-                              <option data-icon="fal fa-file-edit" data-subtext="Everyone can edit" value="editable"> Editable</option>
-                            </select>
-                            <button id="btnRenameFile{{$file->id}}" name="{{$file->id}}" value="{{$file->tile}}"
+                            @include('folders.partials.selectRight',compact($file))
+                            <button id="btnRenameFile{{$file->id}}"  value="{{$file->id}}"
                                     class="btn  btn-secondary">
                                 <i class="fal fa-pen"></i> Rename
                             </button>
                             <button id="btnDeleteFile{{$file->id}}"
                                     name="{{$file->id}}"
-                                    value="{{$file->tile}}" class="btn  btn-danger">
+                                    value="{{$file->title}}" class="btn  btn-danger">
                                 <i class="far fa-folder-times"></i> Delete
                             </button>
                         </span></a>
@@ -67,13 +63,18 @@
 @endsection
 @section('script')
     @include('folders.partialScripts.newFolder')
-    @include('folders.partialScripts.renameFolder')
+    @include('folders.partialScripts.renameFileFolder')
     @include('folders.partialScripts.delete')
+    @include('folders.partialScripts.select')
     <script>
         $(document).ready(function () {
             onReadyNewFolder();
-            onReadyRename();
-            onReadyDelete();
+            onReadyRename('btnRenameFolder',"{{route('folders.update',':id')}}","folder")
+            onReadyRename('btnRenameFile',"{{route('changeFileName',':id')}}","file")
+            onReadyDelete('btnDeleteFolder',"{{route('folders.destroy',':id')}}");
+            onReadyDelete('btnDeleteFile',"{{route('files.destroy',':id')}}");
+
+
 
         })
     </script>

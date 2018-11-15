@@ -1,8 +1,9 @@
 <script>
-    var onReadyDelete = function () {
-        $("button[id^='btnRenameDelete']").click(function (event) {
+    function onReadyDelete (btnName,url) {
+        $(`button[id^=${btnName}]`).click(function (event) {
             let value = $(this).val();
             let id = $(this).attr("name");
+            url= url.replace(":id",id);
             let that = $(event.currentTarget);
             event.preventDefault();
             swal({
@@ -15,7 +16,7 @@
                 confirmButtonText: `Yes, delete ${value}`,
                 showLoaderOnConfirm: true,
                 preConfirm: () => {
-                    return fetch(`{{url('/folders')}}/${id}`, {
+                    return fetch(url, {
                         method: "DELETE",
                         headers: {
                             "Content-Type": "application/json",

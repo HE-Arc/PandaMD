@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
             return $file->isEditable(auth()->user());
 
         });
+
     }
 
     /**

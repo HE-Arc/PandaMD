@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Folder;
 use App\Http\Requests\FolderRequest;
-use App\Http\Requests\FolderNameChangeRequest;
+use App\Http\Requests\NameChangeRequest;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +25,7 @@ class FolderRepository
 
     }
 
-    public function updateName(Folder $folder,FolderNameChangeRequest $request)
+    public function updateName(Folder $folder, NameChangeRequest $request)
     {
         $newName=$request->input('newName');
         $folder->name=$newName;

@@ -13,6 +13,9 @@ class File extends Model
     private static $yaml_delim = '---';
     private static $endl = '\n';
 
+    protected $fillable = [
+        'folder_id'
+    ];
 
     public function folder()
     {

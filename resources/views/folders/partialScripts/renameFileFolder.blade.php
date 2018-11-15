@@ -1,23 +1,24 @@
 <script>
 
-    var onReadyRename = function () {
-        $("button[id^='btnRenameFolder']").click(function (event) {
-            let value = $(this).val();
-            let id = $(this).attr("name");
-            let that = $(event.currentTarget);
+     function onReadyRename(btnName,url,type) {
+        $(`button[id^=${btnName}]`).click(function (event) {
+            let id = $(this).val();
+            url = url.replace(":id",id);
+            let innerText = $(`.${type}${id}`).text();
+            url=url.replace(":id",id);
             event.preventDefault();
             swal({
-                title: 'Rename Folder: "' + value + '"',
+                title: `Rename ${type}: " ${innerText} "`,
                 input: 'text',
-                inputValue: value,
+                inputValue: innerText,
                 inputAttributes: {
                     autocapitalize: 'off'
                 },
                 showCancelButton: true,
                 confirmButtonText: 'Rename',
                 showLoaderOnConfirm: true,
-                preConfirm: (folderName) => {
-                    return fetch(`{{url('/folders')}}/${id}`, {
+                preConfirm: (fileName) => {
+                    return fetch(url, {
                         method: "PUT",
                         headers: {
                             "Content-Type": "application/json",
@@ -26,21 +27,13 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
 
-                        body: JSON.stringify({newName: folderName})
+                        body: JSON.stringify({newName: fileName})
                     }).then(response => {
                         if (!response.ok) {
                             throw new Error(response.statusText)
                         }
-                        let rep = response.json();
-                        rep.then(result =>{
-                            if(result.state==false){
-                                swal.showValidationMessage(
-                                    'Name already exists'
-                                )
-                            }
-                        })
 
-                        return rep;
+                        return response.json();
                     })
                         .catch(error => {
                             swal.showValidationMessage(
@@ -51,12 +44,12 @@
                 allowOutsideClick: () => !swal.isLoading()
             }).then((result) => {
                 swal(
-                    'Folder Rename',
+                    `${type} Rename`,
                     `${result.value.newName}`,
                     'success'
                 ).then(function () {
                     //location.reload();
-                    that.parents('a').children('h3').children('span').text(result.value.newName);
+                    $(`.${type}${id}`).text(result.value.newName);
                 });
 
             })

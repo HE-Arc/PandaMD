@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Folder;
 use App\Http\Requests\FolderRequest;
-use App\Http\Requests\FolderNameChangeRequest;
+use App\Http\Requests\NameChangeRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\FolderRepository;
@@ -98,7 +98,7 @@ class FolderController extends Controller
      * @param  \App\Folder $folder
      * @return \Illuminate\Http\Response
      */
-    public function update(FolderNameChangeRequest $request, Folder $folder)
+    public function update(NameChangeRequest $request, Folder $folder)
     {
         $this->authorize('manage', $folder);
 

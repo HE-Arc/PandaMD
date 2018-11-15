@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\Repositories\FilesRepository;
+use App\Http\Requests\NameChangeRequest;
 use App\Http\Requests\StoreFile;
 use App\Jobs\ProcessPDFDocument;
 use Carbon\Carbon;
@@ -15,6 +17,12 @@ use Symfony\Component\Console\Helper\Helper;
 
 class FileController extends Controller
 {
+    public function __construct(FilesRepository $repository)
+    {
+        $this->middleware('ajax')->only('changeTitle');
+        $this->repositroy = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -82,7 +90,7 @@ class FileController extends Controller
      */
     public function update(StoreFile $request, File $file)
     {
-        $validator = $request->validated();
+        $this->authorize('edit', $file);
         $file->content = $request->fileContent;
         $file->is_title_page = $request->isTitlePage ?? false;
         $file->is_toc = $request->isToc ?? false;
@@ -104,7 +112,9 @@ class FileController extends Controller
      */
     public function destroy(File $file)
     {
-        //
+        $this->authorize('edit', $file);
+        $file->delete();
+        return response()->json();
     }
 
     public function generate(Request $request, File $file)
@@ -115,6 +125,20 @@ class FileController extends Controller
             'Content-Type: application/pdf',
         );
         return \Illuminate\Support\Facades\Response::download("pdf_files/$token.pdf", "$file->title.pdf", $headers);
+    }
+
+    public function changeName(NameChangeRequest $request, File $file)
+    {
+        $this->authorize('edit', $file);
+
+        $newName = $request->input('newName');
+
+            $this->repositroy->updateName($file, $request);
+            return response()->json([
+                'state' => true,
+                'newName' => $newName,
+            ]);
+
     }
 
 }

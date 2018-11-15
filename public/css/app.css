@@ -10496,3 +10496,8 @@ a.text-dark:focus {
   color: #5cc4ef;
 }
 
+#file {
+  margin: auto;
+  content: url(/images/MD_File_Icon_2.svg?dfdb1123f1759fa8eba33c551ed8e6dc);
+}
+

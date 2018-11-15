@@ -13,7 +13,7 @@
 
     @foreach($files as $file)
         <a href="{{route('files.show', $file->id)}}" class="list-group-item list-group-item-action" style="font-family: 'Titillium Web', sans-serif;font-size: 20px;">
-        <i class="fal fa-file fa-fw"></i> {{$file->title}}</a><br>
+        <i class="fal fa-file fa-fw" id="file"></i> {{$file->title}}</a><br>
     @endforeach
     </div>
 @endsection

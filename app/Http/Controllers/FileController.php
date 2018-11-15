@@ -68,7 +68,7 @@ class FileController extends Controller
     public function edit(File $file)
     {
         $this->authorize('edit', $file);
-        $fileDate = date_create($file->date)->format("M d, Y");
+        $fileDate = $file->date;
         $cbxOptions = Helpers::getArrayCbxOptionsForFile($file);
         $textOptions = Helpers::getArrayTextOptionsForFile($file);
         return view('files.edit', compact('file', 'cbxOptions', 'textOptions', 'fileDate'));
@@ -92,7 +92,8 @@ class FileController extends Controller
         $file->title = $request->title ?? "Title";
         $file->subtitle = $request->subtitle ?? "Subtitle";
         $file->school = $request->school;
-        $file->date = $request->date;
+        $file->date = Carbon::createFromFormat('d/m/Y', $request->date);
+
         $file->save();
         return redirect(route('files.show', $file));
     }

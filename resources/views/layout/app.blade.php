@@ -34,7 +34,6 @@
             <li class="nav-item {{{ (Request::is('/') ? 'active' : '') }}}">
                 <a class="nav-link" href="{{route('home')}}"><i class="fal fa-home fa-fw"></i> Home</a>
             </li>
-            @auth
             <li class="nav-item">
                 <a class="nav-link {{{ (Request::is('folders/*') ? 'active' : '') }}}"
                    href="{{route('folders.index')}}"><i
@@ -43,7 +42,6 @@
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fal fa-pencil fa-fw"></i> Create</a>
             </li>
-            @endauth
         </ul>
         <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->

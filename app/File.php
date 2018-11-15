@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Faker\Provider\DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 class File extends Model

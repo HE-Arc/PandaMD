@@ -20,7 +20,7 @@ class FileController extends Controller
 {
     public function __construct(FilesRepository $repository)
     {
-        $this->middleware('ajax')->only('changeTitle');
+        $this->middleware('ajax')->only('changeTitle','destroy');
         $this->repositroy = $repository;
     }
 

@@ -7,6 +7,7 @@ use App\Repositories\FilesRepository;
 use App\Http\Requests\NameChangeRequest;
 use App\Http\Requests\StoreFile;
 use App\Jobs\ProcessPDFDocument;
+use App\wait_process;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers;
@@ -75,7 +76,7 @@ class FileController extends Controller
     public function edit(File $file)
     {
         $this->authorize('edit', $file);
-        $fileDate = date_create($file->date)->format("M d, Y");
+        $fileDate = $file->date;
         $cbxOptions = Helpers::getArrayCbxOptionsForFile($file);
         $textOptions = Helpers::getArrayTextOptionsForFile($file);
         return view('files.edit', compact('file', 'cbxOptions', 'textOptions', 'fileDate'));
@@ -99,7 +100,8 @@ class FileController extends Controller
         $file->title = $request->title ?? "Title";
         $file->subtitle = $request->subtitle ?? "Subtitle";
         $file->school = $request->school;
-        $file->date = $request->date;
+        $file->date = Carbon::createFromFormat('d/m/Y', $request->date);
+
         $file->save();
         return redirect(route('files.show', $file));
     }
@@ -120,11 +122,23 @@ class FileController extends Controller
     public function generate(Request $request, File $file)
     {
         $token = $file->exportMDFile();
-        ProcessPDFDocument::dispatch($token)->onQueue("");
-        $headers = array( //Source : https://stackoverflow.com/questions/20415444/download-files-in-laravel-using-responsedownload
-            'Content-Type: application/pdf',
-        );
-        return \Illuminate\Support\Facades\Response::download("pdf_files/$token.pdf", "$file->title.pdf", $headers);
+        $this->dispatch((new ProcessPDFDocument($token, $file->id)));
+        return $token;
+    }
+
+    public function download(Request $request, String $token)
+    {
+        $path = "pdf_files/$token.pdf";
+        if (file_exists($path)) {
+            return response()->download("pdf_files/$token.pdf", "$token.pdf")->deleteFileAfterSend();
+        }
+        $previousUrl = app('url')->previous();
+        return redirect()->to("$previousUrl?error=2");
+    }
+
+    public function isReady(Request $request, String $token) {
+        $waitProcess = wait_process::where("token", $token)->first();
+        return $waitProcess->status;
     }
 
     public function changeName(NameChangeRequest $request, File $file)

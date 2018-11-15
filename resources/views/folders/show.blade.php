@@ -8,7 +8,7 @@
         </a>
     @foreach($folders as $folder)
         <a href="{{route('folders.show',$folder->id)}}" class="list-group-item list-group-item-action">
-            <h3> <i class="fal fa-folder fa-fw"></i> {{$folder->name}}</h3></a>
+            <h3> <i class="fas fa-folder fa-fw" id="folder" ></i> {{$folder->name}}</h3></a>
     @endforeach
 
     @foreach($files as $file)

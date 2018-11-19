@@ -1,18 +1,22 @@
 @extends('layout.app')
 @section('content')
 
-    <h1>{{$file->title}} <div class="float-right"><button onclick="generatePdf('{{route('generate', $file)}}')" class="btn btn-outline-secondary mr-2">Generate
+    <h1>{{$file->title}} <div class="float-right">@include('files.partials.selectRight',compact($file))<button onclick="generatePdf('{{route('generate', $file)}}')" class="btn btn-outline-secondary mr-2">Generate
             PDF</button>@editable($file)<a href="{{route('files.edit', $file)}}" class="btn btn-outline-primary"><i
                     class="fal fa-edit fa-fw"></i> edit</a>@endeditable
         </div></h1>
     <div id="content-mdfile" class="border-top pt-4">
 
     </div>
+@endsection
+@section('script')
+    @include('files.partialScripts.select')
     <script>
         window.onload = function() {
             document.getElementById("content-mdfile").innerHTML = renderMarkdown(@json($file->content));
             urlDownloadPdfFile = "{{route("downloadPdfFile", "token")}}";
             urlGeneratePdfFile = "{{route("isReady", "token")}}";
+            OnreadyChangeRight();
         };
 
         function generatePdf(url) {

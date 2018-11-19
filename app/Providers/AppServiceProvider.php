@@ -27,6 +27,11 @@ class AppServiceProvider extends ServiceProvider
 
         });
 
+        Blade::if('right', function (File $file) {
+            return $file->canChangeRight(auth()->user());
+
+        });
+
     }
 
     /**

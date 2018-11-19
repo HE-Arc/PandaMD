@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\File;
 use App\Repositories\FilesRepository;
 use App\Http\Requests\NameChangeRequest;
+use App\Http\Requests\ChangeRightRequest;
 use App\Http\Requests\StoreFile;
 use App\Jobs\ProcessPDFDocument;
 use App\wait_process;
@@ -20,7 +21,7 @@ class FileController extends Controller
 {
     public function __construct(FilesRepository $repository)
     {
-        $this->middleware('ajax')->only('changeTitle','destroy');
+        $this->middleware('ajax')->only('changeTitle','destroy','changeRight');
         $this->repositroy = $repository;
     }
 
@@ -152,6 +153,17 @@ class FileController extends Controller
                 'state' => true,
                 'newName' => $newName,
             ]);
+
+    }
+
+    public function changeRight(ChangeRightRequest $request, File $file)
+    {
+       $this->authorize('changeRight', $file);
+
+        $this->repositroy->updateRight($file, $request);
+        return response()->json([
+            'state' => true,
+        ]);
 
     }
 

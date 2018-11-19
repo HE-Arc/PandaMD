@@ -43,7 +43,7 @@
                        style="font-family: 'Titillium Web', sans-serif;font-size: 20px;">
                         <i class="fal fa-file fa-fw"></i> <span class="file{{$file->id}}">{{$file->title}}</span>
                         <span class="float-right">
-                            @include('folders.partials.selectRight',compact($file))
+                            @include('files.partials.selectRight',compact($file))
                             <button id="btnRenameFile{{$file->id}}"  value="{{$file->id}}"
                                     class="btn  btn-secondary">
                                 <i class="fal fa-pen"></i> Rename
@@ -65,7 +65,7 @@
     @include('folders.partialScripts.newFolder')
     @include('folders.partialScripts.renameFileFolder')
     @include('folders.partialScripts.delete')
-    @include('folders.partialScripts.select')
+    @include('files.partialScripts.select')
     <script>
         $(document).ready(function () {
             onReadyNewFolder();
@@ -73,9 +73,7 @@
             onReadyRename('btnRenameFile',"{{route('changeFileName',':id')}}","file")
             onReadyDelete('btnDeleteFolder',"{{route('folders.destroy',':id')}}");
             onReadyDelete('btnDeleteFile',"{{route('files.destroy',':id')}}");
-
-
-
+            OnreadyChangeRight();
         })
     </script>
 @endsection

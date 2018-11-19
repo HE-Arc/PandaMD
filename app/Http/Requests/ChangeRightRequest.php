@@ -25,7 +25,7 @@ class ChangeRightRequest extends FormRequest
     public function rules()
     {
         return [
-            'newRight' => ['required','string',Rule::in(['private','readable','editab'])],
+            'newRight' => ['required','string',Rule::in(['private','readable','editable'])],
         ];
     }
 }

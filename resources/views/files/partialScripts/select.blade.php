@@ -1,6 +1,11 @@
 <script>
     function OnreadyChangeRight() {
         let url = "{{route('changeRight',':id')}}";
+        let selectData={};
+        $("select[id^='select']").each(function () {
+            selectData[$(this).attr('name')]=$(this).val();
+        });
+
         $("select[id^='select']").on('change', function () {
             let id = $(this).attr('name');
             url = url.replace(":id", id);
@@ -15,9 +20,8 @@
                 },
                 body: JSON.stringify({newRight: right})
             }).then(response => {
-                console.log(JSON.stringify({newRight: right}));
                 if (!response.ok) {
-                    $(`select[name=${id}]`)
+                    $(this).val(selectData[id]).change();
                     throw new Error(response.statusText)
 
                 }
@@ -25,6 +29,11 @@
             })
                 .catch(error => {
                     console.log(error);
+                    swal({
+                        type: 'error',
+                        title: 'Something went wrong!',
+                        text: 'Please try again',
+                    })
                 })
 
         });

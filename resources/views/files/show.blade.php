@@ -8,11 +8,15 @@
     <div id="content-mdfile" class="border-top pt-4">
 
     </div>
+@endsection
+@section('script')
+    @include('files.partialScripts.select')
     <script>
         window.onload = function() {
             document.getElementById("content-mdfile").innerHTML = renderMarkdown(@json($file->content));
             urlDownloadPdfFile = "{{route("downloadPdfFile", "token")}}";
             urlGeneratePdfFile = "{{route("isReady", "token")}}";
+            OnreadyChangeRight();
         };
 
         function generatePdf(url) {

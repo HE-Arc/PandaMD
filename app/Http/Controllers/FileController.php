@@ -6,12 +6,14 @@ use App\File;
 use App\Repositories\FilesRepository;
 use App\Http\Requests\NameChangeRequest;
 use App\Http\Requests\ChangeRightRequest;
+use App\Http\Requests\ChangeFolderRequest;
 use App\Http\Requests\StoreFile;
 use App\Jobs\ProcessPDFDocument;
 use App\wait_process;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -21,7 +23,8 @@ class FileController extends Controller
 {
     public function __construct(FilesRepository $repository)
     {
-        $this->middleware('ajax')->only('changeTitle','destroy','changeRight');
+        $this->middleware('ajax')->only('changeTitle','destroy','changeRight','changeFolder');
+        $this->middleware('auth')->only('newFile','changeRight','changeFolder');
         $this->repositroy = $repository;
     }
 
@@ -42,7 +45,7 @@ class FileController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -53,7 +56,8 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
     }
 
     /**
@@ -78,9 +82,10 @@ class FileController extends Controller
     {
         $this->authorize('edit', $file);
         $fileDate = $file->date;
+        $user = Auth::user();
         $cbxOptions = Helpers::getArrayCbxOptionsForFile($file);
         $textOptions = Helpers::getArrayTextOptionsForFile($file);
-        return view('files.edit', compact('file', 'cbxOptions', 'textOptions', 'fileDate'));
+        return view('files.edit', compact('file', 'cbxOptions', 'textOptions', 'fileDate','user'));
     }
 
     /**
@@ -158,13 +163,39 @@ class FileController extends Controller
 
     public function changeRight(ChangeRightRequest $request, File $file)
     {
-       $this->authorize('changeRight', $file);
+       $this->authorize('changeFile', $file);
 
         $this->repositroy->updateRight($file, $request);
         return response()->json([
             'state' => true,
         ]);
 
+    }
+
+    public function changeFolder(ChangeFolderRequest $request, File $file)
+    {
+        $this->authorize('changeFile', $file);
+        $folderId= $request->input('newFolderId');
+
+        if($this->repositroy->updateFolder($file, $request,$folderId,Auth::user()))
+        {
+            return response()->json([
+                'state' => true,
+            ]);
+
+        }
+        else{
+            return response()->json([
+                'state' => false,
+            ]);
+        }
+
+    }
+    public function newFile()
+    {
+        $idNewFile=$this->repositroy->newFile(Auth::user());
+
+        return redirect(route('files.edit', $idNewFile));
     }
 
 }

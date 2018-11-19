@@ -33,8 +33,9 @@ class FilePolicy
         return $file->isEditable($user);
     }
 
-    public function changeRight(User $user, File $file){
+    public function changeFile(User $user, File $file){
 
-        return $file->canChangeRight($user);
+        return $file->canChangeFile($user);
     }
+
 }

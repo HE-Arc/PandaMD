@@ -36,4 +36,6 @@ class User extends Authenticatable
     public function getUserHomeFolder() {
         return $this->folders()->where(["name"=>"home"])->first();
     }
+
+
 }

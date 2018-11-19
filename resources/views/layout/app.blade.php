@@ -39,7 +39,7 @@
                    href="{{route('folders.index')}}"><i class="fal fa-folder fa-fw"></i> Folder</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fal fa-pencil fa-fw"></i> Create</a>
+                <a class="nav-link" href="{{route('newFile')}}"><i class="fal fa-pencil fa-fw"></i> Create</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">

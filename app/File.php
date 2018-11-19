@@ -44,11 +44,11 @@ class File extends Model
         return $user != null && $user->id == $this->folder->user_id;
     }
 
-    public function canChangeRight(?User $user){
+    public function canChangeFile(User $user){
 
-
-        return $user!=null && $user->id == $this->folder->user->id;
+        return $user->id == $this->folder->user->id;
     }
+
 
     public function exportMDFile()
     {

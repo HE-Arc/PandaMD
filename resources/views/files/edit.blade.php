@@ -9,6 +9,7 @@
                role="button"
                aria-expanded="true" aria-controls="pandocOptions">Reduce Pandoc options</a>
             @include('files.partials.selectRight')
+            @include('files.partials.selectFolder')
         </div>
         <div class="collapse show border p-2 mb-2" id="pandocOptions">
             <div class="form-group row pl-3">
@@ -50,9 +51,11 @@
 @endsection
 @section('script')
     @include('files.partialScripts.select')
+    @include('files.partialScripts.selectFolder')
     <script>
         $(document).ready(function () {
             OnreadyChangeRight();
+            OnreadyChangeFolder();
         })
     </script>
     <script>

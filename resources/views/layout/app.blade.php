@@ -11,14 +11,16 @@
     <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
-    <script src="{{asset('js/app.js')}}"></script>
-    <script src="{{asset('js/all.js')}}"></script>
     <link rel="icon" href="{{asset('favicon.ico')}}" type="image/gif">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css"/>
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-POYwD7xcktv3gUeZO5s/9nUbRJG/WOmV6jfEGikMJu77LGYO8Rfs2X7URG822aum" crossorigin="anonymous">
+    <script src="{{asset('js/app.js')}}"></script>
+    <script src="{{asset('js/all.js')}}"></script>
     @yield("includes")
     <title>PandaMD</title>
 </head>

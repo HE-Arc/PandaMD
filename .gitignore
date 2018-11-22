@@ -12,7 +12,7 @@ npm-debug.log
 yarn-error.log
 .env
 .phpunit.result.cache
-public/md_files/*
-!public/md_files/.gitkeep
-public/pdf_files/*
-!public/pdf_files/.gitkeep
+storage/app/md_files/*
+!storage/app/md_files/.gitkeep
+storage/app/public/pdf_files/*
+!storage/app/public/pdf_files/.gitkeep

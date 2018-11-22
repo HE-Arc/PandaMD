@@ -92,6 +92,7 @@ class FileController extends Controller
         $file->title = $request->title ?? "Title";
         $file->subtitle = $request->subtitle ?? "Subtitle";
         $file->school = $request->school;
+        $file->authors = $request->authors;
         $file->date = $request->date;
         $file->save();
         return redirect(route('files.show', $file));

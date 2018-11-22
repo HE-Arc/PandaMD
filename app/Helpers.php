@@ -7,6 +7,7 @@ use App\File;
 class Helpers {
     public static function getArrayCbxOptionsForFile(File $file) {
         return [
+                /*[Id and name, Text label, is checked]*/
                 ['isTitlePage', 'Title Page', $file->is_title_page],
                 ['isToc', 'Table of contents', $file->is_toc],
                 ['isTocOwnPage', 'TOC on own page', $file->is_toc_own_page],
@@ -16,9 +17,11 @@ class Helpers {
 
     public static function getArrayTextOptionsForFile(File $file) {
         return [
-            ['title', 'Title', $file->title, ''],
-            ['subtitle', 'Subtitle', $file->subtitle, ''],
-            ['school', 'School', $file->school, ''],
+            /*[Id and name, label text, input content, placeholder]*/
+            ['title', 'Title', $file->title, 'Title'],
+            ['subtitle', 'Subtitle', $file->subtitle, 'Subtitle'],
+            ['school', 'School', $file->school, 'School'],
+            ['authors', 'Authors', $file->authors, 'Authors1, Authors2, Authors3, ...'],
         ];
     }
 }

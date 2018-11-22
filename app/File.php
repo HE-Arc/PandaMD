@@ -51,6 +51,7 @@ title: $this->title
 subtitle: $this->subtitle
 date: $this->date
 school: $this->school
+author: $this->authors
 papersize: a4
 geometry: margin=3cm
 titlepage: $this->is_title_page

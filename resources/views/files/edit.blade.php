@@ -26,8 +26,8 @@
                     <label for="{{$textOption[0]}}"
                            class="col-sm-2 col-form-label">{{$textOption[1]}}</label>
                     <div class="col-sm-10">
-                        <input id="{{$textOption[0]}}" name="{{$textOption[0]}}" type="text" value="{{$textOption[2]}}" placeholder="{{$textOption[1]}}" {{$textOption[3]}}
-                               class="form-control">
+                        <input id="{{$textOption[0]}}" name="{{$textOption[0]}}" type="text" value="{{$textOption[2]}}" placeholder="{{$textOption[3]}}"
+                               title="{{$textOption[3]}}" class="form-control">
                     </div>
                 </div>
             @endforeach
@@ -75,6 +75,9 @@
 
 
 
+        $(function () {
+            $(document).tooltip();
+        });
 
     </script>
 @endsection

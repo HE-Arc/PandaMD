@@ -36,10 +36,9 @@ class ProcessPDFDocument implements ShouldQueue
      */
     public function handle()
     {
-        $process = new Process(array("pandoc", storage_path() . "/app/md_files/$this->token.md", "-o", storage_path() . "/app/public/pdf_files/$this->token.pdf", "--template", "/usr/share/pandoc/data/templates/eisvogel", "--number-sections", "--pdf-engine", "/bin/pdflatex"));
+        $process = new Process(array("pandoc", storage_path() . "/app/md_files/$this->token.md", "-o", storage_path() . "/app/public/pdf_files/$this->token.pdf", "--template", "/usr/share/pandoc/data/templates/eisvogel", "--number-sections", "--pdf-engine", "/usr/bin/pdflatex"));
         $process->run();
         Storage::delete("md_files/$this->token.md");
-        //unlink("public/md_files/$this->token.md"); //Delete md file when pdf is generated
         if ($process->isSuccessful()) {
             $this->waitprocess->status = 1;
             $this->waitprocess->save();

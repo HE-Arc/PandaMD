@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Helpers;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Console\Helper\Helper;
 
@@ -129,9 +130,9 @@ class FileController extends Controller
 
     public function download(Request $request, String $token)
     {
-        $path = "pdf_files/$token.pdf";
+        $path = storage_path() . "/app/public/pdf_files/$token.pdf";
         if (file_exists($path)) {
-            return response()->download("pdf_files/$token.pdf", "$token.pdf")->deleteFileAfterSend();
+            return response()->download($path, "$token.pdf")->deleteFileAfterSend();
         }
         $previousUrl = app('url')->previous();
         return redirect()->to("$previousUrl?error=2");

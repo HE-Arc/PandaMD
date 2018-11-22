@@ -8,6 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -35,9 +36,10 @@ class ProcessPDFDocument implements ShouldQueue
      */
     public function handle()
     {
-        $process = new Process(array("pandoc", "public/md_files/$this->token.md", "-o", "public/pdf_files/$this->token.pdf", "--template", "eisvogel", "--number-sections", "--pdf-engine", "/bin/pdflatex"));
+        $process = new Process(array("pandoc", storage_path() . "/app/md_files/$this->token.md", "-o", storage_path() . "/app/public/pdf_files/$this->token.pdf", "--template", "/usr/share/pandoc/data/templates/eisvogel", "--number-sections", "--pdf-engine", "/bin/pdflatex"));
         $process->run();
-        unlink("public/md_files/$this->token.md"); //Delete md file when pdf is generated
+        Storage::delete("md_files/$this->token.md");
+        //unlink("public/md_files/$this->token.md"); //Delete md file when pdf is generated
         if ($process->isSuccessful()) {
             $this->waitprocess->status = 1;
             $this->waitprocess->save();
@@ -45,6 +47,7 @@ class ProcessPDFDocument implements ShouldQueue
             $this->waitprocess->status = -1;
             $this->waitprocess->error_message = "An error occured";
             $this->waitprocess->save();
+            throw new ProcessFailedException($process);
         }
     }
 

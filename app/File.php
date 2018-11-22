@@ -4,6 +4,7 @@ namespace App;
 
 use Faker\Provider\DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class File extends Model
 {
@@ -54,7 +55,7 @@ class File extends Model
     {
         $date = date('YmdHis');
         $token = "{$this->id}{$this->folder->id}{$date}"; //Create a token (unique while 2 same file aren't build at same ms)
-        $file_name = "md_files/{$token}.md";
+        $file_name = "{$token}.md";
         $file_content = <<<"EOD"
 ---
 title: $this->title
@@ -73,7 +74,8 @@ toc-depth: 5
 $this->content
 EOD;
 
-        file_put_contents($file_name, $file_content);
+        Storage::put("md_files/$file_name", $file_content);
+        //file_put_contents($file_name, $file_content);
         return $token;
     }
 

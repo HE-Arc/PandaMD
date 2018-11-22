@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Faker\Provider\DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 class File extends Model
@@ -13,6 +14,9 @@ class File extends Model
     private static $yaml_delim = '---';
     private static $endl = '\n';
 
+    protected $fillable = [
+        'folder_id'
+    ];
 
     public function folder()
     {
@@ -38,6 +42,12 @@ class File extends Model
             return true;
         }
         return $user != null && $user->id == $this->folder->user_id;
+    }
+
+    public function canChangeRight(?User $user){
+
+
+        return $user!=null && $user->id == $this->folder->user->id;
     }
 
     public function exportMDFile()

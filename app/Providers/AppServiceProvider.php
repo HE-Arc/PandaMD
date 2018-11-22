@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -25,6 +26,12 @@ class AppServiceProvider extends ServiceProvider
             return $file->isEditable(auth()->user());
 
         });
+
+        Blade::if('right', function (File $file) {
+            return $file->canChangeRight(auth()->user());
+
+        });
+
     }
 
     /**

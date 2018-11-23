@@ -12781,6 +12781,7 @@ blockquote {
   border-left: 10px solid #ccc;
   margin: 1.5em 10px;
   padding: 0.5em 10px;
+  font-style: italic;
 }
 
 blockquote:before {
@@ -12788,17 +12789,8 @@ blockquote:before {
   content: open-quote;
   font-size: 4em;
   line-height: 0.1em;
-  margin-right: 0.25em;
   vertical-align: -0.4em;
-}
-
-blockquote:after {
-  color: #ccc;
-  content: '\201E';
-  font-size: 4em;
-  line-height: 0.1em;
-  margin-left: 0.25em;
-  vertical-align: -0.1em;
+  font-style: normal;
 }
 
 blockquote p {

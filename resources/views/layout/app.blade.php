@@ -108,9 +108,9 @@
         link.setAttribute("href", linkHref);
         link.appendChild(document.createTextNode(linkText));
         link.classList.add("alert-link");
-        link.addEventListener("click", function(event) {
+        link.addEventListener("click", function (event) {
             $('.alert').alert('close');
-        })
+        });
         alert.appendChild(link);
         alert.appendChild(btn);
         divAlert.appendChild(alert);
@@ -126,6 +126,8 @@
     createAlert("alert-danger", "You are not allowed to acceess to this ressource");
     @elseif(Request::get('error')==2)
     createAlert("alert-danger", "File is missing");
+    @elseif(Request::get('error')==3)
+    createAlert("alert-primary", "Please login to access to your folders");
     @endif
 </script>
 </body>

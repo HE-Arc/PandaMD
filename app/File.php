@@ -13,8 +13,7 @@ class File extends Model
     public static $attr_private = 'private';
     public static $attr_readable = 'readable';
     public static $attr_editable = 'editable';
-    private static $yaml_delim = "---\n";
-    private static $endl = '\n';
+    private static $yaml_delim = "---" . PHP_EOL;
 
     protected $fillable = [
         'folder_id'

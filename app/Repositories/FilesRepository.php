@@ -7,6 +7,7 @@ use App\Http\Requests\ChangeRightRequest;
 use App\Http\Requests\NameChangeRequest;
 use App\Http\Requests\ChangeFolderRequest;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -35,6 +36,8 @@ class FilesRepository
 
         $newFile = File::create([
             'folder_id' => $folderId,
+            'title'=> Carbon::now()->toDateTimeString(),
+            'date'=> Carbon::now()->toDateString(),
         ]);
         return $newFile->id;
 

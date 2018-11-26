@@ -10,7 +10,7 @@
                 <a id="folder{{$childFolder->id}}" name="{{$file->id}}" value="{{$childFolder->id}}" class="dropdown-item font-weight-bold" href="javascript:;"><i class="fas fa-folder"></i> {{$childFolder->name}} <i
                             class="far fa-check"></i></a>
             @else
-                <a id="folder{{$childFolder->id}}" name="{{$file->id}}" value="{{$childFolder->id}}" class="dropdown-item" href="javascript:;"><i class="fal fa-folder fa-fw"></i>{{$childFolder->name}}</a>
+                <a id="folder{{$childFolder->id}}" name="{{$file->id}}" value="{{$childFolder->id}}" class="dropdown-item" href="javascript:;"><i class="fal fa-folder fa-fw"></i> {{$childFolder->name}}</a>
             @endif
         @endforeach
     </div>

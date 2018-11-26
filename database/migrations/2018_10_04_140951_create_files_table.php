@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Carbon\Carbon;
+
 
 class CreateFilesTable extends Migration
 {
@@ -25,10 +25,10 @@ class CreateFilesTable extends Migration
             $table->boolean('is_toc')->default(false);
             $table->boolean('is_toc_own_page')->default(false);
             $table->boolean('is_links_as_notes')->default(false);
-            $table->text('title')->default(Carbon::now()->toDateTimeString());
+            $table->text('title');
             $table->text('subtitle')->nullable();
             $table->text('school')->nullable();
-            $table->date('date')->default(Carbon::now()->toDateString());
+            $table->date('date');
             $table->enum('security',['private','readable','editable'])->default('private');
             $table->timestamps();
         });

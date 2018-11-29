@@ -22,6 +22,7 @@ class FileController extends Controller
 {
     public function __construct(FilesRepository $repository)
     {
+        $this->middleware('auth');
         $this->middleware('ajax')->only('changeTitle','destroy','changeRight');
         $this->repositroy = $repository;
     }
@@ -135,7 +136,7 @@ class FileController extends Controller
             return response()->download($path, "$token.pdf")->deleteFileAfterSend();
         }
         $previousUrl = app('url')->previous();
-        return redirect()->to("$previousUrl?error=2");
+        return redirect()->back()->with('error', 2);
     }
 
     public function isReady(Request $request, String $token) {

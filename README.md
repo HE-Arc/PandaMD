@@ -61,3 +61,24 @@ sudo supervisorctl restart all
 ```sh
 php artisan queue:work --tries=1
 ```
+
+# Test
+## Requirements
+### Server
+Create .env.testing with the following content :
+```
+DB_SCHEMA=test
+```
+### Local
+Copy .env in .env.testing and change the schema of the DB.
+
+## Before running test
+```sh
+php artisan config:clear
+php artisan migrate --seed --env=testing
+```
+
+## Run test
+```sh
+./vendor/bin/phpunit
+```

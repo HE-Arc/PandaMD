@@ -122,13 +122,18 @@
         });
     }
 
-    @if(Request::get('error')==1)
-    createAlert("alert-danger", "You are not allowed to acceess to this ressource");
-    @elseif(Request::get('error')==2)
+    @if(session('error')==1)
+    createAlert("alert-danger", "You are not allowed to access to this resource");
+    @elseif(session('error')==2)
     createAlert("alert-danger", "File is missing");
-    @elseif(Request::get('error')==3)
+    @elseif(session('error')==3)
     createAlert("alert-primary", "Please login to access to your folders");
+    @elseif(session('error')==4)
+    createAlert("alert-danger", "Oups this page does not exist.");
+    @elseif(session('error')==5)
+    createAlert("alert-danger", "Oups this resource does not exist.");
     @endif
+    {{session()->forget('error')}}
 </script>
 </body>
 </html>

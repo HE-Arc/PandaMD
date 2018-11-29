@@ -46,12 +46,13 @@ class ProcessPDFDocument implements ShouldQueue
             $this->waitprocess->status = -1;
             $this->waitprocess->error_message = "An error occured";
             $this->waitprocess->save();
-            throw new ProcessFailedException($process);
         }
     }
 
     public function failed(Exception $exception)
     {
-
+        $this->waitprocess->status = -1;
+        $this->waitprocess->error_message = "An error occured";
+        $this->waitprocess->save();
     }
 }

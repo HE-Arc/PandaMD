@@ -37,5 +37,16 @@ class User extends Authenticatable
         return $this->folders()->where(["name"=>"home"])->first();
     }
 
+    public function getCascadedFolder()
+    {
+        $userFolder=$this->folders;
+        $arrayFirstLevel=$userFolder->map(function ($folder){
+            if($folder->folder_id==null)
+            {
+                return $folder;
+            }
 
+        });
+        return $arrayFirstLevel;
+    }
 }

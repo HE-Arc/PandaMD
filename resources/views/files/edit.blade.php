@@ -8,8 +8,7 @@
             <a id="optionsToggler" class="btn btn-outline-info" data-toggle="collapse" href="#pandocOptions"
                role="button"
                aria-expanded="true" aria-controls="pandocOptions">Reduce Pandoc options</a>
-            @include('files.partials.selectRight')
-            @include('files.partials.selectFolder')
+
         </div>
         <div class="collapse show border p-2 mb-2" id="pandocOptions">
             <div class="form-group row pl-3">
@@ -42,20 +41,19 @@
                            data-date-format="dd/mm/yyyy" onkeydown="return false"/>
                 </div>
             </div>
-
+            @include('files.partials.selectFileFolder')
+            @include('files.partials.selectRight')
         </div>
+
         <textarea name="fileContent" id="editor-md"></textarea>
         {{--Button submit in toolbar from js--}}
     </form>
 
 @endsection
 @section('script')
-    @include('files.partialScripts.select')
-    @include('files.partialScripts.selectFolder')
     <script>
         $(document).ready(function () {
-            OnreadyChangeRight();
-            OnreadyChangeFolder();
+
         })
     </script>
     <script>

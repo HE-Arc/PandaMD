@@ -23,6 +23,7 @@
                     <a href="{{route('folders.show',$childFolder->id)}}" class=" list-group-item clearfix ">
                         <h3 style="display: inline;"><i class="fal fa-folder fa-fw"></i> <span class="folder{{$childFolder->id}}">{{$childFolder->name}}</span></h3>
                         <span class="float-right">
+                            @include('folders.partials.selectFolderFolder')
                             <button id="btnRenameFolder{{$childFolder->id}}"
                                     value="{{$childFolder->id}}"
                                     class="btn  btn-secondary">
@@ -43,7 +44,7 @@
                        style="font-family: 'Titillium Web', sans-serif;font-size: 20px;">
                         <i class="fal fa-file fa-fw"></i> <span class="file{{$file->id}}">{{$file->title}}</span>
                         <span class="float-right">
-                            @include('files.partials.selectRight',compact($file))
+                            @include('files.partials.selectFileFolder')
                             <button id="btnRenameFile{{$file->id}}"  value="{{$file->id}}"
                                     class="btn  btn-secondary">
                                 <i class="fal fa-pen"></i> Rename
@@ -65,7 +66,8 @@
     @include('folders.partialScripts.newFolder')
     @include('folders.partialScripts.renameFileFolder')
     @include('folders.partialScripts.delete')
-    @include('files.partialScripts.select')
+    @include('files.partialScripts.selectFileFolder')
+    @include('folders.partialScripts.selectFolderFolder')
     <script>
         $(document).ready(function () {
             onReadyNewFolder();
@@ -73,7 +75,8 @@
             onReadyRename('btnRenameFile',"{{route('changeFileName',':id')}}","file")
             onReadyDelete('btnDeleteFolder',"{{route('folders.destroy',':id')}}");
             onReadyDelete('btnDeleteFile',"{{route('files.destroy',':id')}}");
-            OnreadyChangeRight();
+            OnreadyChangeFileFolder();
+            OnreadyChangeFolderFolder();
         })
     </script>
 @endsection

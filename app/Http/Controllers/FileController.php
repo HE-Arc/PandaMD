@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -85,7 +86,8 @@ class FileController extends Controller
         $user = Auth::user();
         $cbxOptions = Helpers::getArrayCbxOptionsForFile($file);
         $textOptions = Helpers::getArrayTextOptionsForFile($file);
-        return view('files.edit', compact('file', 'cbxOptions', 'textOptions', 'fileDate','user'));
+        $treeFolders=$user->getCascadedFolder();
+        return view('files.edit', compact('file','treeFolders', 'cbxOptions', 'textOptions', 'fileDate','user'));
     }
 
     /**
@@ -97,6 +99,7 @@ class FileController extends Controller
      */
     public function update(StoreFile $request, File $file)
     {
+
         $this->authorize('edit', $file);
         $file->content = $request->fileContent;
         $file->is_title_page = $request->isTitlePage ?? false;
@@ -107,6 +110,8 @@ class FileController extends Controller
         $file->subtitle = $request->subtitle ?? "Subtitle";
         $file->school = $request->school;
         $file->date = Carbon::createFromFormat('d/m/Y', $request->date);
+        $file->security = $request->right ?? "private";
+        $file->folder_id = $request->newFolder;
 
         $file->save();
         return redirect(route('files.show', $file));
@@ -172,12 +177,12 @@ class FileController extends Controller
 
     }
 
-    public function changeFolder(ChangeFolderRequest $request, File $file)
+    public function changeFileFolder(ChangeFolderRequest $request, File $file)
     {
         $this->authorize('changeFile', $file);
         $folderId= $request->input('newFolderId');
 
-        if($this->repositroy->updateFolder($file, $request,$folderId,Auth::user()))
+        if($this->repositroy->updateFolder($file,$folderId,Auth::user()))
         {
             return response()->json([
                 'state' => true,

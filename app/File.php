@@ -15,7 +15,7 @@ class File extends Model
     private static $endl = '\n';
 
     protected $fillable = [
-        'folder_id','title','date',
+        'folder_id','title','date','secrity','content',
     ];
 
     public function folder()

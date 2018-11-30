@@ -25,6 +25,7 @@ Route::put("files/{file}/changeright", "FileController@changeRight")->name('chan
 Route::get('files/{token}/download', 'FileController@download')->name('downloadPdfFile');
 Route::get('files/{token}/isReady', 'FileController@isReady')->name('isReady');
 Route::get('files/', 'FileController@newFile')->name('newFile');
-Route::put('files/{file}/changefolderid','FileController@changeFolder')->name('changeFolderId');
+Route::put('files/{file}/changefilefolderid','FileController@changeFileFolder')->name('changeFileFolderId');
+Route::put('folders/{folder}/changefolderfolderid','FolderController@changeFolderFolder')->name('changeFolderFolderId');
 
 

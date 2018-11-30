@@ -27,10 +27,17 @@ class AppServiceProvider extends ServiceProvider
 
         });
 
+
         Blade::if('changeable', function (File $file) {
             return $file->canChangeFile(auth()->user());
 
         });
+
+        Blade::if('canShowFolder', function (Folder $file) {
+
+
+        });
+
 
     }
 

@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Folder;
+use Illuminate\Support\Facades\Log;
+
 
 class User extends Authenticatable
 {
@@ -33,20 +35,32 @@ class User extends Authenticatable
         return $this->hasMany(Folder::class);
     }
 
-    public function getUserHomeFolder() {
-        return $this->folders()->where(["name"=>"home"])->first();
+    public function getUserHomeFolder()
+    {
+        return $this->folders()->where(["name" => "home"])->first();
     }
 
     public function getCascadedFolder()
     {
-        $userFolder=$this->folders;
-        $arrayFirstLevel=$userFolder->map(function ($folder){
-            if($folder->folder_id==null)
-            {
-                return $folder;
-            }
 
-        });
-        return $arrayFirstLevel;
+        $curentFolder = $this->folders()->whereNull('folder_id')->first();
+        $arrayFolders = [];
+        $this->recursifTreeFolder($curentFolder, $arrayFolders);
+        return $arrayFolders;
+
+    }
+
+
+    private function recursifTreeFolder($currentFolder, &$arrayFolders, $depth = 0)
+    {
+        $arrayTmp = [$currentFolder, $depth];
+        array_push($arrayFolders, $arrayTmp);
+        $depth++;
+        foreach ($currentFolder->folders as $childFolder) {
+
+                $this->recursifTreeFolder($childFolder, $arrayFolders, $depth);
+
+        }
+
     }
 }

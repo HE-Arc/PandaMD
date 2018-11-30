@@ -6,16 +6,17 @@ use App\Folder;
 use App\Http\Requests\FolderRequest;
 use App\Http\Requests\NameChangeRequest;
 use App\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 
 class FolderRepository
 {
 
-    public function store(User $user,FolderRequest $request)
+    public function store(User $user, FolderRequest $request)
     {
         $folder_id = $request->input('folderId');
-        $name=$request->input('name');
+        $name = $request->input('name');
 
         Folder::create([
             'name' => $name,
@@ -27,10 +28,27 @@ class FolderRepository
 
     public function updateName(Folder $folder, NameChangeRequest $request)
     {
-        $newName=$request->input('newName');
-        $folder->name=$newName;
+        $newName = $request->input('newName');
+        $folder->name = $newName;
         $folder->save();
     }
 
+    public function updateFolder(Folder $folder,int $folderId, User $user)
+    {
+        $tabFolder = $user->folders->map(function ($folder) {
+            return $folder->id;
+        });
+
+        $arrayRecursifFolder= $folder->getCascadedFolder();
+
+        if ($tabFolder->contains($folderId) && !in_array($folderId, $arrayRecursifFolder)) {
+            $folder->folder_id = $folderId;
+            $folder->save();
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 
 }

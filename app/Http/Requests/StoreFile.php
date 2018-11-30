@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreFile extends FormRequest
 {
@@ -33,6 +34,8 @@ class StoreFile extends FormRequest
             'school' => 'present|max:100',
             'date' => 'required|date_format:"d/m/Y"',
             'fileContent' => 'required|string',
+            'right' => ['required','string',Rule::in(['private','readable','editable'])],
+            'newFolder' => 'required|integer',
         ];
     }
 }

@@ -2,12 +2,12 @@
     function OnreadyChangeRight() {
         let url = "{{route('changeRight',':id')}}";
         let selectData={};
-        $("select[id^='select']").each(function () {
+        $("select[id^='selectRight']").each(function () {
             selectData[$(this).attr('name')]=$(this).val();
         });
 
-        $("select[id^='select']").on('change', function () {
-            let id = $(this).attr('name');
+        $("select[id^='selectRight']").on('change', function () {
+            let id = $(this).attr('title');
             url = url.replace(":id", id);
             let right = $(this).val();
             fetch(url, {
@@ -21,7 +21,7 @@
                 body: JSON.stringify({newRight: right})
             }).then(response => {
                 if (!response.ok) {
-                    $(this).val(selectData[id]).change();
+                    $(this).val(selectData[id]).select();
                     throw new Error(response.statusText)
 
                 }

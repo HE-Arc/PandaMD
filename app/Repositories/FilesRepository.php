@@ -43,7 +43,7 @@ class FilesRepository
 
     }
 
-    public function updateFolder(File $file,ChangeFolderRequest $request,int $folderId,User $user)
+    public function updateFolder(File $file,int $folderId,User $user)
     {
         $tabFolder = $user->folders->map(function($folder)
         {
@@ -52,7 +52,6 @@ class FilesRepository
 
         if($tabFolder->contains($folderId))
         {
-            $folderId= $request->input('newFolderId');
             $file->folder_id=$folderId;
             $file->save();
             return true;

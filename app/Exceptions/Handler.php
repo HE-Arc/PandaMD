@@ -2,9 +2,12 @@
 
 namespace App\Exceptions;
 
+use Dotenv\Exception\ValidationException;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Auth;
 
 class Handler extends ExceptionHandler
 {
@@ -48,9 +51,19 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($exception instanceof AuthorizationException) {
-            return redirect()->route('home',['error'=>1]); // this will be on a 403 exception
+            if (Auth::check()) {
+                return redirect()->back()->with('error', 1)->setStatusCode(404); // this will be on a 403 exception
+            }
         }
-
+        if ($exception instanceof ModelNotFoundException) {
+            return redirect()->route('home')->with('error', 5)->setStatusCode(404); //Resource not found
+        }
+        //session(['error' => 10]);
+        if($exception instanceof  \Illuminate\Validation\ValidationException) {
+            //$exce = $exception as \Illuminate\Validation\ValidationException::class;
+            error_log($exception);
+        }
+        //error_log($exception);
         return parent::render($request, $exception);
     }
 }

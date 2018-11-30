@@ -10,39 +10,43 @@
                aria-expanded="true" aria-controls="pandocOptions">Reduce Pandoc options</a>
 
         </div>
-        <div class="collapse show border p-2 mb-2" id="pandocOptions">
-            <div class="form-group row pl-3">
-                @foreach($cbxOptions as $cbxOption)
-                    <div class="form-check custom-checkbox col-6 col-lg-3">
-                        <input id="{{$cbxOption[0]}}" name="{{$cbxOption[0]}}" value="true" type="checkbox"
-                               class="custom-control-input"
-                               @if($cbxOption[2])checked="checked"@endif>
-                        <label for="{{$cbxOption[0]}}"
-                               class="custom-control-label">{{$cbxOption[1]}}</label>
+
+        <div class="collapse show mb-2" id="pandocOptions">
+            <div class="p-2 border">
+                <div class="form-group row pl-3">
+                    @foreach($cbxOptions as $cbxOption)
+                        <div class="form-check custom-checkbox col-6 col-lg-3">
+                            <input id="{{$cbxOption[0]}}" name="{{$cbxOption[0]}}" value="true" type="checkbox"
+                                   class="custom-control-input"
+                                   @if($cbxOption[2])checked="checked"@endif>
+                            <label for="{{$cbxOption[0]}}"
+                                   class="custom-control-label">{{$cbxOption[1]}}</label>
+                        </div>
+                    @endforeach
+                </div>
+                @foreach($textOptions as $textOption)
+                    <div class="form-group row">
+                        <label for="{{$textOption[0]}}"
+                               class="col-sm-2 col-form-label">{{$textOption[1]}}</label>
+                        <div class="col-sm-10">
+                            <input id="{{$textOption[0]}}" name="{{$textOption[0]}}" type="text"
+                                   value="{{$textOption[2]}}" placeholder="{{$textOption[3]}}"
+                                   title="{{$textOption[3]}}" class="form-control">
+                        </div>
                     </div>
                 @endforeach
-            </div>
-            @foreach($textOptions as $textOption)
                 <div class="form-group row">
-                    <label for="{{$textOption[0]}}"
-                           class="col-sm-2 col-form-label">{{$textOption[1]}}</label>
+                    <label for="date" class="col-form-label col-sm-2 col-form-label">Date</label>
                     <div class="col-sm-10">
-                        <input id="{{$textOption[0]}}" name="{{$textOption[0]}}" type="text" value="{{$textOption[2]}}" placeholder="{{$textOption[1]}}" {{$textOption[3]}}
-                               class="form-control">
+                        <input id="date" name="date" type='text' class="form-control datepicker-here"
+                               data-position="left top" data-language='en'
+                               data-date-format="dd/mm/yyyy" onkeydown="return false"/>
                     </div>
-                </div>
-            @endforeach
-
-            <div class="form-group row">
-                <label for="date" class="col-form-label col-sm-2 col-form-label">Date</label>
-                <div class="col-sm-10">
-                    <input id="date" name="date" type='text' class="form-control datepicker-here"
-                           data-position="left top" data-language='en'
-                           data-date-format="dd/mm/yyyy" onkeydown="return false"/>
                 </div>
             </div>
             @include('files.partials.selectFileFolder')
             @include('files.partials.selectRight')
+
         </div>
 
         <textarea name="fileContent" id="editor-md"></textarea>
@@ -83,6 +87,8 @@
                 elem.parentElement.classList.remove("cbxdisabled");
             }
         };
-
+        $(function () {
+            $(document).tooltip();
+        });
     </script>
 @endsection

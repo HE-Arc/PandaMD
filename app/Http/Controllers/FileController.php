@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Console\Helper\Helper;
 
@@ -24,8 +25,10 @@ class FileController extends Controller
 {
     public function __construct(FilesRepository $repository)
     {
+
         $this->middleware('ajax')->only('changeTitle','destroy','changeRight','changeFolder');
         $this->middleware('auth')->only('newFile','changeRight','changeFolder');
+
         $this->repositroy = $repository;
     }
 
@@ -109,9 +112,11 @@ class FileController extends Controller
         $file->title = $request->title ?? "Title";
         $file->subtitle = $request->subtitle ?? "Subtitle";
         $file->school = $request->school;
+        $file->authors = $request->authors;
         $file->date = Carbon::createFromFormat('d/m/Y', $request->date);
         $file->security = $request->right ?? "private";
         $file->folder_id = $request->newFolder;
+
 
         $file->save();
         return redirect(route('files.show', $file));
@@ -139,12 +144,12 @@ class FileController extends Controller
 
     public function download(Request $request, String $token)
     {
-        $path = "pdf_files/$token.pdf";
+        $path = storage_path() . "/app/public/pdf_files/$token.pdf";
         if (file_exists($path)) {
-            return response()->download("pdf_files/$token.pdf", "$token.pdf")->deleteFileAfterSend();
+            return response()->download($path, "$token.pdf")->deleteFileAfterSend();
         }
         $previousUrl = app('url')->previous();
-        return redirect()->to("$previousUrl?error=2");
+        return redirect()->back()->with('error', 2);
     }
 
     public function isReady(Request $request, String $token) {

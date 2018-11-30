@@ -32,6 +32,7 @@ class StoreFile extends FormRequest
             'title' => 'required|string|max:100',
             'subtitle' => 'required|max:100',
             'school' => 'present|max:100',
+            'authors' => 'present|max:100',
             'date' => 'required|date_format:"d/m/Y"',
             'fileContent' => 'required|string',
             'right' => ['required','string',Rule::in(['private','readable','editable'])],

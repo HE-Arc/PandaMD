@@ -2,34 +2,37 @@
 
 namespace Tests\Unit;
 
+use App\File;
 use App\User;
+use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class FileTest extends TestCase
 {
-    private function logAsGetURIAssertStatusError(int $idUser, string $uri, int $idRoute, int $status, int $errorNb)
+    /*
+     * Tools
+     */
+    private function logAsGetAssertStatusError(int $idUser, string $uri, int $idRoute, int $status, int $errorNb)
     {
-        $response = $this->logAsGetURIAssertStatus($idUser, $uri, $idRoute, $status);
+        $response = $this->logAsGetAssertStatus($idUser, $uri, $idRoute, $status);
         $response->assertSessionHas('error', $errorNb);
     }
 
-    private function getURIAssertStatusError(string $uri, int $idRoute, int $status, int $errorNb)
+    private function getAssertStatusError(string $uri, int $idRoute, int $status, int $errorNb)
     {
-        $response = $this->getURIAssertStatus($uri, $idRoute, $status);
+        $response = $this->getAssertStatus($uri, $idRoute, $status);
         $response->assertSessionHas('error', $errorNb);
     }
 
-    private function logAsGetURIAssertStatus(int $idUser, string $uri, int $idRoute, int $status)
+    private function logAsGetAssertStatus(int $idUser, string $uri, int $idRoute, int $status)
     {
         $user = User::where('id', $idUser)->first();
         $this->be($user);
-        $response = $this->getURIAssertStatus($uri, $idRoute, $status);
+        $response = $this->getAssertStatus($uri, $idRoute, $status);
         return $response;
     }
 
-    private function getURIAssertStatus(string $uri, int $idRoute, int $status)
+    private function getAssertStatus(string $uri, int $idRoute, int $status)
     {
         $response = $this->get(route($uri, $idRoute));
         $response->assertStatus($status);
@@ -39,50 +42,63 @@ class FileTest extends TestCase
     /*
      * File show
      */
-    public function testURIShowGuest()
+    public function testShowGuest()
     {
-        $this->getURIAssertStatusError('files.show', 1, 302, 3);
+        $this->getAssertStatusError('files.show', 1, 302, 3);
     }
 
-    public function testURIShowLoggedOwner()
+    public function testShowLoggedOwner()
     {
-        $this->logAsGetURIAssertStatus(1, 'files.show', 1, 200);
+        $this->logAsGetAssertStatus(1, 'files.show', 1, 200);
     }
 
-    public function testURIShowLoggedUnauthorized()
+    public function testShowLoggedUnauthorized()
     {
-        $this->logAsGetURIAssertStatusError(2, 'files.show', 1, 404,  1);
+        $this->logAsGetAssertStatusError(2, 'files.show', 1, 404,  1);
     }
 
-    public function testURIShowNonExistent()
+    public function testShowNonExistent()
     {
-        $this->logAsGetURIAssertStatus(1, 'files.show', 1000, 404, 5);
+        $this->logAsGetAssertStatus(1, 'files.show', 1000, 404, 5);
     }
 
     /*
      * File edit
      */
-    public function testURIEditGuest()
+    public function testEditGuest()
     {
-        $this->getURIAssertStatusError('files.edit', 1, 302, 3);
+        $this->getAssertStatusError('files.edit', 1, 302, 3);
     }
 
-    public function testURIEditLoggedOwner()
+    public function testEditLoggedOwner()
     {
-        $this->logAsGetURIAssertStatus(1, 'files.edit', 1,200);
+        $this->logAsGetAssertStatus(1, 'files.edit', 1,200);
     }
 
-    public function testURIEditLoggedUnauthorized()
+    public function testEditLoggedUnauthorized()
     {
-        $this->logAsGetURIAssertStatusError(2, 'files.edit', 1,404, 1);
+        $this->logAsGetAssertStatusError(2, 'files.edit', 1,404, 1);
     }
 
-    public function testURIEditLoggedNonExistent()
+    public function testEditLoggedNonExistent()
     {
-        $this->logAsGetURIAssertStatusError(1, 'files.edit', 1000, 404, 5);
+        $this->logAsGetAssertStatusError(1, 'files.edit', 1000, 404, 5);
     }
 
     /*
-     * File store
+     * File update
      */
+    public function testUpdateLogged()
+    {
+        $user = User::where('id', 1)->first();
+        $file = File::where('id', 1)->first();
+        $this->be($user);
+        $response = $this->PATCH(route(
+            'files.update', $file), [
+            'title' => $file->title, 'subtitle' => $file->subtitle,
+            'date'=> '11/11/2018', 'fileContent'=> '#Titre', 'school' => "", 'authors'=> ""]);
+        $response->assertStatus(302);
+        $response->assertSessionMissing('error');
+        $response->assertLocation(route('files.show', 1));
+    }
 }

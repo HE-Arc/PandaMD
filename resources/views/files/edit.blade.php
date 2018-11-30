@@ -10,7 +10,8 @@
                aria-expanded="true" aria-controls="pandocOptions">Reduce Pandoc options</a>
             @include('files.partials.selectRight')
         </div>
-        <div class="collapse show border p-2 mb-2" id="pandocOptions">
+        <div class="p-2 mb-2">
+        <div class="collapse show border" id="pandocOptions">
             <div class="form-group row pl-3">
                 @foreach($cbxOptions as $cbxOption)
                     <div class="form-check custom-checkbox col-6 col-lg-3">
@@ -32,7 +33,6 @@
                     </div>
                 </div>
             @endforeach
-
             <div class="form-group row">
                 <label for="date" class="col-form-label col-sm-2 col-form-label">Date</label>
                 <div class="col-sm-10">
@@ -41,7 +41,7 @@
                            data-date-format="dd/mm/yyyy" onkeydown="return false"/>
                 </div>
             </div>
-
+            </div>
         </div>
         <textarea name="fileContent" id="editor-md"></textarea>
         {{--Button submit in toolbar from js--}}

@@ -16,7 +16,7 @@ class File extends Model
     private static $yaml_delim = "---" . PHP_EOL;
 
     protected $fillable = [
-        'folder_id'
+        'folder_id','title','date','secrity','content',
     ];
 
     public function folder()
@@ -45,11 +45,11 @@ class File extends Model
         return $user != null && $user->id == $this->folder->user_id;
     }
 
-    public function canChangeRight(?User $user){
+    public function canChangeFile(User $user){
 
-
-        return $user!=null && $user->id == $this->folder->user->id;
+        return $user->id == $this->folder->user->id;
     }
+
 
     public function exportMDFile()
     {

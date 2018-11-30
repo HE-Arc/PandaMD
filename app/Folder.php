@@ -52,4 +52,27 @@ class Folder extends Model
     {
         return $user->id === $this->user_id;
     }
+
+    public function getCascadedFolder()
+    {
+
+        $arrayFolders = [];
+        $this->recursifTreeFolder($this, $arrayFolders);
+        return $arrayFolders;
+
+    }
+
+
+    private function recursifTreeFolder($currentFolder, &$arrayFolders)
+    {
+        $arrayTmp = $currentFolder->id;
+        array_push($arrayFolders, $arrayTmp);
+
+        foreach ($currentFolder->folders as $childFolder) {
+
+            $this->recursifTreeFolder($childFolder, $arrayFolders);
+
+        }
+
+    }
 }

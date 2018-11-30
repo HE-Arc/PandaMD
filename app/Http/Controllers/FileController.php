@@ -6,12 +6,15 @@ use App\File;
 use App\Repositories\FilesRepository;
 use App\Http\Requests\NameChangeRequest;
 use App\Http\Requests\ChangeRightRequest;
+use App\Http\Requests\ChangeFolderRequest;
 use App\Http\Requests\StoreFile;
 use App\Jobs\ProcessPDFDocument;
 use App\wait_process;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -22,8 +25,10 @@ class FileController extends Controller
 {
     public function __construct(FilesRepository $repository)
     {
-        $this->middleware('auth');
-        $this->middleware('ajax')->only('changeTitle','destroy','changeRight');
+
+        $this->middleware('ajax')->only('changeTitle','destroy','changeRight','changeFolder');
+        $this->middleware('auth')->only('newFile','changeRight','changeFolder');
+
         $this->repositroy = $repository;
     }
 
@@ -44,7 +49,7 @@ class FileController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -55,7 +60,8 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
     }
 
     /**
@@ -80,9 +86,11 @@ class FileController extends Controller
     {
         $this->authorize('edit', $file);
         $fileDate = $file->date;
+        $user = Auth::user();
         $cbxOptions = Helpers::getArrayCbxOptionsForFile($file);
         $textOptions = Helpers::getArrayTextOptionsForFile($file);
-        return view('files.edit', compact('file', 'cbxOptions', 'textOptions', 'fileDate'));
+        $treeFolders=$user->getCascadedFolder();
+        return view('files.edit', compact('file','treeFolders', 'cbxOptions', 'textOptions', 'fileDate','user'));
     }
 
     /**
@@ -94,6 +102,7 @@ class FileController extends Controller
      */
     public function update(StoreFile $request, File $file)
     {
+
         $this->authorize('edit', $file);
         $file->content = $request->fileContent;
         $file->is_title_page = $request->isTitlePage ?? false;
@@ -105,6 +114,10 @@ class FileController extends Controller
         $file->school = $request->school;
         $file->authors = $request->authors;
         $file->date = Carbon::createFromFormat('d/m/Y', $request->date);
+        $file->security = $request->right ?? "private";
+        $file->folder_id = $request->newFolder;
+
+
         $file->save();
         return redirect(route('files.show', $file));
     }
@@ -160,13 +173,39 @@ class FileController extends Controller
 
     public function changeRight(ChangeRightRequest $request, File $file)
     {
-       $this->authorize('changeRight', $file);
+       $this->authorize('changeFile', $file);
 
         $this->repositroy->updateRight($file, $request);
         return response()->json([
             'state' => true,
         ]);
 
+    }
+
+    public function changeFileFolder(ChangeFolderRequest $request, File $file)
+    {
+        $this->authorize('changeFile', $file);
+        $folderId= $request->input('newFolderId');
+
+        if($this->repositroy->updateFolder($file,$folderId,Auth::user()))
+        {
+            return response()->json([
+                'state' => true,
+            ]);
+
+        }
+        else{
+            return response()->json([
+                'state' => false,
+            ]);
+        }
+
+    }
+    public function newFile()
+    {
+        $idNewFile=$this->repositroy->newFile(Auth::user());
+
+        return redirect(route('files.edit', $idNewFile));
     }
 
 }

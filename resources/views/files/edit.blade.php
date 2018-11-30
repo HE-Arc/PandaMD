@@ -8,7 +8,7 @@
             <a id="optionsToggler" class="btn btn-outline-info" data-toggle="collapse" href="#pandocOptions"
                role="button"
                aria-expanded="true" aria-controls="pandocOptions">Reduce Pandoc options</a>
-            @include('files.partials.selectRight')
+
         </div>
 
         <div class="collapse show mb-2" id="pandocOptions">
@@ -44,17 +44,20 @@
                     </div>
                 </div>
             </div>
+            @include('files.partials.selectFileFolder')
+            @include('files.partials.selectRight')
+
         </div>
+
         <textarea name="fileContent" id="editor-md"></textarea>
         {{--Button submit in toolbar from js--}}
     </form>
 
 @endsection
 @section('script')
-    @include('files.partialScripts.select')
     <script>
         $(document).ready(function () {
-            OnreadyChangeRight();
+
         })
     </script>
     <script>

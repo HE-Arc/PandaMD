@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Folder;
+use App\Http\Requests\ChangeFolderRequest;
 use App\Http\Requests\FolderRequest;
 use App\Http\Requests\NameChangeRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\FolderRepository;
+use Illuminate\Support\Facades\Log;
+
 
 class FolderController extends Controller
 {
     public function __construct(FolderRepository $repository)
     {
         $this->middleware('auth');
-        $this->middleware('ajax')->only('destroy','update','store');
+        $this->middleware('ajax')->only('destroy','update','store','changeFolderFolder');
         $this->repositroy = $repository;
     }
 
@@ -77,7 +80,8 @@ class FolderController extends Controller
 
         $folders = $folder->folders;
         $files = $folder->files;
-        return view('folders.show', compact('folder', 'folders', 'files'));
+        $treeFolders = Auth::user()->getCascadedFolder();
+        return view('folders.show', compact('folder','treeFolders', 'folders', 'files'));
     }
 
     /**
@@ -128,5 +132,26 @@ class FolderController extends Controller
         $this->authorize('manage', $folder);
         $folder->delete();
         return response()->json();
+    }
+
+
+    public function changeFolderFolder(ChangeFolderRequest $request, Folder $folder)
+    {
+        $this->authorize('manage', $folder);
+
+        $folderId= $request->input('newFolderId');
+
+        if($this->repositroy->updateFolder($folder,$folderId,Auth::user()))
+        {
+            return response()->json([
+                'state' => true,
+            ]);
+
+        }
+        else{
+            return response()->json([
+                'state' => false,
+            ]);
+        }
     }
 }

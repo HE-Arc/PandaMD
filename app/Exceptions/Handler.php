@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Exceptions;
-
-use Dotenv\Exception\ValidationException;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
+use \Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Auth;
 
@@ -58,12 +58,10 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ModelNotFoundException) {
             return redirect()->route('home')->with('error', 5)->setStatusCode(404); //Resource not found
         }
-        //session(['error' => 10]);
-        if($exception instanceof  \Illuminate\Validation\ValidationException) {
-            //$exce = $exception as \Illuminate\Validation\ValidationException::class;
-            error_log($exception);
+        if($exception instanceof  ValidationException) {
+            Log::debug($exception);
+            return back()->withInput();
         }
-        //error_log($exception);
         return parent::render($request, $exception);
     }
 }

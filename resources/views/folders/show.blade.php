@@ -27,13 +27,13 @@
                             <button id="btnRenameFolder{{$childFolder->id}}"
                                     value="{{$childFolder->id}}"
                                     class="btn  btn-secondary">
-                                <i class="fal fa-pen"></i> Rename
+                                <i class="fal fa-pen"></i><span class="d-none d-lg-inline"> Rename</span>
                             </button>
                             <button id="btnDeleteFolder{{$childFolder->id}}"
                                     value="{{$childFolder->name}}"
                                     name="{{$childFolder->id}}"
                                     class="btn  btn-danger">
-                                <i class="far fa-folder-times"></i> Delete
+                                <i class="far fa-folder-times"></i><span class="d-none d-lg-inline"> Delete</span>
                             </button>
                         </span>
                     </a>
@@ -47,12 +47,12 @@
                             @include('files.partials.selectFileFolder')
                             <button id="btnRenameFile{{$file->id}}"  value="{{$file->id}}"
                                     class="btn  btn-secondary">
-                                <i class="fal fa-pen"></i> Rename
+                                <i class="fal fa-pen"></i><span class="d-none d-lg-inline"> Rename</span>
                             </button>
                             <button id="btnDeleteFile{{$file->id}}"
                                     name="{{$file->id}}"
                                     value="{{$file->title}}" class="btn  btn-danger">
-                                <i class="far fa-folder-times"></i> Delete
+                                <i class="far fa-folder-times"></i><span class="d-none d-lg-inline"> Delete</span>
                             </button>
                         </span></a>
                 @endforeach

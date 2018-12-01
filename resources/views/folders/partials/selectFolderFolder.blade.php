@@ -1,4 +1,4 @@
-<select id="selectedFolder{{$childFolder->id}}" name="{{$childFolder->id}}" class="selectpicker customselect">
+<select id="selectedFolder{{$childFolder->id}}" name="{{$childFolder->id}}" class="selectpicker customselect mr-1">
 
     @foreach($treeFolders as $childTreeFolder)
         @if($childTreeFolder[0]->id == $childFolder->folder_id)

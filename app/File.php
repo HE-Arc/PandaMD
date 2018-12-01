@@ -4,6 +4,7 @@ namespace App;
 
 use Faker\Provider\DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Yaml\Yaml;
 
@@ -46,7 +47,6 @@ class File extends Model
     }
 
     public function canChangeFile(User $user){
-
         return $user->id == $this->folder->user->id;
     }
 
@@ -55,6 +55,7 @@ class File extends Model
     {
         $date = date('YmdHis');
         $token = "{$this->id}{$this->folder->id}{$date}"; //Create a token (unique while 2 same file aren't build at same ms)
+        Log::debug("ICCCCCI : $token");
         $file_name = "{$token}.md";
         $yaml_options = [
             "title" => $this->title ?? "",

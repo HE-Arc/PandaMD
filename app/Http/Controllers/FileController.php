@@ -14,12 +14,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Symfony\Component\Console\Helper\Helper;
 
 class FileController extends Controller
 {
@@ -136,7 +130,8 @@ class FileController extends Controller
     public function generate(Request $request, File $file)
     {
         $token = $file->exportMDFile();
-        $this->dispatch((new ProcessPDFDocument($token, $file->id)));
+
+        ProcessPDFDocument::dispatch($token, $file->id);
         return $token;
     }
 
@@ -146,11 +141,11 @@ class FileController extends Controller
         if (file_exists($path)) {
             return response()->download($path, "$token.pdf")->deleteFileAfterSend();
         }
-        return redirect()->back()->with('error', 2);
+        return redirect()->route('home')->with('error', 2)->setStatusCode(404);
     }
 
     public function isReady(Request $request, String $token) {
-        $waitProcess = wait_process::where("token", $token)->first();
+        $waitProcess = wait_process::where("token", $token)->firstOrFail();
         return $waitProcess->status;
     }
 

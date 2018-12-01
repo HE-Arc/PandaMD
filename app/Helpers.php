@@ -8,10 +8,10 @@ class Helpers {
     public static function getArrayCbxOptionsForFile(File $file) {
         return [
                 /*[Id and name, Text label, is checked]*/
-                ['isTitlePage', 'Title Page', old('is_title_page')??$file->is_title_page],
-                ['isToc', 'Table of contents', old('is_toc')??$file->is_toc],
-                ['isTocOwnPage', 'TOC on own page', old('is_toc_own_page')??$file->is_toc_own_page],
-                ['isLinksAsNotes', 'Are links as notes', old('is_links_as_notes')??$file->is_links_as_notes],
+                ['isTitlePage', 'Title Page', old('isTitlePage')??$file->is_title_page],
+                ['isToc', 'Table of contents', old('isToc')??$file->is_toc],
+                ['isTocOwnPage', 'TOC on own page', old('isTocOwnPage')??$file->is_toc_own_page],
+                ['isLinksAsNotes', 'Are links as notes', old('isLinksAsNotes')??$file->is_links_as_notes],
         ];
     }
 

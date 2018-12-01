@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Exceptions;
+
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -33,7 +34,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param  \Exception $exception
      * @return void
      */
     public function report(Exception $exception)
@@ -44,23 +45,22 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
     {
         if ($exception instanceof AuthorizationException) {
             if (Auth::check()) {
-                return redirect()->back()->with('error', 1)->setStatusCode(404); // this will be on a 403 exception
+                return redirect()->route('home')->with('error', 1)->setStatusCode(401); //Unauthorized
             }
         }
         if ($exception instanceof ModelNotFoundException) {
             return redirect()->route('home')->with('error', 5)->setStatusCode(404); //Resource not found
         }
-        if($exception instanceof  ValidationException) {
-            Log::debug($exception);
-            return back()->withInput();
+        if ($exception instanceof ValidationException) {
+            return redirect()->back()->withInput();
         }
         return parent::render($request, $exception);
     }

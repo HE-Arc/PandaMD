@@ -36,11 +36,18 @@
 
                         body: JSON.stringify({newName: Name})
                     }).then(response => {
+                        let rep = response.json();
                         if (!response.ok) {
                             throw new Error(response.statusText)
                         }
-
-                        return response.json();
+                        rep.then(result =>{
+                            if(result.state==false){
+                                swal.showValidationMessage(
+                                    `Name already exists: ${result.newName}`
+                                )
+                            }
+                        })
+                        return rep;
                     })
                         .catch(error => {
                             swal.showValidationMessage(
@@ -50,19 +57,24 @@
                 },
                 allowOutsideClick: () => !swal.isLoading()
             }).then((result) => {
-                swal(
-                    `${type} Rename`,
-                    `${result.value.newName}`,
-                    'success'
-                ).then(function () {
-                    //location.reload();
-                    if(type=="current"){
-                        $('#currentFolder').text(result.value.newName);
-                    }else{
-                        $(`.${type}${id}`).text(result.value.newName);
-                    }
+                if (result.value.state) {
+                    swal(
+                        `${type} Rename`,
+                        `${result.value.newName}`,
+                        'success'
+                    ).then(function () {
+                        //location.reload();
+                        if(type=="current"){
+                            $('#currentFolder').text(result.value.newName);
+                        }else{
+                            $(`.${type}${id}`).text(result.value.newName);
+                        }
 
-                });
+                    });
+                }else {
+                    throw new Error(`Name already exist: ${result.value.newName}`);
+                }
+
 
             })
 

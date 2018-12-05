@@ -31,7 +31,7 @@
                         rep.then(result =>{
                             if(result.state==false){
                                 swal.showValidationMessage(
-                                    'Folder already exists'
+                                    `Folder already exists: ${result.name}`
                                 )
                             }
                         })

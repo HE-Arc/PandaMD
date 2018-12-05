@@ -63,6 +63,7 @@ class FolderController extends Controller
         } else {
             return response()->json([
                 'state' => false,
+                'name' => $name,
             ]);
         }
 
@@ -109,11 +110,9 @@ class FolderController extends Controller
         $currentFolder = Folder::find($folder->folder_id);
         $newName = $request->input('newName');
 
-        if (true) {
-            $this->repository->updateName($folder, $request);
 
-       // if ($currentFolder->canCreatedFolder($newName)) {
-          //  $this->repository->updateName($folder, $request);
+       if ($currentFolder->canCreatedFolder($newName)) {
+          $this->repository->updateName($folder, $request);
 
             return response()->json([
                 'state' => true,
@@ -122,6 +121,7 @@ class FolderController extends Controller
         } else {
             return response()->json([
                 'state' => false,
+                'newName' => $newName,
             ]);
         }
     }

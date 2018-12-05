@@ -6,6 +6,7 @@ use Faker\Provider\DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Yaml\Yaml;
+use Illuminate\Support\Facades\Log;
 
 class File extends Model
 {

@@ -7,7 +7,7 @@
             </button>
         </div>
         <div class="col-1">
-            <button id="btnRenameFolder{{$folder->id}}" name="{{$folder->id}}" value="{{$folder->name}}" type="button"
+            <button id="btnRenameCurrentFolder{{$folder->id}}" name="{{$folder->name}}" value="{{$folder->id}}" type="button"
                     class="btn btn-secondary"><i
                         class="fal fa-pen"></i> Rename
             </button>
@@ -17,7 +17,7 @@
         <div class="col-12">
             <div class="list-group">
                 <a href="javascript:;" class="list-group-item  active bg-dark">
-                    <h1>{{$folder->name}}</h1>
+                    <h1 id="currentFolder">{{$folder->name}}</h1>
                 </a>
                 @foreach($folders as $childFolder)
                     <a href="{{route('folders.show',$childFolder->id)}}" class=" list-group-item clearfix ">
@@ -73,6 +73,7 @@
             onReadyNewFolder();
             onReadyRename('btnRenameFolder',"{{route('folders.update',':id')}}","folder")
             onReadyRename('btnRenameFile',"{{route('changeFileName',':id')}}","file")
+            onReadyRename('btnRenameCurrentFolder',"{{route('folders.update',':id')}}","current")
             onReadyDelete('btnDeleteFolder',"{{route('folders.destroy',':id')}}");
             onReadyDelete('btnDeleteFile',"{{route('files.destroy',':id')}}");
             OnreadyChangeFileFolder();

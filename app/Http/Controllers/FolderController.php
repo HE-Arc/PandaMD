@@ -108,7 +108,7 @@ class FolderController extends Controller
 
         $currentFolder = Folder::find($folder->folder_id);
         $newName = $request->input('newName');
-        if ($currentFolder->canCreatedFolder($newName)) {
+        if (true) {
             $this->repositroy->updateName($folder, $request);
             return response()->json([
                 'state' => true,

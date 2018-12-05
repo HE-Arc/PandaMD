@@ -1,9 +1,10 @@
 <script>
     function onReadyDelete (btnName,url) {
+        let cleanUrl = url;
         $(`button[id^=${btnName}]`).click(function (event) {
             let value = $(this).val();
             let id = $(this).attr("name");
-            url= url.replace(":id",id);
+            let url= cleanUrl.replace(":id",id);
             let that = $(event.currentTarget);
             event.preventDefault();
             swal({

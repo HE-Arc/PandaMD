@@ -1,11 +1,18 @@
 <script>
 
      function onReadyRename(btnName,url,type) {
+         let cleanUrl = url;
         $(`button[id^=${btnName}]`).click(function (event) {
             let id = $(this).val();
-            url = url.replace(":id",id);
-            let innerText = $(`.${type}${id}`).text();
-            url=url.replace(":id",id);
+            let url = cleanUrl.replace(":id",id);
+            console.log(url);
+            let innerText="";
+            if(type=="current"){
+                innerText = $(this).attr('name');
+            }else{
+                innerText = $(`.${type}${id}`).text();
+            }
+
             event.preventDefault();
             swal({
                 title: `Rename ${type}: " ${innerText} "`,
@@ -17,7 +24,7 @@
                 showCancelButton: true,
                 confirmButtonText: 'Rename',
                 showLoaderOnConfirm: true,
-                preConfirm: (fileName) => {
+                preConfirm: (Name) => {
                     return fetch(url, {
                         method: "PUT",
                         headers: {
@@ -27,7 +34,7 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
 
-                        body: JSON.stringify({newName: fileName})
+                        body: JSON.stringify({newName: Name})
                     }).then(response => {
                         if (!response.ok) {
                             throw new Error(response.statusText)
@@ -49,7 +56,12 @@
                     'success'
                 ).then(function () {
                     //location.reload();
-                    $(`.${type}${id}`).text(result.value.newName);
+                    if(type=="current"){
+                        $('#currentFolder').text(result.value.newName);
+                    }else{
+                        $(`.${type}${id}`).text(result.value.newName);
+                    }
+
                 });
 
             })

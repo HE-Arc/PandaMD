@@ -1,5 +1,5 @@
 @changeable($file)
-<select id="selectedFile{{$file->id}}" name="newFolder" title="{{$file->id}}"  class="selectpicker customselect">
+<select id="selectedFile{{$file->id}}" name="newFolder" title="{{$file->id}}"  class="selectpicker customselect mr-1">
 
     @foreach($treeFolders as $childFolder)
         @if($childFolder[0]->id == $file->folder_id)

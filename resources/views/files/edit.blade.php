@@ -31,7 +31,7 @@
                         <div class="col-sm-10">
                             <input id="{{$textOption[0]}}" name="{{$textOption[0]}}" type="text"
                                    value="{{$textOption[2]}}" placeholder="{{$textOption[3]}}"
-                                   title="{{$textOption[3]}}" class="form-control">
+                                   title="{{$textOption[3]}}" class="form-control" {{$textOption[4]}}>
                         </div>
                     </div>
                 @endforeach
@@ -43,9 +43,9 @@
                                data-date-format="dd/mm/yyyy" onkeydown="return false"/>
                     </div>
                 </div>
+                @include('files.partials.selectFileFolder')
+                @include('files.partials.selectRight')
             </div>
-            @include('files.partials.selectFileFolder')
-            @include('files.partials.selectRight')
 
         </div>
 
@@ -61,7 +61,7 @@
         })
     </script>
     <script>
-        initSimpleMde(@json($file->content));
+        initSimpleMde(@json($fileContent));
 
         var datepicker = $('#date').datepicker({
             'autoClose': true

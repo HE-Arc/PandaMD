@@ -18,7 +18,7 @@ class FolderController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('ajax')->only('destroy','update','store','changeFolderFolder');
-        $this->repositroy = $repository;
+        $this->repository = $repository;
     }
 
     /**
@@ -55,7 +55,7 @@ class FolderController extends Controller
 
         $name = $request->input('name');
         if ($currentFolder->canCreatedFolder($name)) {
-            $this->repositroy->store(Auth::user(),$request);
+            $this->repository->store(Auth::user(),$request);
             return response()->json([
                 'state' => true,
                 'name' => $name,
@@ -108,8 +108,13 @@ class FolderController extends Controller
 
         $currentFolder = Folder::find($folder->folder_id);
         $newName = $request->input('newName');
+
         if (true) {
-            $this->repositroy->updateName($folder, $request);
+            $this->repository->updateName($folder, $request);
+
+       // if ($currentFolder->canCreatedFolder($newName)) {
+          //  $this->repository->updateName($folder, $request);
+
             return response()->json([
                 'state' => true,
                 'newName' => $newName,
@@ -131,7 +136,10 @@ class FolderController extends Controller
     {
         $this->authorize('manage', $folder);
         $folder->delete();
-        return response()->json();
+        return response()->json([
+            'state' => true,
+        ]);
+
     }
 
 
@@ -141,7 +149,7 @@ class FolderController extends Controller
 
         $folderId= $request->input('newFolderId');
 
-        if($this->repositroy->updateFolder($folder,$folderId,Auth::user()))
+        if($this->repository->updateFolder($folder,$folderId,Auth::user()))
         {
             return response()->json([
                 'state' => true,

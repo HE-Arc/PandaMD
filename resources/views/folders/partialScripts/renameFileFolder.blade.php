@@ -8,7 +8,7 @@
             console.log(url);
             let innerText="";
             if(type=="current"){
-                innerText = $(this).attr('name');
+                innerText = $('#currentFolder').text();
             }else{
                 innerText = $(`.${type}${id}`).text();
             }

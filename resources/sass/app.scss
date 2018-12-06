@@ -17,8 +17,8 @@
 @import '~bootstrap-select/sass/bootstrap-select.scss';
 
 @font-face {
-  font-family: FontAwesome;
-  src:url(fa-solid-900.woff);
+  font-family: FontAwesome !important;
+  src:url(fa-solid-900.woff) format("woff");
 }
 .navbar-laravel {
   background-color: #fff;

@@ -23,7 +23,7 @@ class File extends Model
 
     public function folder()
     {
-        return $this->belongsTo(Folder::class, 'folder_id');
+        return $this->belongsTo('\App\Folder', 'folder_id');
     }
 
     public function isEditable(?User $user)

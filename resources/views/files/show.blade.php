@@ -1,17 +1,25 @@
 @extends('layout.app')
 @section('content')
 
-    <h1>{{$file->title}}
-        <div class="float-right">
+    <div class="row text-secondary" style="font-size: 30pt;">
+        <div class="col">
+            @foreach($folderPath as $folder)
+                <a href="{{ route('folders.show', $folder->id) }}"
+                   class="text-secondary">{{ $folder->name }}</a><span
+                        style="margin-right:-10px;">/</span>
+            @endforeach
+            {{ $file->title }}
+        </div>
+        <div class="col-auto">
             <button onclick="generatePdf('{{route('generate', $file)}}')" class="btn btn-outline-secondary mr-2">
-                Generate PDF
+                <i class="fal fa-download fa-fw"></i><span class="d-none d-md-inline"> Generate PDF</span>
             </button>
             @editable($file)<a href="{{route('files.edit', $file)}}" class="btn btn-outline-primary"><i
-                        class="fal fa-edit fa-fw"></i> edit</a>@endeditable
+                        class="fal fa-edit fa-fw"></i><span class="d-none d-md-inline"> edit</span></a>@endeditable
         </div>
-    </h1>
+    </div>
     <div id="content-mdfile" class="border-top pt-4">
-
+        {{--Content come from JS--}}
     </div>
 @endsection
 @section('script')

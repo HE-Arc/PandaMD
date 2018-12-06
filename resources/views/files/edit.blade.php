@@ -80,6 +80,9 @@
 
         var elemToVerify = document.getElementById('isToc');
         elemToVerify.onchange = function () {
+            verifyCbx();
+        };
+        function verifyCbx() {
             elem = document.getElementById('isTocOwnPage');
             elem.disabled = !elemToVerify.checked;
             if (elem.disabled) {
@@ -87,6 +90,7 @@
             } else {
                 elem.parentElement.classList.remove("cbxdisabled");
             }
-        };
+        }
+        verifyCbx();
     </script>
 @endsection

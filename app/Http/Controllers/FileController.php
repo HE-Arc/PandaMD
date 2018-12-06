@@ -67,7 +67,9 @@ class FileController extends Controller
     public function show(File $file)
     {
         $this->authorize('read', $file);
-        return view('files.show', ['file' => $file]);
+        error_log($file->folder->name);
+        $folderPath = array_reverse($file->folder->getPath());
+        return view('files.show', compact('file','folderPath'));
     }
 
     /**

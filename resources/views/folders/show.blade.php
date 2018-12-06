@@ -38,7 +38,7 @@
                                 <button id="btnRenameFolder{{$childFolder->id}}"
                                         value="{{$childFolder->id}}"
                                         class="btn  btn-secondary">
-                                    <i class="fal fa-pen fa-fw"></i><span class="d-none d-lg-inline"> Rename</span>
+                                    <i class="fal fa-pen fa-fw"></i><span class="d-none d-md-inline"> Rename</span>
                                 </button>
                             </div>
                             <div class="col-auto px-1">
@@ -47,7 +47,7 @@
                                         name="{{$childFolder->id}}"
                                         class="btn  btn-danger">
                                     <i class="far fa-folder-times fa-fw"></i><span
-                                            class="d-none d-lg-inline"> Delete</span>
+                                            class="d-none d-md-inline"> Delete</span>
                                 </button>
                             </div>
                         </div>

@@ -12745,8 +12745,8 @@ select.selectpicker {
 }
 
 @font-face {
-  font-family: FontAwesome;
-  src: url(/fonts/fa-solid-900.woff?cffaef3d968c7b3ee91296f4d099cd12);
+  font-family: FontAwesome !important;
+  src: url(/fonts/fa-solid-900.woff?cffaef3d968c7b3ee91296f4d099cd12) format("woff");
 }
 
 .navbar-laravel {

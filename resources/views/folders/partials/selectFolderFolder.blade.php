@@ -1,4 +1,4 @@
-<select style="font-family: Nunito,FontAwesome" id="selectedFolder{{$childFolder->id}}" name="{{$childFolder->id}}" class="custom-select mr-1">
+<select style="font-family: FontAwesome" id="selectedFolder{{$childFolder->id}}" name="{{$childFolder->id}}" class="custom-select mr-1">
 
     @foreach($treeFolders as $childTreeFolder)
         @if($childTreeFolder[0]->id == $childFolder->folder_id)

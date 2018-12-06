@@ -2,10 +2,9 @@
 @section('content')
 
     <h1>{{$file->title}}
-        <div class="float-right">@include('files.partials.selectRight',compact($file))
+        <div class="float-right">
             <button onclick="generatePdf('{{route('generate', $file)}}')" class="btn btn-outline-secondary mr-2">
-                Generate
-                PDF
+                Generate PDF
             </button>
             @editable($file)<a href="{{route('files.edit', $file)}}" class="btn btn-outline-primary"><i
                         class="fal fa-edit fa-fw"></i> edit</a>@endeditable
@@ -16,7 +15,6 @@
     </div>
 @endsection
 @section('script')
-    @include('files.partialScripts.selectRight')
     <script>
         var urlDownloadPdfFile;
         var urlGeneratePdfFile;
@@ -27,7 +25,6 @@
             document.getElementById("content-mdfile").innerHTML = renderMarkdown(@json($file->content??""));
             urlDownloadPdfFileOriginal = "{{route("downloadPdfFile", "token")}}";
             urlGeneratePdfFileOriginal = "{{route("isReady", "token")}}";
-            OnreadyChangeRight();
         };
 
         function generatePdf(url) {
@@ -67,8 +64,6 @@
                     console.log(token);
                     urlDownloadPdfFile = urlDownloadPdfFileOriginal.replace("token", token);
                     urlGeneratePdfFile = urlGeneratePdfFileOriginal.replace("token", token);
-                    //tryGetPdfFile();
-
                 }
             });
         }

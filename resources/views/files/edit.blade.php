@@ -61,6 +61,7 @@
         })
     </script>
     <script>
+        cancelUrl = "{{ route('files.show', $file) }}";
         initSimpleMde(@json($fileContent));
 
         var datepicker = $('#date').datepicker({
@@ -87,8 +88,5 @@
                 elem.parentElement.classList.remove("cbxdisabled");
             }
         };
-        $(function () {
-            $(document).tooltip();
-        });
     </script>
 @endsection

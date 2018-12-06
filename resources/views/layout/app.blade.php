@@ -116,7 +116,7 @@
         divAlert.appendChild(alert);
         alertTimeout = setTimeout(function () {
             $(".alert").alert('close');
-        }, 5000);
+        }, 10000);
         $(document).ready(function () {
             $(".alert").addClass('show');
         });

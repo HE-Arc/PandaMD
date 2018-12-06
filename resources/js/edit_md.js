@@ -25,10 +25,8 @@ function initSimpleMde(fileContent) {
     document.getElementsByClassName('editor-toolbar')[0].appendChild(btn);
 
     var cancelLink = document.createElement("button");
-    console.log(cancelUrl);
-    var url = cancelUrl;
     cancelLink.addEventListener("click", function () {
-        location.href = url;
+        location.href = cancelUrl;
     });
     cancelLink.style.marginTop = "-3.5px";
     cancelLink.classList.add("btn", "btn-outline-danger", "float-md-right", "mr-1");

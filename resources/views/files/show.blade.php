@@ -59,9 +59,6 @@
                         }
                     });
                 } else {
-                    console.log(token);
-                    token++;
-                    console.log(token);
                     urlDownloadPdfFile = urlDownloadPdfFileOriginal.replace("token", token);
                     urlGeneratePdfFile = urlGeneratePdfFileOriginal.replace("token", token);
                 }

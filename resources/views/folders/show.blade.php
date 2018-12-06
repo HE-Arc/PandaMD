@@ -22,13 +22,11 @@
 
                     <div class="list-group-item">
                         <div class="row">
-                            <div class="col">
-                                <a href="{{route('folders.show',$childFolder->id)}}" class=" clearfix ">
+                                <a href="{{route('folders.show',$childFolder->id)}}" class="col clearfix">
                                     <h3 style="display: inline;"><i class="fal fa-folder fa-fw"></i> <span
                                                 class="folder{{$childFolder->id}}">{{$childFolder->name}}</span>
                                     </h3>
                                 </a>
-                            </div>
                             <div class="col-auto px-1">
                                 <div style="width:200px;">
                                     @include('folders.partials.selectFolderFolder')
@@ -57,13 +55,11 @@
                 @foreach($files as $file)
                     <div class="list-group-item">
                         <div class="row">
-                            <div class="col">
-                                <a href="{{route('files.show', $file->id)}}" class="pl-5"
+                                <a href="{{route('files.show', $file->id)}}" class="pl-5 col"
                                    style="font-family: 'Titillium Web', sans-serif;font-size: 20px;">
                                     <i class="fal fa-file fa-fw"></i> <span
                                             class="file{{$file->id}}">{{$file->title}}</span>
                                 </a>
-                            </div>
                             <div class="col-auto px-1">
                                 <div style="width:200px;">
                                     @include('files.partials.selectFileFolder')

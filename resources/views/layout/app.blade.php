@@ -87,7 +87,7 @@
 </div>
 @yield('script')
 <script>
-    function createAlert(alertType, alertText, linkHref = "", linkText = "") {
+    function createAlert(alertType, alertText, isTimeout=true ,className = "" ,linkHref = "", linkText = "") {
         $(".alert").alert('close');
         if (typeof alertTimeout !== 'undefined') {
             clearTimeout(alertTimeout);
@@ -95,6 +95,14 @@
         let divAlert = document.getElementById("divAlert");
         let alert = document.createElement("div");
         alert.classList.add("alert", alertType, "alert-dismissible", "fade");
+        if (className !== "") {
+            let divAnim = document.createElement("div");
+            divAnim.classList.add(className);
+            for(let i = 0; i<12; i++) {
+                divAnim.appendChild(document.createElement("div"));
+            }
+            alert.appendChild(divAnim);
+        }
         let btn = document.createElement("button");
         btn.classList.add("close");
         btn.setAttribute("data-dismiss", "alert");
@@ -114,9 +122,12 @@
         alert.appendChild(link);
         alert.appendChild(btn);
         divAlert.appendChild(alert);
-        alertTimeout = setTimeout(function () {
-            $(".alert").alert('close');
-        }, 10000);
+        if(isTimeout) {
+            alertTimeout = setTimeout(function () {
+                $(".alert").alert('close');
+            }, 10000);
+
+        }
         $(document).ready(function () {
             $(".alert").addClass('show');
         });

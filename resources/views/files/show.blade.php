@@ -44,7 +44,7 @@
                 token = value;
                 urlDownloadPdfFile = urlDownloadPdfFileOriginal.replace("token", token);
                 urlGeneratePdfFile = urlGeneratePdfFileOriginal.replace("token", token);
-                createAlert('alert-secondary', 'File is generating');
+                createAlert('alert-secondary', 'File is generating', false, "lds-spinner");
                 tryGetPdfFile();
             });
 
@@ -57,10 +57,10 @@
                 if (response.ok) {
                     response.text().then(function (value) {
                         if (value == 1) {
-                            createAlert('alert-primary', 'Document is ready : ', urlDownloadPdfFile, 'download');
+                            createAlert('alert-primary', 'Document is ready : ', false, "", urlDownloadPdfFile, 'download');
                             token = 0;
                         } else if (value == -1) {
-                            createAlert('alert-danger', 'An error occured, please verify your files');
+                            createAlert('alert-danger', 'An error occured, please verify your files',);
                             token = 0;
                         } else {
                             setTimeout(tryGetPdfFile, 100);

@@ -28,6 +28,7 @@ function initSimpleMde(fileContent) {
     cancelLink.addEventListener("click", function () {
         location.href = cancelUrl;
     });
+    cancelLink.type="button";
     cancelLink.style.marginTop = "-3.5px";
     cancelLink.classList.add("btn", "btn-outline-danger", "float-md-right", "mr-1");
     var icone = document.createElement("i");

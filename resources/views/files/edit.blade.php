@@ -61,7 +61,7 @@
         })
     </script>
     <script>
-        cancelUrl = "{{ route('files.show', $file) }}";
+        cancelUrl = "{{ route('files.show', $file->id) }}";
         initSimpleMde(@json($fileContent));
 
         var datepicker = $('#date').datepicker({

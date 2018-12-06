@@ -16,6 +16,10 @@
 // BootstrapSelect
 @import '~bootstrap-select/sass/bootstrap-select.scss';
 
+@font-face {
+  font-family: FontAwesome;
+  src:url(fa-solid-900.woff);
+}
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);

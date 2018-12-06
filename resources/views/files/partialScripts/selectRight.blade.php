@@ -1,10 +1,10 @@
 <script>
     function OnreadyChangeRight() {
         let url = "{{route('changeRight',':id')}}";
-        let selectData={};
-        $("select[id^='selectRight']").each(function () {
-            selectData[$(this).attr('name')]=$(this).val();
+        $("select[id^='selectRight']").on('focusin',function () {
+            beforeValue=$(this).val();
         });
+
 
         $("select[id^='selectRight']").on('change', function () {
             let id = $(this).attr('title');
@@ -21,7 +21,7 @@
                 body: JSON.stringify({newRight: right})
             }).then(response => {
                 if (!response.ok) {
-                    $(this).val(selectData[id]).select();
+                    $(`#selectedFile${id} option[value=${beforeValue}]`).prop('selected',true);
                     throw new Error(response.statusText)
 
                 }

@@ -7,7 +7,8 @@
             </button>
         </div>
         <div class="col-1">
-            <button id="btnRenameCurrentFolder{{$folder->id}}" name="{{$folder->name}}" value="{{$folder->id}}" type="button"
+            <button id="btnRenameCurrentFolder{{$folder->id}}" name="{{$folder->name}}" value="{{$folder->id}}"
+                    type="button"
                     class="btn btn-secondary"><i
                         class="fal fa-pen"></i> Rename
             </button>
@@ -20,41 +21,72 @@
                     <h1 id="currentFolder">{{$folder->name}}</h1>
                 </a>
                 @foreach($folders as $childFolder)
-                    <a href="{{route('folders.show',$childFolder->id)}}" class=" list-group-item clearfix ">
-                        <h3 style="display: inline;"><i class="fal fa-folder fa-fw"></i> <span class="folder{{$childFolder->id}}">{{$childFolder->name}}</span></h3>
-                        <span class="float-right">
-                            @include('folders.partials.selectFolderFolder')
-                            <button id="btnRenameFolder{{$childFolder->id}}"
-                                    value="{{$childFolder->id}}"
-                                    class="btn  btn-secondary">
-                                <i class="fal fa-pen fa-fw"></i><span class="d-none d-lg-inline"> Rename</span>
-                            </button>
-                            <button id="btnDeleteFolder{{$childFolder->id}}"
-                                    value="{{$childFolder->name}}"
-                                    name="{{$childFolder->id}}"
-                                    class="btn  btn-danger">
-                                <i class="far fa-folder-times fa-fw"></i><span class="d-none d-lg-inline"> Delete</span>
-                            </button>
-                        </span>
-                    </a>
+
+                    <div class="list-group-item">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{{route('folders.show',$childFolder->id)}}" class=" clearfix ">
+                                    <h3 style="display: inline;"><i class="fal fa-folder fa-fw"></i> <span
+                                                class="folder{{$childFolder->id}}">{{$childFolder->name}}</span>
+                                    </h3>
+                                </a>
+                            </div>
+                            <div class="col-auto px-1">
+                                <div style="width:200px;">
+                                    @include('folders.partials.selectFolderFolder')
+                                </div>
+                            </div>
+                            <div class="col-auto px-1">
+                                <button id="btnRenameFolder{{$childFolder->id}}"
+                                        value="{{$childFolder->id}}"
+                                        class="btn  btn-secondary">
+                                    <i class="fal fa-pen fa-fw"></i><span class="d-none d-lg-inline"> Rename</span>
+                                </button>
+                            </div>
+                            <div class="col-auto px-1">
+                                <button id="btnDeleteFolder{{$childFolder->id}}"
+                                        value="{{$childFolder->name}}"
+                                        name="{{$childFolder->id}}"
+                                        class="btn  btn-danger">
+                                    <i class="far fa-folder-times fa-fw"></i><span
+                                            class="d-none d-lg-inline"> Delete</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
 
                 @foreach($files as $file)
-                    <a href="{{route('files.show', $file->id)}}" class="pl-5 list-group-item "
-                       style="font-family: 'Titillium Web', sans-serif;font-size: 20px;">
-                        <i class="fal fa-file fa-fw"></i> <span class="file{{$file->id}}">{{$file->title}}</span>
-                        <span class="float-right">
-                            @include('files.partials.selectFileFolder')
-                            <button id="btnRenameFile{{$file->id}}"  value="{{$file->id}}"
-                                    class="btn  btn-secondary">
-                                <i class="fal fa-pen fa-fw"></i><span class="d-none d-lg-inline"> Rename</span>
-                            </button>
-                            <button id="btnDeleteFile{{$file->id}}"
-                                    name="{{$file->id}}"
-                                    value="{{$file->title}}" class="btn  btn-danger">
-                                <i class="far fa-file fa-fw"></i><span class="d-none d-lg-inline"> Delete</span>
-                            </button>
-                        </span></a>
+                    <div class="list-group-item">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{{route('files.show', $file->id)}}" class="pl-5"
+                                   style="font-family: 'Titillium Web', sans-serif;font-size: 20px;">
+                                    <i class="fal fa-file fa-fw"></i> <span
+                                            class="file{{$file->id}}">{{$file->title}}</span>
+                                </a>
+                            </div>
+                            <div class="col-auto px-1">
+                                <div style="width:200px;">
+                                    @include('files.partials.selectFileFolder')
+                                </div>
+                            </div>
+                            <div class="col-auto px-1">
+                                <button id="btnRenameFile{{$file->id}}" value="{{$file->id}}"
+                                        class="btn  btn-secondary">
+                                    <i class="fal fa-pen fa-fw"></i><span class="d-none d-lg-inline"> Rename</span>
+                                </button>
+                            </div>
+                            <div class="col-auto px-1">
+                                <button id="btnDeleteFile{{$file->id}}"
+                                        name="{{$file->id}}"
+                                        value="{{$file->title}}" class="btn  btn-danger">
+                                    <i class="far fa-file fa-fw"></i><span class="d-none d-lg-inline"> Delete</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                 @endforeach
             </div>
         </div>
@@ -71,11 +103,11 @@
     <script>
         $(document).ready(function () {
             onReadyNewFolder();
-            onReadyRename('btnRenameFolder',"{{route('folders.update',':id')}}","folder")
-            onReadyRename('btnRenameFile',"{{route('changeFileName',':id')}}","file")
-            onReadyRename('btnRenameCurrentFolder',"{{route('folders.update',':id')}}","current")
-            onReadyDelete('btnDeleteFolder',"{{route('folders.destroy',':id')}}","folder");
-            onReadyDelete('btnDeleteFile',"{{route('files.destroy',':id')}}","file");
+            onReadyRename('btnRenameFolder', "{{route('folders.update',':id')}}", "folder")
+            onReadyRename('btnRenameFile', "{{route('changeFileName',':id')}}", "file")
+            onReadyRename('btnRenameCurrentFolder', "{{route('folders.update',':id')}}", "current")
+            onReadyDelete('btnDeleteFolder', "{{route('folders.destroy',':id')}}", "folder");
+            onReadyDelete('btnDeleteFile', "{{route('files.destroy',':id')}}", "file");
             OnreadyChangeFileFolder();
             OnreadyChangeFolderFolder();
         })

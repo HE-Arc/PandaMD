@@ -12744,6 +12744,11 @@ select.selectpicker {
   float: none;
 }
 
+@font-face {
+  font-family: FontAwesome;
+  src: url(/fonts/fa-solid-900.woff?cffaef3d968c7b3ee91296f4d099cd12);
+}
+
 .navbar-laravel {
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);

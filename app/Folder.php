@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\File;
+use function Sodium\add;
 
 class Folder extends Model
 {
@@ -60,13 +61,10 @@ class Folder extends Model
 
     public function getCascadedFolder()
     {
-
         $arrayFolders = [];
         $this->recursifTreeFolder($this, $arrayFolders);
         return $arrayFolders;
-
     }
-
 
     private function recursifTreeFolder($currentFolder, &$arrayFolders)
     {
@@ -74,10 +72,19 @@ class Folder extends Model
         array_push($arrayFolders, $arrayTmp);
 
         foreach ($currentFolder->folders as $childFolder) {
-
             $this->recursifTreeFolder($childFolder, $arrayFolders);
-
         }
+    }
 
+    public function getPath()
+    {
+        $arrayPath = [$this];
+        $fileTemp = $this;
+        while($fileTemp->name!='home')
+        {
+            $fileTemp = Folder::find($fileTemp->folder_id);
+            array_push($arrayPath, $fileTemp);
+        }
+        return $arrayPath;
     }
 }

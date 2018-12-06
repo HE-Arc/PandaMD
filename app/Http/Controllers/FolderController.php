@@ -82,7 +82,9 @@ class FolderController extends Controller
         $folders = $folder->folders;
         $files = $folder->files;
         $treeFolders = Auth::user()->getCascadedFolder();
-        return view('folders.show', compact('folder','treeFolders', 'folders', 'files'));
+        $folderPath = array_reverse($folder->getPath());
+        Log::debug($folderPath);
+        return view('folders.show', compact('folder','treeFolders', 'folders', 'files', 'folderPath'));
     }
 
     /**

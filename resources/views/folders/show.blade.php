@@ -1,26 +1,24 @@
 @extends('layout.app')
 @section('content')
 
-    <div class="row mb-3 ">
-        <div class="col-sm-1 col-3 mr-5">
-            <button id="btnNewFolder" type="button" class="btn btn-dark"><i class="far fa-folder-plus"></i> New Folder
-            </button>
-        </div>
-        <div class="col-1">
-            <button id="btnRenameCurrentFolder{{$folder->id}}" name="{{$folder->name}}" value="{{$folder->id}}"
-                    type="button"
-                    class="btn btn-secondary"><i
-                        class="fal fa-pen"></i> Rename
-            </button>
-        </div>
-    </div>
+
+
     <div class="row">
         <div class="col-12">
             <div class="list-group">
-                <a href="javascript:;" class="list-group-item  active bg-dark">
-                    <h1 id="currentFolder">{{$folder->name}}</h1>
-                </a>
+                <div class="row mx-0 darkBackground border border-dark rounded text-secondary" style="font-size: 30pt;">
+                    <div class="col">
+                        @foreach($folderPath as $folder)
+                            <a href="{{ route('folders.show', $folder->id) }}" class="text-secondary">{{ $folder->name }}</a>@if(!$loop->last)<span style="margin-right:-10px;">/</span>@endif
+                        @endforeach
+                    </div>
+                    <div id="btnNewFolder" class="col-auto actionToHover text-center">
+                            <i class="far fa-plus fa-fw py-2"></i>
+                    </div>
+                </div>
+
                 @foreach($folders as $childFolder)
+
 
                     <div class="list-group-item">
                         <div class="row">
@@ -103,11 +101,12 @@
     <script>
         $(document).ready(function () {
             onReadyNewFolder();
-            onReadyRename('btnRenameFolder', "{{route('folders.update',':id')}}", "folder")
-            onReadyRename('btnRenameFile', "{{route('changeFileName',':id')}}", "file")
-            onReadyRename('btnRenameCurrentFolder', "{{route('folders.update',':id')}}", "current")
-            onReadyDelete('btnDeleteFolder', "{{route('folders.destroy',':id')}}", "folder");
-            onReadyDelete('btnDeleteFile', "{{route('files.destroy',':id')}}", "file");
+
+            onReadyRename('btnRenameFolder', "{{route('folders.update',':id')}}", "folder");
+            onReadyRename('btnRenameFile', "{{route('changeFileName',':id')}}", "file");
+            onReadyDelete('btnDeleteFolder', "{{route('folders.destroy',':id')}}");
+            onReadyDelete('btnDeleteFile', "{{route('files.destroy',':id')}}");
+
             OnreadyChangeFileFolder();
             OnreadyChangeFolderFolder();
         })

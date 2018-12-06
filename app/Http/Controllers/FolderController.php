@@ -63,6 +63,7 @@ class FolderController extends Controller
         } else {
             return response()->json([
                 'state' => false,
+                'name' => $name,
             ]);
         }
 
@@ -110,8 +111,11 @@ class FolderController extends Controller
 
         $currentFolder = Folder::find($folder->folder_id);
         $newName = $request->input('newName');
-        if ($currentFolder->canCreatedFolder($newName)) {
-            $this->repository->updateName($folder, $request);
+
+
+       if ($currentFolder->canCreatedFolder($newName)) {
+          $this->repository->updateName($folder, $request);
+
             return response()->json([
                 'state' => true,
                 'newName' => $newName,
@@ -119,6 +123,7 @@ class FolderController extends Controller
         } else {
             return response()->json([
                 'state' => false,
+                'newName' => $newName,
             ]);
         }
     }
@@ -133,7 +138,10 @@ class FolderController extends Controller
     {
         $this->authorize('manage', $folder);
         $folder->delete();
-        return response()->json();
+        return response()->json([
+            'state' => true,
+        ]);
+
     }
 
 

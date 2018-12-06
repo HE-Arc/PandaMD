@@ -1,9 +1,10 @@
 <script>
-    function onReadyDelete (btnName,url) {
+    function onReadyDelete (btnName,url,type) {
+        let cleanUrl = url;
         $(`button[id^=${btnName}]`).click(function (event) {
-            let value = $(this).val();
             let id = $(this).attr("name");
-            url= url.replace(":id",id);
+            let url= cleanUrl.replace(":id",id);
+            let innerText = $(`.${type}${id}`).text();
             let that = $(event.currentTarget);
             event.preventDefault();
             swal({
@@ -13,7 +14,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#3085d6',
-                confirmButtonText: `Yes, delete ${value}`,
+                confirmButtonText: `Yes, delete ${innerText}`,
                 showLoaderOnConfirm: true,
                 preConfirm: () => {
                     return fetch(url, {
@@ -43,7 +44,7 @@
                 if(result.value){
                     swal(
                         'Delete',
-                        `${value} Deleted`,
+                        `${innerText} Deleted`,
                         'success'
                     ).then( () =>{
                         that.parents('a').remove();

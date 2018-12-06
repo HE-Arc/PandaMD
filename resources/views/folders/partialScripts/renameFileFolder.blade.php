@@ -1,11 +1,18 @@
 <script>
 
      function onReadyRename(btnName,url,type) {
+         let cleanUrl = url;
         $(`button[id^=${btnName}]`).click(function (event) {
             let id = $(this).val();
-            url = url.replace(":id",id);
-            let innerText = $(`.${type}${id}`).text();
-            url=url.replace(":id",id);
+            let url = cleanUrl.replace(":id",id);
+            console.log(url);
+            let innerText="";
+            if(type=="current"){
+                innerText = $('#currentFolder').text();
+            }else{
+                innerText = $(`.${type}${id}`).text();
+            }
+
             event.preventDefault();
             swal({
                 title: `Rename ${type}: " ${innerText} "`,
@@ -17,7 +24,7 @@
                 showCancelButton: true,
                 confirmButtonText: 'Rename',
                 showLoaderOnConfirm: true,
-                preConfirm: (fileName) => {
+                preConfirm: (Name) => {
                     return fetch(url, {
                         method: "PUT",
                         headers: {
@@ -27,13 +34,20 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
 
-                        body: JSON.stringify({newName: fileName})
+                        body: JSON.stringify({newName: Name})
                     }).then(response => {
+                        let rep = response.json();
                         if (!response.ok) {
                             throw new Error(response.statusText)
                         }
-
-                        return response.json();
+                        rep.then(result =>{
+                            if(result.state==false){
+                                swal.showValidationMessage(
+                                    `Name already exists: ${result.newName}`
+                                )
+                            }
+                        })
+                        return rep;
                     })
                         .catch(error => {
                             swal.showValidationMessage(
@@ -43,14 +57,24 @@
                 },
                 allowOutsideClick: () => !swal.isLoading()
             }).then((result) => {
-                swal(
-                    `${type} Rename`,
-                    `${result.value.newName}`,
-                    'success'
-                ).then(function () {
-                    //location.reload();
-                    $(`.${type}${id}`).text(result.value.newName);
-                });
+                if (result.value.state) {
+                    swal(
+                        `${type} Rename`,
+                        `${result.value.newName}`,
+                        'success'
+                    ).then(function () {
+                        //location.reload();
+                        if(type=="current"){
+                            $('#currentFolder').text(result.value.newName);
+                        }else{
+                            $(`.${type}${id}`).text(result.value.newName);
+                        }
+
+                    });
+                }else {
+                    throw new Error(`Name already exist: ${result.value.newName}`);
+                }
+
 
             })
 

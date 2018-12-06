@@ -68,10 +68,15 @@
     <script>
         $(document).ready(function () {
             onReadyNewFolder();
-            onReadyRename('btnRenameFolder', "{{route('folders.update',':id')}}", "folder")
-            onReadyRename('btnRenameFile', "{{route('changeFileName',':id')}}", "file")
+            onReadyRename('btnRenameFolder', "{{route('folders.update',':id')}}", "folder");
+            onReadyRename('btnRenameFile', "{{route('changeFileName',':id')}}", "file");
             onReadyDelete('btnDeleteFolder', "{{route('folders.destroy',':id')}}");
             onReadyDelete('btnDeleteFile', "{{route('files.destroy',':id')}}");
+            onReadyRename('btnRenameFolder',"{{route('folders.update',':id')}}","folder");
+            onReadyRename('btnRenameFile',"{{route('changeFileName',':id')}}","file");
+            onReadyDelete('btnDeleteFolder',"{{route('folders.destroy',':id')}}","folder");
+            onReadyDelete('btnDeleteFile',"{{route('files.destroy',':id')}}","file");
+
             OnreadyChangeFileFolder();
             OnreadyChangeFolderFolder();
         })

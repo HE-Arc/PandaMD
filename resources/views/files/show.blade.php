@@ -16,7 +16,7 @@
     </div>
 @endsection
 @section('script')
-    @include('files.partialScripts.select')
+    @include('files.partialScripts.selectRight')
     <script>
         var urlDownloadPdfFile;
         var urlGeneratePdfFile;

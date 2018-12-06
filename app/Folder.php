@@ -49,6 +49,11 @@ class Folder extends Model
         return !$this->foldersName()->contains($name);
     }
 
+    public function canRenameFolder($name)
+    {
+        return !$this->foldersName()->contains($name) || $this->name==$name;
+    }
+
     public function isUserFolder($user)
     {
         return $user->id === $this->user_id;

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreFile extends FormRequest
 {
@@ -29,10 +30,13 @@ class StoreFile extends FormRequest
             'isTocOwnPage' => 'sometimes|accepted',
             'isLinksAsNotes' => 'sometimes|accepted',
             'title' => 'required|string|max:100',
-            'subtitle' => 'required|max:100',
-            'school' => 'present|max:100',
+            'subtitle' => 'sometimes|max:100',
+            'school' => 'sometimes|max:100',
+            'authors' => 'sometimes|max:100',
             'date' => 'required|date_format:"d/m/Y"',
-            'fileContent' => 'required|string',
+            'fileContent' => 'sometimes|nullable|string',
+            'right' => ['required','string',Rule::in(['private','readable','editable'])],
+            'newFolder' => 'required|integer',
         ];
     }
 }

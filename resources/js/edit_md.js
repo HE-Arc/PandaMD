@@ -4,9 +4,6 @@ function initSimpleMde(fileContent) {
         initialValue: fileContent,
         spellChecker: false,
         showIcons: ["code", "table"],
-        shortcuts: {
-            'drawTable': "Ctrl-T"
-        },
         previewRender: function (plainText) {
             return global_markdown_it.render(plainText); // Returns HTML from a custom parser
         },

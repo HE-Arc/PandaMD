@@ -55,6 +55,7 @@ class Handler extends ExceptionHandler
             if (Auth::check()) {
                 return redirect()->route('home')->with('error', 1)->setStatusCode(401); //Unauthorized
             }
+           return redirect()->route('login')->with('error', 3)->setStatusCode(302); //Not logged
         }
         if ($exception instanceof ModelNotFoundException) {
             return redirect()->route('home')->with('error', 5)->setStatusCode(404); //Resource not found

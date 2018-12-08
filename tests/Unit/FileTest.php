@@ -16,12 +16,14 @@ class FileTest extends TestCase
     {
         $response = $this->logAsGetAssertStatus($idUser, $uri, $idRoute, $status);
         $response->assertSessionHas('error', $errorNb);
+        return $response;
     }
 
     private function getAssertStatusError(string $uri, int $idRoute, int $status, int $errorNb)
     {
         $response = $this->getAssertStatus($uri, $idRoute, $status);
         $response->assertSessionHas('error', $errorNb);
+        return $response;
     }
 
     private function logAsGetAssertStatus(int $idUser, string $uri, int $idRoute, int $status)
@@ -39,12 +41,30 @@ class FileTest extends TestCase
         return $response;
     }
 
+    private $argsFilesOK = ['title' => "changed from test", 'date' => '11/11/2018', 'fileContent' => '#Titre',
+        'right' => 'private', 'newFolder' => 1];
+
+    private function logAsPatchAssertStatus(int $idUser, string $uri, int $idRoute, int $status, array $args)
+    {
+        $user = User::where('id', $idUser)->first();
+        $this->be($user);
+        return $this->patchAssertStatus($uri, $idRoute, $status, $args);
+    }
+
+    private function patchAssertStatus(string $uri, int $idRoute, int $status, array $args)
+    {
+        $response = $this->PATCH(route($uri, $idRoute), $args);
+        $response->assertStatus($status);
+        return $response;
+    }
+
     /*
      * File show
      */
     public function testShowGuest()
     {
-        $this->getAssertStatusError('files.show', 1, 302, 3);
+        $response = $this->getAssertStatusError('files.show', 1, 302, 3);
+        $response->assertLocation(route('login'));
     }
 
     public function testShowLoggedOwner()
@@ -54,12 +74,14 @@ class FileTest extends TestCase
 
     public function testShowLoggedUnauthorized()
     {
-        $this->logAsGetAssertStatusError(2, 'files.show', 1, 401,  1);
+        $response = $this->logAsGetAssertStatusError(2, 'files.show', 1, 401, 1);
+        $response->assertLocation(route('home'));
     }
 
     public function testShowNonExistent()
     {
-        $this->logAsGetAssertStatus(1, 'files.show', 1000, 404, 5);
+        $response = $this->logAsGetAssertStatusError(1, 'files.show', 1000, 404,5);
+        $response->assertLocation(route('home'));
     }
 
     /*
@@ -67,37 +89,55 @@ class FileTest extends TestCase
      */
     public function testEditGuest()
     {
-        $this->getAssertStatusError('files.edit', 1, 302, 3);
+        $response = $this->getAssertStatusError('files.edit', 1, 302, 3);
+        $response->assertLocation(route('login'));
     }
 
     public function testEditLoggedOwner()
     {
-        $this->logAsGetAssertStatus(1, 'files.edit', 1,200);
+        $this->logAsGetAssertStatus(1, 'files.edit', 1, 200);
     }
 
     public function testEditLoggedUnauthorized()
     {
-        $this->logAsGetAssertStatusError(2, 'files.edit', 1,401, 1);
+        $response = $this->logAsGetAssertStatusError(2, 'files.edit', 1, 401, 1);
+        $response->assertLocation(route('home'));
     }
 
     public function testEditLoggedNonExistent()
     {
-        $this->logAsGetAssertStatusError(1, 'files.edit', 1000, 404, 5);
+        $response = $this->logAsGetAssertStatusError(1, 'files.edit', 1000, 404, 5);
+        $response->assertLocation(route('home'));
     }
 
     /*
      * File update
      */
-    public function testUpdateLogged()
+    public function testUpdateGuest()
     {
-        $user = User::where('id', 1)->first();
-        $file = File::where('id', 1)->first();
-        $this->be($user);
-        $response = $this->PATCH(route(
-            'files.update', $file), [
-            'title' => "changed from test", 'date'=> '11/11/2018', 'fileContent'=> '#Titre']);
-        $response->assertStatus(302);
+        $response = $this->patchAssertStatus('files.update', 1, 302, $this->argsFilesOK);
+        $response->assertSessionHas('error', 3);
+        $response->assertLocation(route('login'));
+    }
+
+    public function testUpdateLoggedGood()
+    {
+        $response = $this->logAsPatchAssertStatus(1, 'files.update', 1, 302, $this->argsFilesOK);
         $response->assertSessionMissing('error');
         $response->assertLocation(route('files.show', 1));
+    }
+
+    public function testUpdateUnauthorized()
+    {
+        $response = $this->logAsPatchAssertStatus(2, 'files.update', 1, 401, $this->argsFilesOK);
+        $response->assertSessionHas('error', 1);
+        $response->assertLocation(route('home'));
+    }
+
+    public function testUpdateNonExistent()
+    {
+        $response = $this->logAsPatchAssertStatus(1, 'files.update', 1000, 404, $this->argsFilesOK);
+        $response->assertSessionHas('error', 5);
+        $response->assertLocation(route('home'));
     }
 }

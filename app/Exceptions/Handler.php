@@ -5,10 +5,9 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Log;
-use \Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -55,7 +54,7 @@ class Handler extends ExceptionHandler
             if (Auth::check()) {
                 return redirect()->route('home')->with('error', 1)->setStatusCode(401); //Unauthorized
             }
-           return redirect()->route('login')->with('error', 3)->setStatusCode(302); //Not logged
+            return redirect()->route('login')->with('error', 3)->setStatusCode(302); //Not logged
         }
         if ($exception instanceof ModelNotFoundException) {
             return redirect()->route('home')->with('error', 5)->setStatusCode(404); //Resource not found

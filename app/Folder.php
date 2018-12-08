@@ -3,8 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\File;
-use function Sodium\add;
 
 class Folder extends Model
 {

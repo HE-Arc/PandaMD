@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\File;
-use App\Repositories\FilesRepository;
-use App\Http\Requests\NameChangeRequest;
-use App\Http\Requests\ChangeRightRequest;
+use App\Helpers;
 use App\Http\Requests\ChangeFolderRequest;
+use App\Http\Requests\ChangeRightRequest;
+use App\Http\Requests\NameChangeRequest;
 use App\Http\Requests\StoreFile;
 use App\Jobs\ProcessPDFDocument;
+use App\Repositories\FilesRepository;
 use App\wait_process;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Helpers;
 use Illuminate\Support\Facades\Auth;
 
 class FileController extends Controller
@@ -65,7 +65,6 @@ class FileController extends Controller
     public function show(File $file)
     {
         $this->authorize('read', $file);
-        error_log($file->folder->name);
         $folderPath = array_reverse($file->folder->getPath());
         return view('files.show', compact('file','folderPath'));
     }

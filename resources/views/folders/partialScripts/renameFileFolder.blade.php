@@ -5,7 +5,6 @@
         $(`button[id^=${btnName}]`).click(function (event) {
             let id = $(this).val();
             let url = cleanUrl.replace(":id",id);
-            console.log(url);
             let innerText="";
             if(type=="current"){
                 innerText = $('#currentFolder').text();

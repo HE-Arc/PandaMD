@@ -6,10 +6,8 @@ use App\Folder;
 use App\Http\Requests\ChangeFolderRequest;
 use App\Http\Requests\FolderRequest;
 use App\Http\Requests\NameChangeRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Repositories\FolderRepository;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 
 class FolderController extends Controller

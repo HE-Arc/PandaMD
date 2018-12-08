@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
+use App\File;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use App\File;
 
 class FilePolicy
 {

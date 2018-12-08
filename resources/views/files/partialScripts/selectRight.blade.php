@@ -28,7 +28,6 @@
 
             })
                 .catch(error => {
-                    console.log(error);
                     swal({
                         type: 'error',
                         title: 'Something went wrong!',

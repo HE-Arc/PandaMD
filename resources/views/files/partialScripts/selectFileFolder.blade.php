@@ -13,7 +13,6 @@
             url = url.replace(":id", fileId);
             //change clicked folder to bold and selected icon
             let newFolderId = $(this).val();
-            console.log(url);
             fetch(url, {
                 method: "PUT",
                 headers: {
@@ -40,7 +39,6 @@
                 }
             })
                 .catch(error => {
-                    console.log(error);
                     swal({
                         type: 'error',
                         title: 'Something went wrong!',

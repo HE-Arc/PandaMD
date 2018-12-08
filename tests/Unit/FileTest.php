@@ -54,7 +54,7 @@ class FileTest extends TestCase
 
     public function testShowLoggedUnauthorized()
     {
-        $this->logAsGetAssertStatusError(2, 'files.show', 1, 404,  1);
+        $this->logAsGetAssertStatusError(2, 'files.show', 1, 401,  1);
     }
 
     public function testShowNonExistent()
@@ -77,7 +77,7 @@ class FileTest extends TestCase
 
     public function testEditLoggedUnauthorized()
     {
-        $this->logAsGetAssertStatusError(2, 'files.edit', 1,404, 1);
+        $this->logAsGetAssertStatusError(2, 'files.edit', 1,401, 1);
     }
 
     public function testEditLoggedNonExistent()
@@ -95,8 +95,7 @@ class FileTest extends TestCase
         $this->be($user);
         $response = $this->PATCH(route(
             'files.update', $file), [
-            'title' => $file->title, 'subtitle' => $file->subtitle,
-            'date'=> '11/11/2018', 'fileContent'=> '#Titre', 'school' => "", 'authors'=> ""]);
+            'title' => "changed from test", 'date'=> '11/11/2018', 'fileContent'=> '#Titre']);
         $response->assertStatus(302);
         $response->assertSessionMissing('error');
         $response->assertLocation(route('files.show', 1));

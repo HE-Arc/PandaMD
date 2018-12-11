@@ -12761,6 +12761,7 @@ select.selectpicker {
   z-index: 2;
   top: 0;
   border-bottom: 1px solid #ddd;
+  background-color: #f8fafc;
 }
 
 .editor-toolbar {

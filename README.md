@@ -81,6 +81,12 @@ php artisan migrate --seed --env=testing
 ```
 
 ## Run test
+Linux:
 ```sh
 ./vendor/bin/phpunit
 ```
+Windows:
+```sh
+"./vendor/bin/phpunit"
+```
+

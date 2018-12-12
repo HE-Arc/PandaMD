@@ -69,6 +69,8 @@ Create .env.testing with the following content :
 ```
 DB_SCHEMA=test
 ```
+Create Schema test in database
+
 ### Local
 Copy .env in .env.testing and change the schema of the DB.
 

@@ -18,7 +18,11 @@
                 input: 'text',
                 inputValue: innerText,
                 inputAttributes: {
-                    autocapitalize: 'off'
+                    autocapitalize: 'off',
+                    placeholder: 'New folder name'
+                },
+                inputValidator:(value)=>{
+                    return !value && "folder name can't be empty !"
                 },
                 showCancelButton: true,
                 confirmButtonText: 'Rename',

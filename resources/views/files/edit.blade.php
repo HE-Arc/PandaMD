@@ -119,13 +119,12 @@
 
 
         mdeditor.codemirror.on("paste", function (data, e) {
-            console.log("paste");
             getFileTransferData(data, e);
         });
 
         mdeditor.codemirror.on("drop", function(data, e){
-            console.log("drop");
             getFileTransferData(data, e);
+            mdeditor.codemirror.replaceRange(' **Uploading image...** ', {line: Infinity});
         });
 
         let urlGetImgurURL = "{{route("uploadImage")}}";
@@ -133,7 +132,6 @@
             let files = e.dataTransfer.files;
             if(files.length > 0){
                 let file = files[0];
-                console.log(file);
                 fetch(urlGetImgurURL, {
                     method: 'POST',
                     headers: {
@@ -144,6 +142,7 @@
                     let jsonData = response.json();
                     jsonData.then( jsonData => {
                         console.log(jsonData.link);
+                        mdeditor.codemirror.undo();
                         mdeditor.codemirror.replaceRange(' ![](' + jsonData.link + ') ', {line: Infinity});
                     })
                 })

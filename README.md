@@ -33,7 +33,7 @@ php artisan db:seed #Only if we want default data
 ## Queue manager
 Converting markdown to pdf takes time so we make this in a queue in background.
 ### Run on server
-We will configure sv, he makes sure that the queue always turns.
+We will configure sv, he makes sure that the queue will always turns.
 
 Create /etc/service/laravel-queue-worker/run with the following content :
 ```

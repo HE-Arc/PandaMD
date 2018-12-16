@@ -210,7 +210,7 @@ class FileController extends Controller
     {
         $image = $request->getContent();
         $client = new Client();
-        $headers = ['Authorization' => 'Client-ID 1fe844e31f961df'];
+        $headers = ['Authorization' => 'Client-ID '.config('services.imgur.clientID')];
         $body = [
             'name' => 'image',
             'contents' => $image

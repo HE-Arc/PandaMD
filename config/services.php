@@ -36,4 +36,8 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'imgur' => [
+        'clientID' => env('IMGUR_CLIENT_ID'),
+    ]
+
 ];

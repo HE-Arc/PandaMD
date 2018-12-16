@@ -139,12 +139,14 @@
                     },
                     body: file
                 }).then(response => {
-                    let jsonData = response.json();
-                    jsonData.then( jsonData => {
-                        console.log(jsonData.link);
-                        mdeditor.codemirror.undo();
-                        mdeditor.codemirror.replaceRange(' ![](' + jsonData.link + ') ', {line: Infinity});
-                    })
+                    mdeditor.codemirror.undo();
+                    if(response.ok){
+                        let jsonData = response.json();
+                        jsonData.then( jsonData => {
+                            mdeditor.codemirror.replaceRange(' ![](' + jsonData.link + ') ', {line: Infinity});
+                        })
+                    }
+
                 })
             }
         }

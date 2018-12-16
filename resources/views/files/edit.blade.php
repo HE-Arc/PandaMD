@@ -144,6 +144,7 @@
                     let jsonData = response.json();
                     jsonData.then( jsonData => {
                         console.log(jsonData.link);
+                        mdeditor.codemirror.replaceRange(' ![](' + jsonData.link + ') ', {line: Infinity});
                     })
                 })
             }

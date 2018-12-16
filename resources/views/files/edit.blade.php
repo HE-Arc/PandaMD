@@ -71,8 +71,9 @@
         })
     </script>
     <script>
+
         cancelUrl = "{{ route('files.show', $file->id) }}";
-        initSimpleMde(@json($fileContent));
+        var mdeditor = initSimpleMde(@json($fileContent));
 
         var datepicker = $('#date').datepicker({
             'autoClose': true
@@ -101,8 +102,54 @@
             } else {
                 elem.parentElement.classList.remove("cbxdisabled");
             }
-        }
+        };
+        $(function () {
+            $(document).tooltip();
+        });
 
+
+
+        window.addEventListener("dragover", function (e) {
+            e.preventDefault();
+        });
+
+        window.addEventListener("drop", function (e) {
+            e.preventDefault();
+        });
+
+
+        mdeditor.codemirror.on("paste", function (data, e) {
+            getFileTransferData(data, e);
+        });
+
+        mdeditor.codemirror.on("drop", function(data, e){
+            getFileTransferData(data, e);
+            mdeditor.codemirror.replaceRange(' **Uploading image...** ', {line: Infinity});
+        });
+
+        let urlGetImgurURL = "{{route("uploadImage")}}";
+        function getFileTransferData(data, e){
+            let files = e.dataTransfer.files;
+            if(files.length > 0){
+                let file = files[0];
+                fetch(urlGetImgurURL, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    body: file
+                }).then(response => {
+                    mdeditor.codemirror.undo();
+                    if(response.ok){
+                        let jsonData = response.json();
+                        jsonData.then( jsonData => {
+                            mdeditor.codemirror.replaceRange(' ![](' + jsonData.link + ') ', {line: Infinity});
+                        })
+                    }
+
+                })
+            }
+        }
         verifyCbx();
     </script>
 @endsection

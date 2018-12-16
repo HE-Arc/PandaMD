@@ -4,6 +4,7 @@ function initSimpleMde(fileContent) {
         initialValue: fileContent,
         spellChecker: false,
         showIcons: ["code", "table"],
+        dragDrop: true,
         previewRender: function (plainText) {
             return global_markdown_it.render(plainText); // Returns HTML from a custom parser
         },
@@ -54,6 +55,7 @@ function initSimpleMde(fileContent) {
             toolbar.classList.remove("sticky");
         }
     }
+    return simplemde;
 }
 
 function renderMarkdown(plaintext) {

@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
-    <link rel="icon" href="{{asset('favicon.ico')}}" type="image/gif">
+    <link rel="icon" href="{{asset('favicon.png')}}" type="image/gif">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css"/>
@@ -26,7 +26,8 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-family:'Comfortaa'">
-    <a class="navbar-brand" href="{{route('home')}}"><img src="{{asset('favicon.ico')}}" alt=""> PandaMD</a>
+    <a class="navbar-brand" href="{{route('home')}}">
+        <img src="{{asset('favicon.png')}}" id="navicon" alt=""> PandaMD</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

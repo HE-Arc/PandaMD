@@ -3,16 +3,16 @@
     function OnreadyChangeFileFolder() {
 
         let url = "{{route('changeFileFolderId',':id')}}";
-        let selectData = {};
-        $("select[id^='selectedFile']").each(function () {
-            selectData[$(this).attr('name')] = $(this).val();
+
+        $("select[id^='selectedFile']").on('focus',function () {
+            beforeValue=$(this).val();
         });
+
         $("select[id^='selectedFile']").on('change', function () {
             let fileId = $(this).attr('title');
             url = url.replace(":id", fileId);
             //change clicked folder to bold and selected icon
             let newFolderId = $(this).val();
-            console.log(url);
             fetch(url, {
                 method: "PUT",
                 headers: {
@@ -24,14 +24,14 @@
                 body: JSON.stringify({newFolderId: newFolderId})
             }).then(response => {
                 if (!response.ok) {
-                    $(this).val(selectData[fileId]).select();
+                    $(`#selectedFile${fileId} option[value=${beforeValue}]`).prop('selected',true);
                     throw new Error(response.statusText)
                 }
                 return response.json();
 
             }).then(function (data) {
                 if(!data.state){
-                    $(this).val(selectData[fileId]).select();
+                    $(`#selectedFile${fileId} option[value=${beforeValue}]`).prop('selected',true);
                     throw new Error(response.statusText)
                 }
                 else{
@@ -39,7 +39,6 @@
                 }
             })
                 .catch(error => {
-                    console.log(error);
                     swal({
                         type: 'error',
                         title: 'Something went wrong!',

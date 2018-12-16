@@ -5,7 +5,6 @@
         $(`button[id^=${btnName}]`).click(function (event) {
             let id = $(this).val();
             let url = cleanUrl.replace(":id",id);
-            console.log(url);
             let innerText="";
             if(type=="current"){
                 innerText = $('#currentFolder').text();
@@ -19,7 +18,11 @@
                 input: 'text',
                 inputValue: innerText,
                 inputAttributes: {
-                    autocapitalize: 'off'
+                    autocapitalize: 'off',
+                    placeholder: 'New folder name'
+                },
+                inputValidator:(value)=>{
+                    return !value && "folder name can't be empty !"
                 },
                 showCancelButton: true,
                 confirmButtonText: 'Rename',

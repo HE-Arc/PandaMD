@@ -6,10 +6,8 @@ use App\Folder;
 use App\Http\Requests\ChangeFolderRequest;
 use App\Http\Requests\FolderRequest;
 use App\Http\Requests\NameChangeRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Repositories\FolderRepository;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 
 class FolderController extends Controller
@@ -82,7 +80,8 @@ class FolderController extends Controller
         $folders = $folder->folders;
         $files = $folder->files;
         $treeFolders = Auth::user()->getCascadedFolder();
-        return view('folders.show', compact('folder','treeFolders', 'folders', 'files'));
+        $folderPath = array_reverse($folder->getPath());
+        return view('folders.show', compact('folder','treeFolders', 'folders', 'files', 'folderPath'));
     }
 
     /**

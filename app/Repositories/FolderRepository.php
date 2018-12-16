@@ -6,8 +6,6 @@ use App\Folder;
 use App\Http\Requests\FolderRequest;
 use App\Http\Requests\NameChangeRequest;
 use App\User;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
 
 
 class FolderRepository

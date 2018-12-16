@@ -36,15 +36,25 @@
                     </div>
                 @endforeach
                 <div class="form-group row">
-                    <label for="date" class="col-form-label col-sm-2 col-form-label">Date</label>
+                    <label for="date" class="col-form-label col-sm-2">Date</label>
                     <div class="col-sm-10">
                         <input id="date" name="date" type='text' class="form-control datepicker-here"
                                data-position="left top" data-language='en'
                                data-date-format="dd/mm/yyyy" onkeydown="return false"/>
                     </div>
                 </div>
-                @include('files.partials.selectFileFolder')
-                @include('files.partials.selectRight')
+                <div class="form-group row">
+                    <label for="selectedFile{{ $file->id }}" class="col-form-label col-sm-2">Location</label>
+                    <div class="col-sm-10">
+                        @include('files.partials.selectFileFolder')
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="selectRight{{ $file->id }}" class="col-form-label col-sm-2">Security</label>
+                    <div class="col-sm-10">
+                        @include('files.partials.selectRight')
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -61,6 +71,8 @@
         })
     </script>
     <script>
+
+        cancelUrl = "{{ route('files.show', $file->id) }}";
         var mdeditor = initSimpleMde(@json($fileContent));
 
         var datepicker = $('#date').datepicker({
@@ -79,6 +91,10 @@
 
         var elemToVerify = document.getElementById('isToc');
         elemToVerify.onchange = function () {
+            verifyCbx();
+        };
+
+        function verifyCbx() {
             elem = document.getElementById('isTocOwnPage');
             elem.disabled = !elemToVerify.checked;
             if (elem.disabled) {
@@ -132,5 +148,6 @@
                 })
             }
         }
+        verifyCbx();
     </script>
 @endsection

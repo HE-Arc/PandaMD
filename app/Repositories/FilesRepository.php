@@ -5,10 +5,8 @@ namespace App\Repositories;
 use App\File;
 use App\Http\Requests\ChangeRightRequest;
 use App\Http\Requests\NameChangeRequest;
-use App\Http\Requests\ChangeFolderRequest;
 use App\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
 
 class FilesRepository

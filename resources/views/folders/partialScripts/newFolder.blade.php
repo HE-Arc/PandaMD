@@ -3,11 +3,14 @@
         $('#btnNewFolder').click(function (event) {
             event.preventDefault()
             swal({
-                title: 'Rename your new Folder',
+                title: 'Create new Folder',
                 input: 'text',
-                inputValue: 'Untilted',
                 inputAttributes: {
-                    autocapitalize: 'off'
+                    autocapitalize: 'off',
+                    placeholder: 'Folder name'
+                },
+                inputValidator:(value)=>{
+                    return !value && "folder name can't be empty !"
                 },
                 showCancelButton: true,
                 confirmButtonText: 'Create',

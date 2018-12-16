@@ -47,7 +47,7 @@
                         `${innerText} Deleted`,
                         'success'
                     ).then( () =>{
-                        that.parents('a').remove();
+                        location.reload()
                     })
                 }
             })

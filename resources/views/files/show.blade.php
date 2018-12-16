@@ -1,22 +1,28 @@
 @extends('layout.app')
 @section('content')
 
-    <h1>{{$file->title}}
-        <div class="float-right">@include('files.partials.selectRight',compact($file))
+    <div class="row text-secondary" style="font-size: 30pt;">
+        <div class="col">
+            @foreach($folderPath as $folder)
+                <a href="{{ route('folders.show', $folder->id) }}"
+                   class="text-secondary">{{ $folder->name }}</a><span
+                        style="margin-right:-10px;">/</span>
+            @endforeach
+            {{ $file->title }}
+        </div>
+        <div class="col-auto">
             <button onclick="generatePdf('{{route('generate', $file)}}')" class="btn btn-outline-secondary mr-2">
-                Generate
-                PDF
+                <i class="fal fa-download fa-fw"></i><span class="d-none d-md-inline"> Generate PDF</span>
             </button>
             @editable($file)<a href="{{route('files.edit', $file)}}" class="btn btn-outline-primary"><i
-                        class="fal fa-edit fa-fw"></i> edit</a>@endeditable
+                        class="fal fa-edit fa-fw"></i><span class="d-none d-md-inline"> edit</span></a>@endeditable
         </div>
-    </h1>
+    </div>
     <div id="content-mdfile" class="border-top pt-4">
-
+        {{--Content come from JS--}}
     </div>
 @endsection
 @section('script')
-    @include('files.partialScripts.selectRight')
     <script>
         var urlDownloadPdfFile;
         var urlGeneratePdfFile;
@@ -27,7 +33,6 @@
             document.getElementById("content-mdfile").innerHTML = renderMarkdown(@json($file->content??""));
             urlDownloadPdfFileOriginal = "{{route("downloadPdfFile", "token")}}";
             urlGeneratePdfFileOriginal = "{{route("isReady", "token")}}";
-            OnreadyChangeRight();
         };
 
         function generatePdf(url) {
@@ -39,7 +44,7 @@
                 token = value;
                 urlDownloadPdfFile = urlDownloadPdfFileOriginal.replace("token", token);
                 urlGeneratePdfFile = urlGeneratePdfFileOriginal.replace("token", token);
-                createAlert('alert-secondary', 'File is generating');
+                createAlert('alert-secondary', 'File is generating', false, "lds-spinner");
                 tryGetPdfFile();
             });
 
@@ -52,23 +57,18 @@
                 if (response.ok) {
                     response.text().then(function (value) {
                         if (value == 1) {
-                            createAlert('alert-primary', 'Document is ready : ', urlDownloadPdfFile, 'download');
+                            createAlert('alert-primary', 'Document is ready : ', false, "", urlDownloadPdfFile, 'download');
                             token = 0;
                         } else if (value == -1) {
-                            createAlert('alert-danger', 'An error occured, please verify your files');
+                            createAlert('alert-danger', 'An error occured, please verify your files',);
                             token = 0;
                         } else {
                             setTimeout(tryGetPdfFile, 100);
                         }
                     });
                 } else {
-                    console.log(token);
-                    token++;
-                    console.log(token);
                     urlDownloadPdfFile = urlDownloadPdfFileOriginal.replace("token", token);
                     urlGeneratePdfFile = urlGeneratePdfFileOriginal.replace("token", token);
-                    //tryGetPdfFile();
-
                 }
             });
         }

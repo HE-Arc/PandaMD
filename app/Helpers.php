@@ -2,8 +2,6 @@
 
 namespace App;
 
-use App\File;
-
 class Helpers {
     public static function getArrayCbxOptionsForFile(File $file) {
         return [

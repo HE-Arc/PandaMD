@@ -69,6 +69,8 @@ Create .env.testing with the following content :
 ```
 DB_SCHEMA=test
 ```
+Create Schema test in database
+
 ### Local
 Copy .env in .env.testing and change the schema of the DB.
 
@@ -79,6 +81,12 @@ php artisan migrate --seed --env=testing
 ```
 
 ## Run test
+Linux:
 ```sh
 ./vendor/bin/phpunit
 ```
+Windows:
+```sh
+"./vendor/bin/phpunit"
+```
+

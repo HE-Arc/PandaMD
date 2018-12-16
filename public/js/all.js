@@ -25,6 +25,21 @@ function initSimpleMde(fileContent) {
     btn.appendChild(spanSaveText);
     document.getElementsByClassName('editor-toolbar')[0].appendChild(btn);
 
+    var cancelLink = document.createElement("button");
+    cancelLink.addEventListener("click", function () {
+        location.href = cancelUrl;
+    });
+    cancelLink.type="button";
+    cancelLink.style.marginTop = "-3.5px";
+    cancelLink.classList.add("btn", "btn-outline-danger", "float-md-right", "mr-1");
+    var icone = document.createElement("i");
+    icone.classList.add("fal", "fa-times-octagon", "fa-fw");
+    cancelLink.appendChild(icone);
+    spanSaveText = document.createElement("span");
+    spanSaveText.appendChild(document.createTextNode(' Cancel'));
+    cancelLink.appendChild(spanSaveText);
+    document.getElementsByClassName('editor-toolbar')[0].appendChild(cancelLink);
+
     /* Sticky the toolbar of simplemde
       * Source : https://www.w3schools.com/howto/howto_js_navbar_sticky.asp */
     window.onscroll = function () {

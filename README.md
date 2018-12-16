@@ -24,7 +24,6 @@ sudo wget https://raw.githubusercontent.com/steven-jeanneret/dotFiles/master/pan
 We need to give write permission to the user who will execute the queue worker. 
 ```sh
 git clone https://github.com/HE-Arc/PandaMD.git
-sudo chmod a+w PandaMD PandaMD/storage/logs
 cd PandaMD
 composer install
 php artisan migrate
@@ -34,32 +33,24 @@ php artisan db:seed #Only if we want default data
 ## Queue manager
 Converting markdown to pdf takes time so we make this in a queue in background.
 ### Run on server
-We will install and configure supervisor, he makes sure that the queue always turns.
-```sh
-sudo apt insatll supervisor
+We will configure sv, he makes sure that the queue always turns.
+
+Create /etc/service/laravel-queue-worker/run with the following content :
 ```
-Create /etc/supervisor/conf.d/ with the following content :
-```
-[program:laravel-worker]
-process_name=%(program_name)s_%(process_num)02d
-directory=/home/poweruser/www/PandaMD/
-command=php artisan queue:work --tries=1
-autostart=true
-autorestart=true
-user=www-data
-numprocs=1
-redirect_stderr=true
-stdout_logfile=/home/poweruser/www/logs/worker.log
+#!/bin/sh
+set -xe
+cd /var/www/PandaMD
+exec 2>&1
+exec chpst -uwww-data php artisan queue:work
 ```
 
 ```sh
-sudo supervisorctl reread
-sudo supervisorctl update
-sudo supervisorctl restart all
+sudo chmod a+x run
+sudo sv start laravel-queue-worker
 ```
 ### Run on local
 ```sh
-php artisan queue:work --tries=1
+php artisan queue:work
 ```
 
 # Test

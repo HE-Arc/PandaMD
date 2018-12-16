@@ -55,6 +55,16 @@ sudo sv start laravel-queue-worker
 php artisan queue:work
 ```
 
+## Imgur API
+When drag and dropping an image onto the editor, the image is uploaded on imgur and referenced into the editor. 
+In order to use the API, a `client ID` is required. To get an Imgur `client ID`, it is necessary to [register to Imgur](https://imgur.com/register). The detailed steps can be found in [Imgur API reference](https://apidocs.imgur.com/#authorization-and-oauth).
+
+When in possession of a `client ID`, please add the following line to your `.env` file:
+
+```
+IMGUR_CLIENT_ID=[your_client_id]
+```
+
 # Test
 ## Requirements
 ### Server

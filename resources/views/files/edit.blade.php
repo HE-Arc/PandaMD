@@ -61,7 +61,7 @@
         })
     </script>
     <script>
-        initSimpleMde(@json($fileContent));
+        var mdeditor = initSimpleMde(@json($fileContent));
 
         var datepicker = $('#date').datepicker({
             'autoClose': true
@@ -90,5 +90,47 @@
         $(function () {
             $(document).tooltip();
         });
+
+
+
+        window.addEventListener("dragover", function (e) {
+            e.preventDefault();
+        });
+
+        window.addEventListener("drop", function (e) {
+            e.preventDefault();
+        });
+
+
+        mdeditor.codemirror.on("paste", function (data, e) {
+            console.log("paste");
+            getFileTransferData(data, e);
+        });
+
+        mdeditor.codemirror.on("drop", function(data, e){
+            console.log("drop");
+            getFileTransferData(data, e);
+        });
+
+        let urlGetImgurURL = "{{route("uploadImage")}}";
+        function getFileTransferData(data, e){
+            let files = e.dataTransfer.files;
+            if(files.length > 0){
+                let file = files[0];
+                console.log(file);
+                fetch(urlGetImgurURL, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    body: file
+                }).then(response => {
+                    let jsonData = response.json();
+                    jsonData.then( jsonData => {
+                        console.log(jsonData.link);
+                    })
+                })
+            }
+        }
     </script>
 @endsection

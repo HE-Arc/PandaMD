@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers;
 use Illuminate\Support\Facades\Auth;
+use GuzzleHttp\Client;
 
 class FileController extends Controller
 {
@@ -199,4 +200,35 @@ class FileController extends Controller
         return redirect(route('files.edit', $idNewFile));
     }
 
+    /**
+     * Upload the image to imgur and return a link to it
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function uploadImage(Request $request)
+    {
+        $image = $request->getContent();
+        $client = new Client();
+        $headers = ['Authorization' => 'Client-ID 1fe844e31f961df'];
+        $body = [
+            'name' => 'image',
+            'contents' => $image
+        ];
+        $response = $client->request('POST', 'https://api.imgur.com/3/image',
+            ['headers' => $headers, 'multipart' => [$body]]);
+
+        $data = json_decode($response->getBody(), true);
+
+
+        return response()->json([
+            'link' => $data['data']['link'],
+            'state' => true
+        ]);
+
+
+
+
+    }
 }

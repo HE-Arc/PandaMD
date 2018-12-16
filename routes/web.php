@@ -30,7 +30,7 @@ Route::get('files/', 'FileController@newFile')->name('newFile');
 Route::put('files/{file}/changefilefolderid','FileController@changeFileFolder')->name('changeFileFolderId');
 Route::put('folders/{folder}/changefolderfolderid','FolderController@changeFolderFolder')->name('changeFolderFolderId');
 Route::get('files/{token}/download', 'FileController@download')->name('downloadPdfFile');
-
+Route::post('files/uploadimage', 'FileController@uploadImage')->name('uploadImage');
 
 Route::fallback(function() {
     return redirect(route('home'))->with('error', 4);

@@ -12774,12 +12774,13 @@ select.selectpicker {
   color: #5cc4ef;
 }
 
-#file {
+.file {
   margin: auto;
   content: url(/images/MD_File_Icon_2.svg?dfdb1123f1759fa8eba33c551ed8e6dc);
 }
 
 /* Source : https://css-tricks.com/snippets/css/simple-and-nice-blockquote-styling/ */
+
 blockquote {
   background: #f9f9f9;
   border-left: 10px solid #ccc;
@@ -12800,3 +12801,4 @@ blockquote:before {
 blockquote p {
   display: inline;
 }
+

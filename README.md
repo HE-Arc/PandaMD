@@ -25,6 +25,7 @@ We need to give write permission to the user who will execute the queue worker.
 ```sh
 git clone https://github.com/HE-Arc/PandaMD.git
 cd PandaMD
+sudo chmod a+w storage/app
 composer install
 php artisan migrate
 php artisan db:seed #Only if we want default data

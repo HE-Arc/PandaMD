@@ -39,7 +39,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link {{{ (Request::is('folders/*') ? 'active' : '') }}}"
-                   href="{{route('folders.index')}}"><i class="fal fa-folder fa-fw"></i> Folder</a>
+                   href="{{route('folders.index')}}"><i class="fal fa-folder fa-fw"></i> Folders</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{route('newFile')}}"><i class="fal fa-pencil fa-fw"></i> Create</a>

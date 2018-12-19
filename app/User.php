@@ -39,12 +39,10 @@ class User extends Authenticatable
 
     public function getCascadedFolder()
     {
-
         $curentFolder = $this->folders()->whereNull('folder_id')->first();
         $arrayFolders = [];
         $this->recursifTreeFolder($curentFolder, $arrayFolders);
         return $arrayFolders;
-
     }
 
 

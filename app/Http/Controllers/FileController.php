@@ -81,11 +81,10 @@ class FileController extends Controller
         $this->authorize('edit', $file);
         $fileContent = old('fileContent') ?? $file->content;
         $fileDate = old('date')??$file->date;
-        $user = Auth::user();
         $cbxOptions = Helpers::getArrayCbxOptionsForFile($file);
         $textOptions = Helpers::getArrayTextOptionsForFile($file);
-        $treeFolders=$user->getCascadedFolder();
-        return view('files.edit', compact('file','treeFolders', 'cbxOptions', 'textOptions','fileContent', 'fileDate','user'));
+        $treeFolders=$file->folder->user->getCascadedFolder();
+        return view('files.edit', compact('file','treeFolders', 'cbxOptions', 'textOptions','fileContent', 'fileDate'));
     }
 
     /**

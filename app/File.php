@@ -24,6 +24,7 @@ class File extends Model
         return $this->belongsTo('\App\Folder', 'folder_id');
     }
 
+
     public function isEditable(?User $user)
     {
         $security = $this->security;
@@ -45,8 +46,12 @@ class File extends Model
         return $user != null && $user->id == $this->folder->user_id;
     }
 
-    public function canChangeFile(User $user){
-        return $user->id == $this->folder->user->id;
+    public function canChangeFile(?User $user){
+        $security = $this->security;
+        if($security==File::$attr_editable) {
+            return true;
+        }
+        return $user!=null && $user->id == $this->folder->user->id;
     }
 
 
